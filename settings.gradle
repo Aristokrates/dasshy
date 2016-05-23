@@ -1,0 +1,17 @@
+include 'dasshy-server'
+include 'dasshy-core'
+include 'dasshy-web'
+include 'dasshy-lib'
+include 'dasshy-model'
+
+rootProject.name = 'dasshy'
+
+rootProject.children.each {project ->
+    String fileBaseName = project.name.replaceAll("\\p{Upper}") { "-${it.toLowerCase()}" }
+    String projectDirName = "$fileBaseName"
+    project.projectDir = new File(settingsDir, projectDirName)
+    project.buildFileName = "${fileBaseName}.gradle"
+    assert project.projectDir.isDirectory()
+    assert project.buildFile.isFile()
+}
+

@@ -1,0 +1,90 @@
+import java.util.concurrent.TimeUnit
+
+description = 'Dasshy'
+
+ext {
+
+    javaLanguageLevel = '1.7'
+
+    // dependencies versions
+    sparkGroup      =   'org.apache.spark'
+    sparkVersion    =   '2.0.0-SNAPSHOT'
+    scalaVersion    =   '2.10'
+
+    jettyGroup      =   'org.eclipse.jetty'
+    jettyVersion    =   '8.1.19.v20160209'
+    shiroVersion    =   '1.2.4'
+
+    groovyVersion   =   '2.2.0'
+    jUnitVersion    =   '4.11'
+
+    archaiusVersion =   '0.7.4'
+
+    thriftVersion   =   '0.9.3'
+
+    jacksonGroup    =   'org.codehaus.jackson'
+    jacksonVersion  =   '1.9.13'
+
+    libs = [
+
+            spark_core:         "$sparkGroup:spark-core_$scalaVersion:$sparkVersion",
+            spark_sql:          "$sparkGroup:spark-sql_$scalaVersion:$sparkVersion",
+            spark_catalyst:     "$sparkGroup:spark-catalyst_$scalaVersion:$sparkVersion",
+            spark_streaming:    "$sparkGroup:spark-streaming_$scalaVersion:$sparkVersion",
+            spark_kafka:        "$sparkGroup:spark-streaming-kafka_$scalaVersion:$sparkVersion",
+
+            jetty_server:       "$jettyGroup:jetty-server:$jettyVersion",
+            jetty_servlet:      "$jettyGroup:jetty-servlet:$jettyVersion",
+            jetty_http:         "$jettyGroup:jetty-http:$jettyVersion",
+            jetty_security:     "$jettyGroup:jetty-security:$jettyVersion",
+
+            shiro_core:         "org.apache.shiro:shiro-core:$shiroVersion",
+            shiro_web:          "org.apache.shiro:shiro-web:$shiroVersion",
+
+            jackson_core_asl:   "$jacksonGroup:jackson-core-asl:$jacksonVersion",
+            jackson_mapper_asl: "$jacksonGroup:jackson-mapper-asl:$jacksonVersion",
+            jackson_xc:         "$jacksonGroup:jackson-xc:$jacksonVersion",
+            jackson_jaxrs:      "$jacksonGroup:jackson-jaxrs:$jacksonVersion",
+
+            archaius:           "com.netflix.archaius:archaius-core:$archaiusVersion",
+
+            thrift:             "org.apache.thrift:libthrift:$thriftVersion",
+
+            groovy:             "org.codehaus.groovy:groovy-all:$groovyVersion",
+            junit:              "junit:junit:$jUnitVersion"
+    ]
+}
+
+allprojects { project ->
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+
+    defaultTasks 'build'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "http://repository.apache.org/snapshots/"
+        }
+    }
+}
+
+subprojects { subProject ->
+    apply plugin: 'java'
+
+    apply plugin: 'build-dashboard'
+    apply plugin: 'project-report'
+
+    group = 'com.kromatik.dasshy'
+    version = dasshyTargetVersion
+
+
+    dependencies {
+
+        testCompile(libs.junit)
+    }
+
+    targetCompatibility = javaLanguageLevel
+    sourceCompatibility = javaLanguageLevel
+}

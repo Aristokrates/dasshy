@@ -1,0 +1,20 @@
+dependencies {
+
+    // spark deps
+    compile(libs.spark_core) {
+        exclude group: 'org.apache.hadoop', module: 'hadoop-yarn-client'
+        exclude group: 'org.apache.hadoop', module: 'hadoop-yarn-api'
+        exclude group: 'org.apache.hadoop', module: 'hadoop-yarn-common'
+        exclude group: 'org.apache.hadoop', module: 'hadoop-yarn-server-common'
+        exclude group: 'org.apache.hadoop', module: 'hadoop-yarn-server-nodemanager'
+    }
+    compile(libs.spark_sql) {
+        exclude group: 'org.apache.spark'
+    }
+    compile(libs.spark_catalyst) {
+        exclude group: 'org.apache.spark'
+    }
+    compile(libs.spark_streaming) {
+        exclude group: 'org.apache.spark'
+    }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: com.kromatik.dasshy.model</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: com.kromatik.dasshy.model</h1>
+<table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
+<tr>
+<td>com.kromatik.dasshy.model</td><td></td>
+<td><a href="#Struct_TCassandraLoaderConfiguration">TCassandraLoaderConfiguration</a><br/>
+<a href="#Struct_TCustomConfiguration">TCustomConfiguration</a><br/>
+<a href="#Struct_TExtractor">TExtractor</a><br/>
+<a href="#Struct_TExtractorConfiguration">TExtractorConfiguration</a><br/>
+<a href="#Enum_TExtractorType">TExtractorType</a><br/>
+<a href="#Struct_TKafkaExtractorConfiguration">TKafkaExtractorConfiguration</a><br/>
+<a href="#Enum_TKafkaOffset">TKafkaOffset</a><br/>
+<a href="#Struct_TLoader">TLoader</a><br/>
+<a href="#Struct_TLoaderConfiguration">TLoaderConfiguration</a><br/>
+<a href="#Enum_TLoaderType">TLoaderType</a><br/>
+<a href="#Struct_TTransformer">TTransformer</a><br/>
+<a href="#Struct_TTransformerConfiguration">TTransformerConfiguration</a><br/>
+<a href="#Enum_TTransformerType">TTransformerType</a><br/>
+<a href="#Typedef_UID">UID</a><br/>
+</td>
+<td></code></td>
+</tr></table>
+<hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_TExtractorType">Enumeration: TExtractorType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>KAFKA</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>CUSTOM</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_TKafkaOffset">Enumeration: TKafkaOffset</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>SMALLEST</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>LARGEST</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>AUTO</code></td><td><code>2</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_TTransformerType">Enumeration: TTransformerType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>IDENTITY</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>CUSTOM</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_TLoaderType">Enumeration: TLoaderType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>CASSANDRA</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>CUSTOM</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<hr/><h2 id="Typedefs">Type declarations</h2>
+<div class="definition"><h3 id="Typedef_UID">Typedef: UID</h3>
+<p><strong>Base type:</strong>&nbsp;<code>string</code></p>
+</div>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_TKafkaExtractorConfiguration">Struct: TKafkaExtractorConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>host</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>port</td><td><code>i32</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>topic</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>4</td><td>offset</td><td><code><a href="#Enum_TKafkaOffset">TKafkaOffset</a></code></td><td></td><td>optional</td><td><code><code><a href="#Const_TKafkaOffset.AUTO">TKafkaOffset.AUTO</a></code></code></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TCustomConfiguration">Struct: TCustomConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>className</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>required</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TExtractorConfiguration">Union: TExtractorConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>kafka</td><td><code><a href="#Struct_TKafkaExtractorConfiguration">TKafkaExtractorConfiguration</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>custom</td><td><code><a href="#Struct_TCustomConfiguration">TCustomConfiguration</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TExtractor">Struct: TExtractor</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="#Enum_TExtractorType">TExtractorType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>configuration</td><td><code><a href="#Struct_TExtractorConfiguration">TExtractorConfiguration</a></code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TTransformerConfiguration">Union: TTransformerConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>custom</td><td><code><a href="#Struct_TCustomConfiguration">TCustomConfiguration</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TTransformer">Struct: TTransformer</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="#Enum_TTransformerType">TTransformerType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>configuration</td><td><code><a href="#Struct_TTransformerConfiguration">TTransformerConfiguration</a></code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TCassandraLoaderConfiguration">Struct: TCassandraLoaderConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>host</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>port</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>username</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>password</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TLoaderConfiguration">Union: TLoaderConfiguration</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>cassandra</td><td><code><a href="#Struct_TCassandraLoaderConfiguration">TCassandraLoaderConfiguration</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>custom</td><td><code><a href="#Struct_TCustomConfiguration">TCustomConfiguration</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TLoader">Struct: TLoader</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="#Enum_TLoaderType">TLoaderType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>configuration</td><td><code><a href="#Struct_TLoaderConfiguration">TLoaderConfiguration</a></code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div></div></body></html>

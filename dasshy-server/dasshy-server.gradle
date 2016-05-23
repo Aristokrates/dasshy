@@ -1,0 +1,32 @@
+dependencies {
+
+    compile(libs.spark_kafka) {
+        exclude group: 'org.apache.spark'
+    }
+
+    // jetty deps
+    compile(libs.jetty_server)
+    compile(libs.jetty_servlet) {
+        exclude group: 'org.eclipse.jetty'
+    }
+    compile(libs.jetty_security) {
+        exclude group: 'org.eclipse.jetty'
+    }
+    compile(libs.jetty_http) {
+        exclude group: 'org.eclipse.jetty'
+    }
+
+    // json jackson deps
+    compile(libs.jackson_core_asl)
+    compile(libs.jackson_mapper_asl)
+    compile(libs.jackson_xc)
+    compile(libs.jackson_jaxrs)
+
+
+    compile(libs.shiro_core)
+    compile(libs.shiro_web)
+
+    compile project(':dasshy-core')
+    compile project(':dasshy-model')
+    compile project(':dasshy-lib')
+}
