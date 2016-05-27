@@ -11,7 +11,7 @@ public class ZookeeperClientFactory implements IZookeeperClientFactory
 {
 
 	/** singleton instance */
-	private final static IZookeeperClientFactory	INSTANCE	=	new ZookeeperClientFactory();
+	private static final IZookeeperClientFactory	INSTANCE	=	new ZookeeperClientFactory();
 
 	/** map of ZookeeperClients by zookeeper cluster */
 	private final Map<String, IZookeeperClient>		zkClients 	=	new HashMap<>();

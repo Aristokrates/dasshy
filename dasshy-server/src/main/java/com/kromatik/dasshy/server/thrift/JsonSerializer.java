@@ -2,7 +2,6 @@ package com.kromatik.dasshy.server.thrift;
 
 import com.kromatik.dasshy.server.exception.SerializationException;
 import org.apache.thrift.TBase;
-import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TSimpleJSONProtocol;
 import org.apache.thrift.transport.TMemoryBuffer;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -12,7 +11,6 @@ import org.codehaus.jackson.map.SerializationConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 /**
  * JSON serializer for thrift entities
