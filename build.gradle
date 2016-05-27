@@ -107,7 +107,8 @@ project(":dasshy-model") {
             property "sonar.exclusions", "src/main/java/com/kromatik/dasshy/thrift/model/**"
             property "sonar.sourceEncoding", "UTF-8"
         }
-    }}
+    }
+}
 
 
 // custom tasks
