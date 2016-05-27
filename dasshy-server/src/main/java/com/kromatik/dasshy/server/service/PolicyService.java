@@ -70,7 +70,7 @@ public class PolicyService
 	 */
 	public boolean deletePolicy(final String policyId)
 	{
-		TPolicy policy = getPolicy(policyId);
+		TPolicy policy = policyDao.get(policyId);
 		if (policy == null)
 		{
 			return false;
