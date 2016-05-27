@@ -15,6 +15,14 @@ public class TUtils
 {
 
 	/**
+	 * Private constructor for Utility classes
+	 */
+	private TUtils()
+	{
+		// no-arg
+	}
+
+	/**
 	 * Serialize the thrift entity using Json protocol
 	 *
 	 * @param tEntity thrift entity
@@ -30,7 +38,7 @@ public class TUtils
 		memoryBuffer.flush();
 		try
 		{
-			return memoryBuffer.toString("UTF-8").getBytes();
+			return memoryBuffer.toString("UTF-8").getBytes("UTF-8");
 		}
 		catch (UnsupportedEncodingException e)
 		{

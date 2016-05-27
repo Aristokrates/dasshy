@@ -2,12 +2,9 @@ package com.kromatik.dasshy.server.component;
 
 import com.kromatik.dasshy.core.engine.IEngineComponent;
 import com.kromatik.dasshy.server.dao.PolicyDao;
-import com.kromatik.dasshy.server.policy.JobsOnPolicyListener;
-import com.kromatik.dasshy.server.policy.PolicyFactory;
 import com.kromatik.dasshy.server.policy.PolicyListener;
 import com.kromatik.dasshy.server.policy.PolicyPoller;
 import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
-import com.kromatik.dasshy.server.streaming.DasshyRuntime;
 
 /**
  * Streaming engine component

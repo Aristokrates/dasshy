@@ -107,7 +107,7 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 
 		// 3. manage jetty component
 		final PolicyService policyService = new PolicyService(policyDao, policyListener);
-		engineRuntime.manage(new JettyEngineComponent(configuration, dasshyRuntime, policyService));
+		engineRuntime.manage(new JettyEngineComponent(configuration, policyService));
 
 		// 4. manage policy streaming
 		engineRuntime.manage(new StreamingEngineComponent(policyListener, policyScheduler, policyDao));

@@ -26,7 +26,7 @@ public class JobUpdateListener implements JobListener
 	@Override
 	public void onProgressUpdate(final Job job, int progress)
 	{
-
+		// no action
 	}
 
 	@Override

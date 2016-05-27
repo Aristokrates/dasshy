@@ -1,6 +1,7 @@
 package com.kromatik.dasshy.server.component;
 
 import com.kromatik.dasshy.core.engine.IEngineComponent;
+import com.kromatik.dasshy.core.exception.EngineStartupException;
 import com.kromatik.dasshy.sdk.RuntimeContext;
 import com.kromatik.dasshy.server.config.DasshyConfiguration;
 import com.kromatik.dasshy.server.streaming.DasshyRuntime;
@@ -54,7 +55,7 @@ public class SparkEngineComponent implements IEngineComponent
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Spark engine is not starting", e);
+			throw new EngineStartupException("Spark engine is not starting", e);
 		}
 	}
 
@@ -76,7 +77,7 @@ public class SparkEngineComponent implements IEngineComponent
 			}
 			catch (final Exception e)
 			{
-				throw new RuntimeException("Spark engine did not stop properly", e);
+				throw new EngineStartupException("Spark engine did not stop properly", e);
 			}
 		}
 	}

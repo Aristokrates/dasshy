@@ -1,8 +1,9 @@
 package com.kromatik.dasshy.server.policy;
-;
+
 import com.kromatik.dasshy.sdk.Extractor;
 import com.kromatik.dasshy.sdk.Loader;
 import com.kromatik.dasshy.sdk.Transformer;
+import com.kromatik.dasshy.server.exception.StageInitException;
 import com.kromatik.dasshy.server.streaming.BatchClock;
 import com.kromatik.dasshy.server.streaming.CassandraLoader;
 import com.kromatik.dasshy.server.streaming.CustomConfiguration;
@@ -65,7 +66,7 @@ public class DefaultPolicyFactory implements PolicyFactory
 				final TKafkaExtractorConfiguration tKafkaExtractorConfig = configuration.getKafka();
 				if (tKafkaExtractorConfig == null)
 				{
-					throw new RuntimeException("Kafka extractor configuration is not present");
+					throw new StageInitException("Kafka extractor configuration is not present");
 				}
 
 				final KafkaExtractorConfiguration kafkaExtractorConfig = new KafkaExtractorConfiguration();
@@ -81,16 +82,17 @@ public class DefaultPolicyFactory implements PolicyFactory
 				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
 				if (tCustomConfiguration == null)
 				{
-					throw new RuntimeException("Custom extractor configuration is not present");
+					throw new StageInitException("Custom extractor configuration is not present");
 				}
 
 				final String className = tCustomConfiguration.getClassName();
 				final Map<String, String> values = tCustomConfiguration.getValue();
 
 				return new ExtractorHolder((Extractor)instanceOf(className), new CustomConfiguration(values));
-		}
 
-		return null;
+			default:
+				return null;
+		}
 	}
 
 	@Override
@@ -110,17 +112,17 @@ public class DefaultPolicyFactory implements PolicyFactory
 				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
 				if (tCustomConfiguration == null)
 				{
-					throw new RuntimeException("Custom transformer configuration is not present");
+					throw new StageInitException("Custom transformer configuration is not present");
 				}
 
 				final String className = tCustomConfiguration.getClassName();
 				final Map<String, String> values = tCustomConfiguration.getValue();
 
 				return new TransformerHolder((Transformer)instanceOf(className), new CustomConfiguration(values));
+
+			default:
+				return null;
 		}
-
-		return null;
-
 	}
 
 	@Override
@@ -136,7 +138,7 @@ public class DefaultPolicyFactory implements PolicyFactory
 				final TCassandraLoaderConfiguration tCassandraLoaderConfiguration = configuration.getCassandra();
 				if (tCassandraLoaderConfiguration == null)
 				{
-					throw new RuntimeException("Cassandra loader configuration is not present");
+					throw new StageInitException("Cassandra loader configuration is not present");
 				}
 
 				return new LoaderHolder(new CassandraLoader(), null);
@@ -146,16 +148,17 @@ public class DefaultPolicyFactory implements PolicyFactory
 				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
 				if (tCustomConfiguration == null)
 				{
-					throw new RuntimeException("Custom transformer configuration is not present");
+					throw new StageInitException("Custom transformer configuration is not present");
 				}
 
 				final String className = tCustomConfiguration.getClassName();
 				final Map<String, String> values = tCustomConfiguration.getValue();
 
 				return new LoaderHolder((Loader)instanceOf(className), new CustomConfiguration(values));
-		}
 
-		return null;
+			default:
+				return null;
+		}
 	}
 
 	/**

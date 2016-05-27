@@ -1,5 +1,3 @@
-import java.util.concurrent.TimeUnit
-
 description = 'Dasshy'
 
 ext {
@@ -55,6 +53,7 @@ ext {
     ]
 }
 
+// all projects configuration
 allprojects { project ->
     apply plugin: 'idea'
     apply plugin: 'eclipse'
@@ -70,6 +69,7 @@ allprojects { project ->
     }
 }
 
+// sub-projects configuration
 subprojects { subProject ->
     apply plugin: 'java'
 
@@ -79,7 +79,6 @@ subprojects { subProject ->
     group = 'com.kromatik.dasshy'
     version = dasshyTargetVersion
 
-
     dependencies {
 
         testCompile(libs.junit)
@@ -87,4 +86,38 @@ subprojects { subProject ->
 
     targetCompatibility = javaLanguageLevel
     sourceCompatibility = javaLanguageLevel
+}
+
+// build/ plugin configuration
+apply plugin: 'org.sonarqube'
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
+    }
+}
+
+project(":dasshy-model") {
+    sonarqube {
+        properties {
+            property "sonar.exclusions", "src/main/java/com/kromatik/dasshy/thrift/model/**"
+            property "sonar.sourceEncoding", "UTF-8"
+        }
+    }}
+
+
+// custom tasks
+task docs(type: Javadoc) {
+
+    options.encoding = 'utf-8'
+    options.docEncoding = 'utf-8'
+    options.charSet = 'utf-8'
+
+    source subprojects.collect {project -> project.sourceSets.main.allJava }
+    classpath = files(subprojects.collect {project -> [project.sourceSets.main.compileClasspath, project.sourceSets.main.output] })
+    destinationDir = new File(projectDir, 'docs')
 }

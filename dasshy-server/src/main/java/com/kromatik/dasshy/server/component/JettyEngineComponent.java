@@ -3,14 +3,15 @@ package com.kromatik.dasshy.server.component;
 import com.kromatik.dasshy.core.engine.IEngineComponent;
 import com.kromatik.dasshy.server.config.DasshyConfiguration;
 import com.kromatik.dasshy.server.config.JettyServerConfiguration;
+import com.kromatik.dasshy.server.exception.mapper.CommonExceptionMapper;
+import com.kromatik.dasshy.server.exception.mapper.EngineExceptionMapper;
+import com.kromatik.dasshy.server.exception.mapper.NotFoundExceptionMapper;
 import com.kromatik.dasshy.server.rest.DasshyRestApi;
 import com.kromatik.dasshy.server.rest.PolicyRestApi;
 import com.kromatik.dasshy.server.service.PolicyService;
-import com.kromatik.dasshy.server.streaming.DasshyRuntime;
 import com.kromatik.dasshy.server.thrift.SimpleJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftPayLoadProvider;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.eclipse.jetty.server.AbstractConnector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -20,7 +21,6 @@ import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.message.GZipEncoder;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.EncodingFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
@@ -46,9 +46,6 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 
 	// all objects used by methods #getClasses and #getSingletons needs to be static!!!
 
-	/** dasshy runtime */
-	private static DasshyRuntime			runtime;
-
 	/** policy service */
 	private static PolicyService			policyService;
 
@@ -65,17 +62,14 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	 * Default constructor, entry point of this component
 	 *
 	 * @param configuration engine configuration
-	 * @param dasshyRuntime	dasshy runtime
 	 * @param service policy service
 	 */
 	public JettyEngineComponent(
 					final DasshyConfiguration configuration,
-					final DasshyRuntime dasshyRuntime,
 					final PolicyService service)
 	{
 		jettyConfiguration = configuration.getJettyConfiguration();
-		runtime = dasshyRuntime;
-		policyService = service;
+		policyService = service;	//NOSONAR
 	}
 
 	@Override
@@ -97,7 +91,7 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 		}
 		catch (Exception e)
 		{
-			LOGGER.error("Error when running embedded jetty server");
+			LOGGER.error("Error when running embedded jetty server", e);
 			return;
 		}
 
@@ -170,7 +164,7 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 		}
 		catch (Exception e)
 		{
-			LOGGER.error("Error when stopping the embedded jetty server");
+			LOGGER.error("Error when stopping the embedded jetty server", e);
 		}
 	}
 
@@ -195,13 +189,20 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	{
 		Set<Object> singletons = new HashSet<>();
 
-		final DasshyRestApi root = new DasshyRestApi(runtime);
+		final DasshyRestApi root = new DasshyRestApi();
 		final PolicyRestApi policyRestApi = new PolicyRestApi(policyService);
 
 		// add more resources
 
 		singletons.add(root);
 		singletons.add(policyRestApi);
+
+
+		// add more mappers
+
+		singletons.add(new CommonExceptionMapper());
+		singletons.add(new EngineExceptionMapper());
+		singletons.add(new NotFoundExceptionMapper());
 
 		return singletons;
 	}

@@ -20,7 +20,7 @@ public interface EntitySerializer<T extends TBase>
 	 *
 	 * @throws Exception
 	 */
-	void write(final T t, final OutputStream outputStream) throws Exception;
+	void write(final T t, final OutputStream outputStream);
 
 	/**
 	 * Deserialize
@@ -32,5 +32,5 @@ public interface EntitySerializer<T extends TBase>
 	 *
 	 * @throws Exception
 	 */
-	T read(final Class<T> tClass, final InputStream inputStream) throws Exception;
+	T read(final Class<T> tClass, final InputStream inputStream);
 }

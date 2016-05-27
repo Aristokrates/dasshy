@@ -2,6 +2,8 @@ package com.kromatik.dasshy.server.component;
 
 import com.kromatik.dasshy.core.engine.IEngineComponent;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClientFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -10,6 +12,9 @@ import java.io.IOException;
  */
 public class ZookeeperEngineComponent implements IEngineComponent
 {
+
+	private static final Logger LOGGER	=	LoggerFactory.getLogger(ZookeeperEngineComponent.class);
+
 	/** factory for creating zookeeper client connections */
 	private final IZookeeperClientFactory		clientFactory;
 
@@ -44,7 +49,7 @@ public class ZookeeperEngineComponent implements IEngineComponent
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			LOGGER.warn("Exception during closing of the zookeeper clients", e);
 		}
 	}
 }

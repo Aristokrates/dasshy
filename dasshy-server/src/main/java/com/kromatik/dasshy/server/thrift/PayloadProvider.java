@@ -62,7 +62,7 @@ public abstract class PayloadProvider<T extends TBase> implements MessageBodyRea
 		}
 		catch (final Exception e)
 		{
-			if (e instanceof org.eclipse.jetty.io.EofException)
+			if (e instanceof org.eclipse.jetty.io.EofException) //NOSONAR
 			{
 				throw new IOException(e);
 			}

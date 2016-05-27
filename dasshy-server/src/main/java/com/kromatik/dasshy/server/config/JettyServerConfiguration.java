@@ -5,6 +5,8 @@ import com.kromatik.dasshy.core.config.impl.AbstractEngineConfiguration;
 import com.netflix.config.DynamicIntProperty;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +18,9 @@ import static com.kromatik.dasshy.server.config.DasshyProperties.*;
  */
 public class JettyServerConfiguration extends AbstractEngineConfiguration
 {
+
+	private static final Logger LOGGER	=	LoggerFactory.getLogger(JettyServerConfiguration.class);
+
 	/** server host */
 	private DynamicStringProperty		host;
 
@@ -42,13 +47,14 @@ public class JettyServerConfiguration extends AbstractEngineConfiguration
 	public void loadConfiguration(final DynamicPropertyFactory dynamicPropertyFactory)
 	{
 
-		String localHost = null;
+		String localHost;
 		try
 		{
 			localHost = InetAddress.getLocalHost().getHostName();
 		}
 		catch (UnknownHostException e)
 		{
+			LOGGER.info("Unknown local host address", e);
 			localHost = SERVER_ADDRESS.getDefaultValue();
 		}
 

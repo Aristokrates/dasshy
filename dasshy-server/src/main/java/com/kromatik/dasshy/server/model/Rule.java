@@ -11,10 +11,22 @@ import com.kromatik.dasshy.sdk.RuntimeContext;
 public class Rule implements Action
 {
 	/** condition */
-	private Condition condition;
+	private final Condition		condition;
 
 	/** action */
-	private Action action;
+	private final Action		action;
+
+	/**
+	 * Default constructor
+	 *
+	 * @param condition	condition
+	 * @param action	action
+	 */
+	public Rule(final Condition condition, final Action action)
+	{
+		this.condition = condition;
+		this.action = action;
+	}
 
 	@Override
 	public void fire(final RuntimeContext runtimeContext)

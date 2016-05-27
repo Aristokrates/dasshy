@@ -59,7 +59,7 @@ public abstract class Job
 			jobResult = run();
 			endTime = System.currentTimeMillis();
 		}
-		catch (Throwable throwable)
+		catch (Exception throwable)
 		{
 			this.exception = throwable;
 			jobResult = throwable.getMessage();
@@ -80,21 +80,6 @@ public abstract class Job
 		aborted = abort();
 	}
 
-	/**
-	 * Pause the job
-	 */
-	public void pause()
-	{
-		throw new RuntimeException("Not all jobs support pausing");
-	}
-
-	/**
-	 * Resume the job
-	 */
-	public void resume()
-	{
-		throw new RuntimeException("Not all jobs support resuming");
-	}
 
 	/**
 	 * Run the job and get a result of it execution

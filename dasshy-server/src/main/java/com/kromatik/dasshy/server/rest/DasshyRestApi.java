@@ -1,6 +1,5 @@
 package com.kromatik.dasshy.server.rest;
 
-import com.kromatik.dasshy.server.streaming.DasshyRuntime;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,17 +11,13 @@ import javax.ws.rs.core.Response;
 @Path("/")
 public class DasshyRestApi extends AbstractRestApi
 {
-	/** dasshy runtime */
-	private final DasshyRuntime		runtime;
 
 	/**
 	 * Default constructor. Used for injecting dependencies
-	 *
-	 * @param dasshyRuntime dasshy server runtime
 	 */
-	public DasshyRestApi(final DasshyRuntime dasshyRuntime)
+	public DasshyRestApi()
 	{
-		runtime = dasshyRuntime;
+		// no-arg
 	}
 
 	@GET

@@ -1,5 +1,6 @@
 package com.kromatik.dasshy.server.thrift;
 
+import com.kromatik.dasshy.server.exception.SerializationException;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TSimpleJSONProtocol;
@@ -8,6 +9,7 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -33,38 +35,42 @@ public class JsonSerializer<T extends TBase> implements EntitySerializer<T>
 	}
 
 	@Override
-	public void write(final T t, final OutputStream outputStream) throws Exception
+	public void write(final T t, final OutputStream outputStream)
 	{
 		byte[] bytesEntity;
+		TMemoryBuffer memoryBuffer = null;
 		try
 		{
-			final TMemoryBuffer memoryBuffer = new TMemoryBuffer(1);
+			memoryBuffer = new TMemoryBuffer(1);
 			t.write(new TSimpleJSONProtocol(memoryBuffer));
 			memoryBuffer.flush();
-			try
-			{
-				bytesEntity = memoryBuffer.toString("UTF-8").getBytes();
-			}
-			catch (final UnsupportedEncodingException e)
-			{
-				throw new TException(e);
-			}
-			finally
+
+			bytesEntity = memoryBuffer.toString("UTF-8").getBytes("UTF-8");
+
+			outputStream.write(bytesEntity);
+
+		}
+		catch (IOException e)
+		{
+			throw new SerializationException("Cannot write base entity", e);
+		}
+		catch (final Exception e)
+		{
+			throw new SerializationException(
+							"Failed to serialise Thrift entity to Simple JSON format. Thrift entity toString(): '" + ((t
+											== null) ? "null" : t.toString()) + "'", e);
+		}
+		finally
+		{
+			if (memoryBuffer != null)
 			{
 				memoryBuffer.close();
 			}
 		}
-		catch (final Exception e)
-		{
-			throw new Exception(
-							"Failed to serialise Thrift entity to Simple JSON format. Thrift entity toString(): '" + ((t
-											== null) ? "null" : t.toString()) + "'", e);
-		}
-		outputStream.write(bytesEntity);
 	}
 
 	@Override
-	public T read(final Class<T> tClass, final InputStream inputStream) throws Exception
+	public T read(final Class<T> tClass, final InputStream inputStream)
 	{
 		try
 		{
@@ -72,7 +78,7 @@ public class JsonSerializer<T extends TBase> implements EntitySerializer<T>
 		}
 		catch (final Exception e)
 		{
-			throw new Exception("Failed to deserialize Simple JSON format to Thrift entity. Thrift type: " + tClass
+			throw new SerializationException("Failed to deserialize Simple JSON format to Thrift entity. Thrift type: " + tClass
 							.getName(), e);
 		}
 	}

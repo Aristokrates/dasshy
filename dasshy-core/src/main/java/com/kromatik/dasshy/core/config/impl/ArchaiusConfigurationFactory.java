@@ -2,6 +2,7 @@ package com.kromatik.dasshy.core.config.impl;
 
 import com.kromatik.dasshy.core.config.IConfigurationFactory;
 import com.kromatik.dasshy.core.config.IEngineConfiguration;
+import com.kromatik.dasshy.core.exception.EngineConfigurationException;
 import com.netflix.config.ConcurrentCompositeConfiguration;
 import com.netflix.config.ConcurrentMapConfiguration;
 import com.netflix.config.ConfigurationManager;
@@ -42,7 +43,7 @@ public class ArchaiusConfigurationFactory<T extends IEngineConfiguration> implem
         }
         catch (final IllegalStateException exception)
         {
-            throw new RuntimeException("Configuration installation has failed", exception);
+            throw new EngineConfigurationException("Configuration installation has failed", exception);
         }
 
         // load the configuration
@@ -67,7 +68,7 @@ public class ArchaiusConfigurationFactory<T extends IEngineConfiguration> implem
         }
         catch (InstantiationException | IllegalAccessException e)
         {
-            throw new RuntimeException("Error instantiating configuration class: " + klass, e);
+            throw new EngineConfigurationException("Error instantiating configuration class: " + klass, e);
         }
 
         return configuration;

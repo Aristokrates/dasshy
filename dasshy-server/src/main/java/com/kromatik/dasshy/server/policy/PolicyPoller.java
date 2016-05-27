@@ -15,7 +15,7 @@ public class PolicyPoller extends Thread
 	private long								pollingInterval;
 
 	/** flag indicating if the thread is terminated */
-	private boolean								terminate 					=	 false;
+	private boolean								terminate					=	false;
 
 	/** policy listener */
 	private final PolicyListener				policyListener;
@@ -36,6 +36,24 @@ public class PolicyPoller extends Thread
 	{
 		this.policyListener = policyListener;
 		this.policyDao = dao;
+	}
+
+	/**
+	 * Constructor with pooling interval
+	 *
+	 * @param policyListener policy listener
+	 * @param dao dao
+	 * @param pollingInterval an interval
+	 */
+	public PolicyPoller(
+					final PolicyListener policyListener,
+					final PolicyDao dao,
+					Long pollingInterval
+	)
+	{
+		this.policyListener = policyListener;
+		this.policyDao = dao;
+		this.pollingInterval = pollingInterval;
 	}
 
 	@Override
@@ -64,7 +82,7 @@ public class PolicyPoller extends Thread
 			}
 			catch (InterruptedException e)
 			{
-
+				continue;
 			}
 		}
 	}

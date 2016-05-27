@@ -1,5 +1,6 @@
 package com.kromatik.dasshy.server.zookeeper;
 
+import com.kromatik.dasshy.server.exception.ZookeeperClientException;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.state.ConnectionState;
@@ -22,7 +23,7 @@ public class ZookeeperClient implements IZookeeperClient
 	private final IZookeeperClientProperties			zookeeperClientProperties;
 
 	/** tracks the state of the underlying zookeeper connection */
-	private boolean								closed		=	true;
+	private boolean										closed		=	true;
 
 	/**
 	 * Creates zookeeper client for the given properties
@@ -36,10 +37,10 @@ public class ZookeeperClient implements IZookeeperClient
 		try
 		{
 
-			curatorFramework = CuratorFrameworkFactory.builder().connectString(properties.getConnectionString())
-							.connectionTimeoutMs(properties.getConnectionSessionTimeout())
-							.sessionTimeoutMs(properties.getConnectionSessionTimeout())
-							.retryPolicy(properties.getRetryPolicy()).build();
+			curatorFramework = CuratorFrameworkFactory.builder().connectString(zookeeperClientProperties.getConnectionString())
+							.connectionTimeoutMs(zookeeperClientProperties.getConnectionSessionTimeout())
+							.sessionTimeoutMs(zookeeperClientProperties.getConnectionSessionTimeout())
+							.retryPolicy(zookeeperClientProperties.getRetryPolicy()).build();
 
 			curatorFramework.getConnectionStateListenable().addListener(new ZookeeperConnectionStateListener());
 
@@ -58,7 +59,7 @@ public class ZookeeperClient implements IZookeeperClient
 		catch (final Exception e)
 		{
 			close();
-			throw new RuntimeException(e);
+			throw new ZookeeperClientException("Zookeeper connection has failed", e);
 		}
 	}
 

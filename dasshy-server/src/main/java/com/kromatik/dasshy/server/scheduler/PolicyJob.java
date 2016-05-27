@@ -107,7 +107,7 @@ public class PolicyJob extends Job
 
 			}
 		}
-		catch (Throwable e)
+		catch (Exception e)
 		{
 			fireEvent(new PolicyBatchCancelled(
 							UUID.randomUUID().toString(),

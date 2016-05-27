@@ -35,6 +35,20 @@ enum TJobState {
 	    ABORT
 }
 
+struct TErrorDetail {
+    1:  string               message
+    2:  optional i32         code
+    3:  optional string      codeExtended
+}
+
+struct TError {
+    1:  string                          message
+    2:  optional i32                    code
+    3:  optional string                 codeExtended
+    4:  optional list<TErrorDetail>     errorDetails
+    5:  optional string                 debug
+}
+
 struct TCustomConfiguration {
     1:  required string                         className,
     2:  required map<string,string>             value

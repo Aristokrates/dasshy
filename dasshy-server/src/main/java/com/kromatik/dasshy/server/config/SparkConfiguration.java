@@ -83,7 +83,7 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	 */
 	public long getBatchDuration()
 	{
-		final DynamicStringProperty batchDuration = getSparkProperties().get(DasshyProperties.SPARK_BATCH_DURATION);
+		final DynamicStringProperty batchDuration = getSparkProperties().get(DasshyProperties.SPARK_BATCH_DURATION.getPropertyName());
 		return batchDuration != null ?
 						Long.valueOf(batchDuration.get()) :
 						Long.valueOf(DasshyProperties.SPARK_BATCH_DURATION.getDefaultValue());

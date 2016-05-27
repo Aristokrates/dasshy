@@ -1,6 +1,7 @@
 package com.kromatik.dasshy.server.service;
 
 import com.kromatik.dasshy.server.dao.PolicyDao;
+import com.kromatik.dasshy.server.exception.PolicyNotFoundException;
 import com.kromatik.dasshy.server.policy.PolicyListener;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TPolicyList;
@@ -85,11 +86,18 @@ public class PolicyService
 	 *
 	 * @param policyId policy Id
 	 *
-	 * @return policy; NULL if no policy for the given Id exists
+	 * @return policy
 	 */
 	public TPolicy getPolicy(final String policyId)
 	{
-		return policyDao.get(policyId);
+		final TPolicy policy = policyDao.get(policyId);
+
+		if (policy == null)
+		{
+			throw new PolicyNotFoundException("Policy with id: " + policyId + " not found");
+		}
+
+		return policy;
 	}
 
 	/**

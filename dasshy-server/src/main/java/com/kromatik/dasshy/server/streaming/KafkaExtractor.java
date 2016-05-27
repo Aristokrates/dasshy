@@ -3,6 +3,7 @@ package com.kromatik.dasshy.server.streaming;
 import com.kromatik.dasshy.sdk.AbstractExtractor;
 import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.RuntimeContext;
+import com.kromatik.dasshy.server.exception.StageInitException;
 import kafka.common.TopicAndPartition;
 import kafka.message.MessageAndMetadata;
 import kafka.serializer.DefaultDecoder;
@@ -50,7 +51,7 @@ public class KafkaExtractor extends AbstractExtractor
 		}
 		else
 		{
-			throw new RuntimeException("The configuration is not related to kafka extractor");
+			throw new StageInitException("The configuration is not related to kafka extractor");
 		}
 	}
 
@@ -127,6 +128,9 @@ public class KafkaExtractor extends AbstractExtractor
 
 			case 2:
 				// largest
+				break;
+
+			default:
 				break;
 		}
 

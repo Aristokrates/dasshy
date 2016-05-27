@@ -1,5 +1,9 @@
 package com.kromatik.dasshy.server.dao;
 
+import com.kromatik.dasshy.server.exception.InvalidPolicyException;
+import com.kromatik.dasshy.server.exception.PolicyExistsException;
+import com.kromatik.dasshy.server.exception.PolicyNotFoundException;
+import com.kromatik.dasshy.server.exception.ZookeeperException;
 import com.kromatik.dasshy.server.thrift.TUtils;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClient;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClientFactory;
@@ -39,7 +43,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 	{
 		if (exists(policy.getId()))
 		{
-			throw new RuntimeException("Policy with the same Id already exists");
+			throw new PolicyExistsException("Policy with the same Id already exists");
 		}
 
 		try
@@ -59,11 +63,11 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 		}
 		catch (final JsonProcessingException e)
 		{
-			throw new RuntimeException("Invalid model", e);
+			throw new InvalidPolicyException("Invalid model", e);
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Zookeeper operation has failed", e);
+			throw new ZookeeperException("Zookeeper operation has failed", e);
 		}
 
 	}
@@ -75,7 +79,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 
 		if (existing == null)
 		{
-			throw new RuntimeException("Policy not found for update");
+			throw new PolicyNotFoundException("Policy not found for update");
 		}
 
 		try
@@ -95,11 +99,11 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 		}
 		catch (final JsonProcessingException e)
 		{
-			throw new RuntimeException("Invalid model", e);
+			throw new InvalidPolicyException("Invalid model", e);
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Zookeeper operation has failed", e);
+			throw new ZookeeperException("Zookeeper operation has failed", e);
 		}
 	}
 
@@ -111,13 +115,14 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			final IZookeeperClient zkClient = super.getClient();
 			zkClient.getCuratorFramework().delete().forPath(getPolicyPath(policy.getId()));
 		}
-		catch (final KeeperException.NoNodeException noNodeEx)
+		catch (final KeeperException.NoNodeException noNodeEx) //NOSONAR
 		{
 			// ignore it
+			return;
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Operation has failed", e);
+			throw new ZookeeperException("Operation has failed", e);
 		}
 	}
 
@@ -131,13 +136,13 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			// read from ZK
 			zkObject = zkClient.getCuratorFramework().getData().forPath(getPolicyPath(id));
 		}
-		catch (final KeeperException.NoNodeException noNodeEx)
+		catch (final KeeperException.NoNodeException noNodeEx)	//NOSONAR
 		{
 			return null;
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Operation has failed", e);
+			throw new ZookeeperException("Operation has failed", e);
 		}
 
 		// convert to policy
@@ -149,7 +154,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Operation has failed", e);
+			throw new ZookeeperException("Operation has failed", e);
 		}
 	}
 
@@ -165,7 +170,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Operation has failed", e);
+			throw new ZookeeperException("Operation has failed", e);
 		}
 	}
 
@@ -179,7 +184,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 
 			final Stat policyPath = zkClient.getCuratorFramework().checkExists().forPath(POLICY_PATH);
 
-			/** Check the path is exist */
+			/** Check if the path exists */
 			if (policyPath != null)
 			{
 				final List<String> policyIds = zkClient.getCuratorFramework()
@@ -192,7 +197,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 		}
 		catch (final Exception e)
 		{
-			throw new RuntimeException("Operation has failed", e);
+			throw new ZookeeperException("Operation has failed", e);
 		}
 
 		return policies;
