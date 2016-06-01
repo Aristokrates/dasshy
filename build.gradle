@@ -84,6 +84,12 @@ subprojects { subProject ->
         testCompile(libs.junit)
     }
 
+    javadoc {
+
+        failOnError = true
+
+    }
+
     targetCompatibility = javaLanguageLevel
     sourceCompatibility = javaLanguageLevel
 }

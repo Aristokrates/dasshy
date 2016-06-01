@@ -12,7 +12,7 @@ import org.apache.spark.sql.Row;
 public class CassandraLoader extends AbstractLoader
 {
 	@Override
-	public void load(RuntimeContext context, StageConfiguration configuration, Dataset<Row> input)
+	public void load(RuntimeContext context, Dataset<Row> input)
 	{
 	// load the data into cassandra tables
 

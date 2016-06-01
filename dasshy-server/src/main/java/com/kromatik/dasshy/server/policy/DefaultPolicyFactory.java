@@ -1,29 +1,17 @@
 package com.kromatik.dasshy.server.policy;
 
+import com.kromatik.dasshy.sdk.AttributeUtils;
 import com.kromatik.dasshy.sdk.Extractor;
 import com.kromatik.dasshy.sdk.Loader;
+import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.Transformer;
-import com.kromatik.dasshy.server.exception.StageInitException;
+import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.streaming.BatchClock;
-import com.kromatik.dasshy.server.streaming.CassandraLoader;
-import com.kromatik.dasshy.server.streaming.CustomConfiguration;
 import com.kromatik.dasshy.server.streaming.DefaultBatchClock;
-import com.kromatik.dasshy.server.streaming.IdentityTransformer;
-import com.kromatik.dasshy.server.streaming.KafkaExtractor;
-import com.kromatik.dasshy.server.streaming.KafkaExtractorConfiguration;
-import com.kromatik.dasshy.thrift.model.TCassandraLoaderConfiguration;
-import com.kromatik.dasshy.thrift.model.TCustomConfiguration;
-import com.kromatik.dasshy.thrift.model.TExtractor;
-import com.kromatik.dasshy.thrift.model.TExtractorConfiguration;
-import com.kromatik.dasshy.thrift.model.TExtractorType;
-import com.kromatik.dasshy.thrift.model.TKafkaExtractorConfiguration;
-import com.kromatik.dasshy.thrift.model.TLoader;
-import com.kromatik.dasshy.thrift.model.TLoaderConfiguration;
-import com.kromatik.dasshy.thrift.model.TLoaderType;
 import com.kromatik.dasshy.thrift.model.TPolicy;
-import com.kromatik.dasshy.thrift.model.TTransformer;
-import com.kromatik.dasshy.thrift.model.TTransformerConfiguration;
-import com.kromatik.dasshy.thrift.model.TTransformerType;
+import com.kromatik.dasshy.thrift.model.TStage;
+import com.kromatik.dasshy.thrift.model.TStagePlugin;
+import com.kromatik.dasshy.thrift.model.TStageType;
 
 import java.util.Map;
 
@@ -32,6 +20,18 @@ import java.util.Map;
  */
 public class DefaultPolicyFactory implements PolicyFactory
 {
+	/** stage plugin service */
+	private final StagePluginService		stagePluginService;
+
+	/**
+	 * Default constructor
+	 *
+	 * @param service plugin service
+	 */
+	public DefaultPolicyFactory(final StagePluginService service)
+	{
+		this.stagePluginService = service;
+	}
 
 	@Override
 	public Policy buildPolicy(final TPolicy policyModel)
@@ -54,111 +54,66 @@ public class DefaultPolicyFactory implements PolicyFactory
 	}
 
 	@Override
-	public ExtractorHolder buildExtractor(final TExtractor extractorModel)
+	public ExtractorHolder buildExtractor(final TStage extractorModel)
 	{
-		final TExtractorType type = extractorModel.getType();
-		final TExtractorConfiguration configuration = extractorModel.getConfiguration();
+		final String extractorId = extractorModel.getIdentifier();
+		final Map<String, String> extractorConfig = extractorModel.getConfiguration();
 
-		switch (type)
-		{
-			case KAFKA:
+		// get the plugin from the plugin registry
+		final TStagePlugin extractorPlugin = getPlugin(TStageType.EXTRACTOR, extractorId);
+		final Extractor extractor = instanceOf(extractorPlugin.getClasspath());
 
-				final TKafkaExtractorConfiguration tKafkaExtractorConfig = configuration.getKafka();
-				if (tKafkaExtractorConfig == null)
-				{
-					throw new StageInitException("Kafka extractor configuration is not present");
-				}
+		// validate the configuration against the attribute definitions of the extractor
+		AttributeUtils.validateConfiguration(extractor, extractorConfig);
 
-				final KafkaExtractorConfiguration kafkaExtractorConfig = new KafkaExtractorConfiguration();
-				kafkaExtractorConfig.setHost(tKafkaExtractorConfig.getHost());
-				kafkaExtractorConfig.setPort(tKafkaExtractorConfig.getPort());
-				kafkaExtractorConfig.setTopic(tKafkaExtractorConfig.getTopic());
-				kafkaExtractorConfig.setOffset(tKafkaExtractorConfig.getOffset().getValue());
+		return new ExtractorHolder(extractor, new StageConfiguration(extractorConfig));
+	}
 
-				return new ExtractorHolder(new KafkaExtractor(), kafkaExtractorConfig);
 
-			case CUSTOM:
+	@Override
+	public TransformerHolder buildTransformer(final TStage transformerModel)
+	{
+		final String transformerId = transformerModel.getIdentifier();
+		final Map<String, String> transformerConfig = transformerModel.getConfiguration();
 
-				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
-				if (tCustomConfiguration == null)
-				{
-					throw new StageInitException("Custom extractor configuration is not present");
-				}
+		// get the plugin from the plugin registry
+		final TStagePlugin transformerPlugin = getPlugin(TStageType.TRANSFORMER, transformerId);
+		final Transformer transformer = instanceOf(transformerPlugin.getClasspath());
 
-				final String className = tCustomConfiguration.getClassName();
-				final Map<String, String> values = tCustomConfiguration.getValue();
+		// validate the configuration against the attribute definitions of the transformer
+		AttributeUtils.validateConfiguration(transformer, transformerConfig);
 
-				return new ExtractorHolder((Extractor)instanceOf(className), new CustomConfiguration(values));
-
-			default:
-				return null;
-		}
+		return new TransformerHolder(transformer, new StageConfiguration(transformerConfig));
 	}
 
 	@Override
-	public TransformerHolder buildTransformer(final TTransformer transformerModel)
+	public LoaderHolder buildLoader(final TStage loaderModel)
 	{
-		final TTransformerType type = transformerModel.getType();
-		final TTransformerConfiguration configuration = transformerModel.getConfiguration();
+		final String loaderId = loaderModel.getIdentifier();
+		final Map<String, String> loaderConfig = loaderModel.getConfiguration();
 
-		switch (type)
-		{
-			case IDENTITY:
+		// get the plugin from the plugin registry
+		final TStagePlugin loaderPlugin = getPlugin(TStageType.LOADER, loaderId);
+		final Loader loader = instanceOf(loaderPlugin.getClasspath());
 
-				return new TransformerHolder(new IdentityTransformer(), null);
+		// validate the configuration against the attribute definitions of the transformer
+		AttributeUtils.validateConfiguration(loader, loaderConfig);
 
-			case CUSTOM:
-
-				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
-				if (tCustomConfiguration == null)
-				{
-					throw new StageInitException("Custom transformer configuration is not present");
-				}
-
-				final String className = tCustomConfiguration.getClassName();
-				final Map<String, String> values = tCustomConfiguration.getValue();
-
-				return new TransformerHolder((Transformer)instanceOf(className), new CustomConfiguration(values));
-
-			default:
-				return null;
-		}
+		return new LoaderHolder(loader, new StageConfiguration(loaderConfig));
 	}
 
-	@Override
-	public LoaderHolder buildLoader(final TLoader loaderModel)
+	/**
+	 * Get plugin by type and id
+	 *
+	 * @param type stage type
+	 * @param identifier stage identifier
+	 *
+	 * @return a stage plugin
+	 */
+	private TStagePlugin getPlugin(final TStageType type, final String identifier)
 	{
-		final TLoaderType type = loaderModel.getType();
-		final TLoaderConfiguration configuration = loaderModel.getConfiguration();
-
-		switch (type)
-		{
-			case CASSANDRA:
-
-				final TCassandraLoaderConfiguration tCassandraLoaderConfiguration = configuration.getCassandra();
-				if (tCassandraLoaderConfiguration == null)
-				{
-					throw new StageInitException("Cassandra loader configuration is not present");
-				}
-
-				return new LoaderHolder(new CassandraLoader(), null);
-
-			case CUSTOM:
-
-				TCustomConfiguration tCustomConfiguration = configuration.getCustom();
-				if (tCustomConfiguration == null)
-				{
-					throw new StageInitException("Custom transformer configuration is not present");
-				}
-
-				final String className = tCustomConfiguration.getClassName();
-				final Map<String, String> values = tCustomConfiguration.getValue();
-
-				return new LoaderHolder((Loader)instanceOf(className), new CustomConfiguration(values));
-
-			default:
-				return null;
-		}
+		// we need to get the plugin from the plugin service
+		return stagePluginService.getStagePluginByTypeAndId(type, identifier);
 	}
 
 	/**

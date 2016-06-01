@@ -1,9 +1,8 @@
 package com.kromatik.dasshy.server.streaming;
 
 import com.kromatik.dasshy.sdk.AbstractExtractor;
-import com.kromatik.dasshy.sdk.StageConfiguration;
+import com.kromatik.dasshy.sdk.StageAttribute;
 import com.kromatik.dasshy.sdk.RuntimeContext;
-import com.kromatik.dasshy.server.exception.StageInitException;
 import kafka.common.TopicAndPartition;
 import kafka.message.MessageAndMetadata;
 import kafka.serializer.DefaultDecoder;
@@ -27,32 +26,41 @@ import java.util.Map;
 public class KafkaExtractor extends AbstractExtractor
 {
 
+	public static final String			HOST 		=	"host";
+	public static final String			PORT 		=	"port";
+	public static final String			TOPIC 		=	"topic";
+	public static final String			OFFSET 		=	"offset";
+
 	/** input stream */
 	private JavaInputDStream<byte[]>	dStream;
+
+	/**
+	 * Default constructor
+	 */
+	public KafkaExtractor()
+	{
+		// set the attribute definitions for this extractor
+		setAttributeDefinitions(
+						new StageAttribute(HOST, StageAttribute.Type.STRING, true),
+						new StageAttribute(PORT, StageAttribute.Type.INTEGER, true),
+						new StageAttribute(TOPIC, StageAttribute.Type.STRING, true),
+						new StageAttribute(OFFSET, StageAttribute.Type.STRING, false)
+		);
+	}
 
 	@Override
 	public Dataset<Row> next(
 					final RuntimeContext context,
-					final StageConfiguration configuration,
 					final Time time
 	)
 	{
 
-		if (configuration instanceof KafkaExtractorConfiguration)
+		if (dStream == null)
 		{
-			final KafkaExtractorConfiguration kafkaConfig = (KafkaExtractorConfiguration) configuration;
-
-			if (dStream == null)
-			{
-				dStream = extract(context, kafkaConfig);
-			}
-			final JavaRDD<byte[]> rdd = dStream.compute(time);
-			return context.getSparkSession().createDataset(rdd.rdd(), (Encoder)Encoders.BINARY());
+			dStream = extract(context);
 		}
-		else
-		{
-			throw new StageInitException("The configuration is not related to kafka extractor");
-		}
+		final JavaRDD<byte[]> rdd = dStream.compute(time);
+		return context.getSparkSession().createDataset(rdd.rdd(), (Encoder)Encoders.BINARY());
 	}
 
 
@@ -72,15 +80,12 @@ public class KafkaExtractor extends AbstractExtractor
 	 * Extract the data as an input stream of bytes
 	 *
 	 * @param context runtime context
-	 * @param kafkaConfig kafka extractor configuration
 	 * @return input DStream
 	 */
-	private JavaInputDStream<byte[]> extract(
-					final RuntimeContext context,
-					final KafkaExtractorConfiguration kafkaConfig)
+	private JavaInputDStream<byte[]> extract(final RuntimeContext context)
 	{
-		final Map<String, String> kafkaMap = buildKafkaMap(kafkaConfig);
-		Map<TopicAndPartition, Long> initialOffsets  = getInitialOffsets(kafkaConfig);
+		final Map<String, String> kafkaMap = buildKafkaMap();
+		Map<TopicAndPartition, Long> initialOffsets  = getInitialOffsets();
 
 		return KafkaUtils.createDirectStream(context.getJavaStreamingContext(), String.class, byte[].class,
 						StringDecoder.class, DefaultDecoder.class, byte[].class, kafkaMap,
@@ -91,13 +96,12 @@ public class KafkaExtractor extends AbstractExtractor
 	/**
 	 * Build the kafka parameter map
 	 *
-	 * @param kafkaConfig kafka extractor configuration
 	 * @return Kafka parameter map
 	 */
-	private Map<String, String> buildKafkaMap(final KafkaExtractorConfiguration kafkaConfig)
+	private Map<String, String> buildKafkaMap()
 	{
 		final Map<String, String> kafkaMap = new HashMap<>();
-		final String broker = kafkaConfig.getHost() + ":" + kafkaConfig.getPort();
+		final String broker = getAttribute(HOST, "localhost") + ":" + getAttribute(PORT, 9092);
 
 		kafkaMap.put("bootstrap.servers", broker);
 
@@ -111,29 +115,11 @@ public class KafkaExtractor extends AbstractExtractor
 	/**
 	 * Get offsets. Initial implementation manages the offsets in Zookeeper
 	 *
-	 * @param kafkaConfig kafka extractor configuration
 	 * @return offset info
 	 */
-	protected Map<TopicAndPartition, Long> getInitialOffsets(final KafkaExtractorConfiguration kafkaConfig)
+	protected Map<TopicAndPartition, Long> getInitialOffsets()
 	{
-		switch (kafkaConfig.getOffset())
-		{
-			case 0:
-				// auto
-				break;
-
-			case 1:
-				// smallest
-				break;
-
-			case 2:
-				// largest
-				break;
-
-			default:
-				break;
-		}
-
+		// TODO (pai)
 		return new HashMap<>();
 	}
 

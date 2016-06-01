@@ -15,12 +15,11 @@ public interface Extractor extends IStage
 	 * Calculates the next data set
 	 *
 	 * @param context runtime context
-	 * @param configuration configuration
 	 * @param time time
 	 *
 	 * @return the next, extracted data frame
 	 */
-	Dataset<Row> next(final RuntimeContext context, final StageConfiguration configuration, final Time time);
+	Dataset<Row> next(final RuntimeContext context, final Time time);
 
 	/**
 	 * Commits the extracted data

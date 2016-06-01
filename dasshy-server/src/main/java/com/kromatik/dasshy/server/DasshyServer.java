@@ -14,7 +14,9 @@ import com.kromatik.dasshy.server.component.StreamingEngineComponent;
 import com.kromatik.dasshy.server.component.ZookeeperEngineComponent;
 import com.kromatik.dasshy.server.config.DasshyConfiguration;
 import com.kromatik.dasshy.server.dao.PolicyDao;
+import com.kromatik.dasshy.server.dao.StagePluginDao;
 import com.kromatik.dasshy.server.dao.ZookeeperPolicyDao;
+import com.kromatik.dasshy.server.dao.ZookeeperStagePluginDao;
 import com.kromatik.dasshy.server.policy.DefaultPolicyFactory;
 import com.kromatik.dasshy.server.policy.JobsOnPolicyListener;
 import com.kromatik.dasshy.server.policy.PolicyFactory;
@@ -23,6 +25,7 @@ import com.kromatik.dasshy.server.scheduler.ConcurrentPolicyScheduler;
 import com.kromatik.dasshy.server.scheduler.JobUpdateListener;
 import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
 import com.kromatik.dasshy.server.service.PolicyService;
+import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.streaming.DasshyRuntime;
 import com.kromatik.dasshy.server.streaming.DasshyRuntimeFactory;
 import com.kromatik.dasshy.server.zookeeper.ZookeeperClientFactory;
@@ -93,12 +96,19 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 		// 2. manage spark engine component
 		engineRuntime.manage(new SparkEngineComponent(configuration, dasshyRuntime));
 
+		// init daos and services
 		final PolicyDao policyDao = new ZookeeperPolicyDao(
 						ZookeeperClientFactory.getInstance(),
 						configuration.getZookeeperClientConfiguration());
 
+		final StagePluginDao stagePluginDao = new ZookeeperStagePluginDao(
+						ZookeeperClientFactory.getInstance(),
+						configuration.getZookeeperClientConfiguration());
+
+		final StagePluginService stagePluginService = new StagePluginService(stagePluginDao);
+		final PolicyFactory policyFactory = new DefaultPolicyFactory(stagePluginService);
+
 		final PolicyScheduler policyScheduler = new ConcurrentPolicyScheduler(Executors.newScheduledThreadPool(10));
-		final PolicyFactory policyFactory = new DefaultPolicyFactory();
 		final PolicyListener policyListener = new JobsOnPolicyListener(
 						dasshyRuntime.getRuntimeContext(),
 						policyFactory,
@@ -106,8 +116,8 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 						new JobUpdateListener(policyDao));
 
 		// 3. manage jetty component
-		final PolicyService policyService = new PolicyService(policyDao, policyListener);
-		engineRuntime.manage(new JettyEngineComponent(configuration, policyService));
+		final PolicyService policyService = new PolicyService(policyDao, policyListener, policyFactory);
+		engineRuntime.manage(new JettyEngineComponent(configuration, policyService, stagePluginService));
 
 		// 4. manage policy streaming
 		engineRuntime.manage(new StreamingEngineComponent(policyListener, policyScheduler, policyDao));

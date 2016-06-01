@@ -48,7 +48,7 @@ public class PolicyPoller extends Thread
 	public PolicyPoller(
 					final PolicyListener policyListener,
 					final PolicyDao dao,
-					Long pollingInterval
+					final Long pollingInterval
 	)
 	{
 		this.policyListener = policyListener;

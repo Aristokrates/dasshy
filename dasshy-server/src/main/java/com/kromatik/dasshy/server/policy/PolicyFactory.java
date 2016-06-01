@@ -1,10 +1,8 @@
 package com.kromatik.dasshy.server.policy;
 
 import com.kromatik.dasshy.server.streaming.BatchClock;
-import com.kromatik.dasshy.thrift.model.TExtractor;
-import com.kromatik.dasshy.thrift.model.TLoader;
 import com.kromatik.dasshy.thrift.model.TPolicy;
-import com.kromatik.dasshy.thrift.model.TTransformer;
+import com.kromatik.dasshy.thrift.model.TStage;
 
 /**
  * Factory for building policy components
@@ -37,7 +35,7 @@ public interface PolicyFactory
 	 *
 	 * @return extractor holder
 	 */
-	ExtractorHolder buildExtractor(final TExtractor extractorModel);
+	ExtractorHolder buildExtractor(final TStage extractorModel);
 
 	/**
 	 * Builds an transformer instance from its model
@@ -46,7 +44,7 @@ public interface PolicyFactory
 	 *
 	 * @return transformer holder
 	 */
-	TransformerHolder buildTransformer(final TTransformer transformerModel);
+	TransformerHolder buildTransformer(final TStage transformerModel);
 
 	/**
 	 * Builds a loader instance from its model
@@ -55,5 +53,5 @@ public interface PolicyFactory
 	 *
 	 * @return loader holder
 	 */
-	LoaderHolder buildLoader(final TLoader loaderModel);
+	LoaderHolder buildLoader(final TStage loaderModel);
 }

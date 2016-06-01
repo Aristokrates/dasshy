@@ -1,7 +1,9 @@
 package com.kromatik.dasshy.server.service;
 
 import com.kromatik.dasshy.server.dao.PolicyDao;
+import com.kromatik.dasshy.server.exception.InvalidPolicyException;
 import com.kromatik.dasshy.server.exception.PolicyNotFoundException;
+import com.kromatik.dasshy.server.policy.PolicyFactory;
 import com.kromatik.dasshy.server.policy.PolicyListener;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TPolicyList;
@@ -19,16 +21,21 @@ public class PolicyService
 	/** policy listener */
 	private final PolicyListener	policyListener;
 
+	/** policy factory */
+	private final PolicyFactory		policyFactory;
+
 	/**
 	 * Default constructor
 	 *
 	 * @param policyDao policy dao
 	 * @param policyListener policy listener
+	 * @param policyFactory policy factory
 	 */
-	public PolicyService(final PolicyDao policyDao, final PolicyListener policyListener)
+	public PolicyService(final PolicyDao policyDao, final PolicyListener policyListener, final PolicyFactory policyFactory)
 	{
 		this.policyDao = policyDao;
 		this.policyListener = policyListener;
+		this.policyFactory = policyFactory;
 	}
 
 	/**
@@ -40,6 +47,8 @@ public class PolicyService
 	 */
 	public TPolicy createPolicy(final TPolicy policy)
 	{
+		validate(policy);
+
 		policyDao.create(policy);
 		policyListener.onPolicySave(policy);
 		return policy;
@@ -55,6 +64,8 @@ public class PolicyService
 	public TPolicy updatePolicy(final TPolicy policy)
 	{
 		policy.setLastUpdated(System.currentTimeMillis());
+
+		validate(policy);
 
 		policyDao.update(policy);
 		policyListener.onPolicySave(policy);
@@ -108,5 +119,24 @@ public class PolicyService
 	public TPolicyList listPolicies()
 	{
 		return new TPolicyList(new ArrayList<>(policyDao.list()));
+	}
+
+	/**
+	 * Validates the policy
+	 *
+	 * @param policyModel policy
+	 */
+	private void validate(final TPolicy policyModel)
+	{
+		// validate the policy by building an instance of it
+
+		try
+		{
+			policyFactory.buildPolicy(policyModel);
+		}
+		catch (final Exception e)
+		{
+			throw new InvalidPolicyException("Invalid policy model: " + policyModel, e);
+		}
 	}
 }

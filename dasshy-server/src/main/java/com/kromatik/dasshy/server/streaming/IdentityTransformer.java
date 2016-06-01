@@ -14,7 +14,6 @@ public class IdentityTransformer extends AbstractTransformer
 	@Override
 	public Dataset<Row> transform(
 					final RuntimeContext context,
-					final StageConfiguration configuration,
 					final Dataset<Row> input
 	)
 	{

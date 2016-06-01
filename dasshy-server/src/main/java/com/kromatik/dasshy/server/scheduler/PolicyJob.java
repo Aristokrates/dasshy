@@ -93,13 +93,11 @@ public class PolicyJob extends Job
 				// set job group without interruption on cancel
 				sparkContext.setJobGroup(batchId, "Job group for Id", false);
 
-				final Dataset<Row> inputDF = policy.getExtractor().stage().next(
-								runtimeContext, extractorConfig, batchTime);
+				final Dataset<Row> inputDF = policy.getExtractor().stage().next(runtimeContext, batchTime);
 
-				final Dataset<Row> transformedDF = policy.getTransformer().stage()
-								.transform(runtimeContext, transformerConfig, inputDF);
+				final Dataset<Row> transformedDF = policy.getTransformer().stage().transform(runtimeContext, inputDF);
 
-				policy.getLoader().stage().load(runtimeContext, loaderConfig, transformedDF);
+				policy.getLoader().stage().load(runtimeContext, transformedDF);
 
 				// TODO (pai) get the batch information
 				fireEvent(new PolicyBatchEnded(UUID.randomUUID().toString(), id, System.currentTimeMillis()));

@@ -8,7 +8,9 @@ import com.kromatik.dasshy.server.exception.mapper.EngineExceptionMapper;
 import com.kromatik.dasshy.server.exception.mapper.NotFoundExceptionMapper;
 import com.kromatik.dasshy.server.rest.DasshyRestApi;
 import com.kromatik.dasshy.server.rest.PolicyRestApi;
+import com.kromatik.dasshy.server.rest.StagePluginRestApi;
 import com.kromatik.dasshy.server.service.PolicyService;
+import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.thrift.SimpleJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftPayLoadProvider;
@@ -49,6 +51,9 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	/** policy service */
 	private static PolicyService			policyService;
 
+	/** plugin service */
+	private static StagePluginService		pluginService;
+
 	/**
 	 * Constructor called by Jersey to initialize the Application and its resources
 	 * This constructor is called via reflection
@@ -63,13 +68,16 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	 *
 	 * @param configuration engine configuration
 	 * @param service policy service
+	 * @param stagePluginService plugin service
 	 */
 	public JettyEngineComponent(
 					final DasshyConfiguration configuration,
-					final PolicyService service)
+					final PolicyService service,
+					final StagePluginService stagePluginService)
 	{
 		jettyConfiguration = configuration.getJettyConfiguration();
 		policyService = service;	//NOSONAR
+		pluginService = stagePluginService;	//NOSONAR
 	}
 
 	@Override
@@ -191,11 +199,13 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 
 		final DasshyRestApi root = new DasshyRestApi();
 		final PolicyRestApi policyRestApi = new PolicyRestApi(policyService);
+		final StagePluginRestApi stagePluginRestApi = new StagePluginRestApi(pluginService);
 
 		// add more resources
 
 		singletons.add(root);
 		singletons.add(policyRestApi);
+		singletons.add(stagePluginRestApi);
 
 
 		// add more mappers

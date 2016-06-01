@@ -3,13 +3,30 @@ package com.kromatik.dasshy.sdk;
 import java.util.Map;
 
 /**
- * Common configuration class for any execution stage
+ * Configuration class for any execution stage
  */
-public abstract class StageConfiguration
+public class StageConfiguration
 {
+	/** values */
+	private final Map<String, String>			values;
+
 	/**
+	 * Default constructor
 	 *
-	 * @return configuration as map
+	 * @param values configuration values
 	 */
-	public abstract Map<String, String> getConfigAsMap();
+	public StageConfiguration(final Map<String, String> values)
+	{
+		this.values = values;
+	}
+
+	/**
+	 * Configuration map
+	 *
+	 * @return map
+	 */
+	public Map<String, String> getValues()
+	{
+		return values;
+	}
 }
