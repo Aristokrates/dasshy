@@ -94,6 +94,10 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			existing.setLoader(policy.getLoader());
 			existing.setLastUpdated(policy.getLastUpdated());
 
+			existing.setError(policy.getError());
+			existing.setStartTime(policy.getStartTime());
+			existing.setEndTime(policy.getEndTime());
+
 			byte[] policyBytes = TUtils.serializeJson(existing);
 			curatorFramework.setData().forPath(getPolicyPath(existing.getId()), policyBytes);
 		}

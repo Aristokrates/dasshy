@@ -6,6 +6,7 @@ import com.kromatik.dasshy.server.config.JettyServerConfiguration;
 import com.kromatik.dasshy.server.exception.mapper.CommonExceptionMapper;
 import com.kromatik.dasshy.server.exception.mapper.EngineExceptionMapper;
 import com.kromatik.dasshy.server.exception.mapper.NotFoundExceptionMapper;
+import com.kromatik.dasshy.server.exception.mapper.WebApplicationExceptionMapper;
 import com.kromatik.dasshy.server.rest.DasshyRestApi;
 import com.kromatik.dasshy.server.rest.PolicyRestApi;
 import com.kromatik.dasshy.server.rest.StagePluginRestApi;
@@ -213,6 +214,7 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 		singletons.add(new CommonExceptionMapper());
 		singletons.add(new EngineExceptionMapper());
 		singletons.add(new NotFoundExceptionMapper());
+		singletons.add(new WebApplicationExceptionMapper());
 
 		return singletons;
 	}
