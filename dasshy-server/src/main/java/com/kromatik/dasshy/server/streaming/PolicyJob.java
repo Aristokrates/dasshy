@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.scheduler;
+package com.kromatik.dasshy.server.streaming;
 
 import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.RuntimeContext;
@@ -8,6 +8,8 @@ import com.kromatik.dasshy.server.event.PolicyBatchStarted;
 import com.kromatik.dasshy.server.event.PolicyJobEnded;
 import com.kromatik.dasshy.server.event.PolicyJobStarted;
 import com.kromatik.dasshy.server.policy.Policy;
+import com.kromatik.dasshy.server.scheduler.Job;
+import com.kromatik.dasshy.server.scheduler.JobListener;
 import com.kromatik.dasshy.thrift.model.TJobState;
 import org.apache.spark.SparkEnv;
 import org.apache.spark.api.java.JavaSparkContext;

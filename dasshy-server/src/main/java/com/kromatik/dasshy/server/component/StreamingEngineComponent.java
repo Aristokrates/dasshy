@@ -4,7 +4,7 @@ import com.kromatik.dasshy.core.engine.IEngineComponent;
 import com.kromatik.dasshy.server.dao.PolicyDao;
 import com.kromatik.dasshy.server.policy.PolicyListener;
 import com.kromatik.dasshy.server.policy.PolicyPoller;
-import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
+import com.kromatik.dasshy.server.scheduler.JobScheduler;
 
 /**
  * Streaming engine component
@@ -12,7 +12,7 @@ import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
 public class StreamingEngineComponent implements IEngineComponent
 {
 	/** scheduler */
-	private final PolicyScheduler			policyScheduler;
+	private final JobScheduler				jobScheduler;
 
 	/** policy poller */
 	private final PolicyPoller				policyPoller;
@@ -21,16 +21,16 @@ public class StreamingEngineComponent implements IEngineComponent
 	 * Default constructor
 	 *
 	 * @param policyListener policy listener
-	 * @param policyScheduler scheduler
+	 * @param jobScheduler scheduler
 	 * @param policyDao policy dao
 	 */
 	public StreamingEngineComponent(
 					final PolicyListener policyListener,
-					final PolicyScheduler policyScheduler,
+					final JobScheduler jobScheduler,
 					final PolicyDao policyDao
 	)
 	{
-		this.policyScheduler = policyScheduler;
+		this.jobScheduler = jobScheduler;
 		policyPoller = new PolicyPoller(policyListener, policyDao);
 	}
 
@@ -44,6 +44,6 @@ public class StreamingEngineComponent implements IEngineComponent
 	public void stop()
 	{
 		policyPoller.terminate();
-		policyScheduler.stopAll();
+		jobScheduler.stopAll();
 	}
 }

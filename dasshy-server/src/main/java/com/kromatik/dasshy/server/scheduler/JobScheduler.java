@@ -3,9 +3,9 @@ package com.kromatik.dasshy.server.scheduler;
 import java.util.Collection;
 
 /**
- * Scheduler for the streaming policy jobs
+ * Scheduler for the jobs
  */
-public interface PolicyScheduler
+public interface JobScheduler
 {
 	/**
 	 * Gets the running jobs

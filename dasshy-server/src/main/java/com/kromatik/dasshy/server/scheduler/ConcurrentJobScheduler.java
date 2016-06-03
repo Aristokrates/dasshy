@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
 /**
  * Runs the jobs concurrently
  */
-public class ConcurrentPolicyScheduler implements PolicyScheduler
+public class ConcurrentJobScheduler implements JobScheduler
 {
 
 	/** underlying executor service used to run the jobs */
@@ -27,7 +27,7 @@ public class ConcurrentPolicyScheduler implements PolicyScheduler
 	 *
 	 * @param service executor service to run the jobs
 	 */
-	public ConcurrentPolicyScheduler(final ExecutorService service)
+	public ConcurrentJobScheduler(final ExecutorService service)
 	{
 		executorService = service;
 	}

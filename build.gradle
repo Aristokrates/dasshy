@@ -14,7 +14,10 @@ ext {
     shiroVersion    =   '1.2.4'
 
     groovyVersion   =   '2.2.0'
-    jUnitVersion    =   '4.11'
+
+    testNgVersion   =   '6.8.8'
+    mockitoVersion  =   '1.9.5'
+    festVersion     =   '2.0M10'
 
     archaiusVersion =   '0.7.4'
 
@@ -49,7 +52,9 @@ ext {
             thrift:             "org.apache.thrift:libthrift:$thriftVersion",
 
             groovy:             "org.codehaus.groovy:groovy-all:$groovyVersion",
-            junit:              "junit:junit:$jUnitVersion"
+            testNg:             "org.testng:testng:$testNgVersion",
+            mockito:            "org.mockito:mockito-all:$mockitoVersion",
+            fest:               "org.easytesting:fest-assert-core:$festVersion"
     ]
 }
 
@@ -73,21 +78,51 @@ allprojects { project ->
 subprojects { subProject ->
     apply plugin: 'java'
 
-    apply plugin: 'build-dashboard'
-    apply plugin: 'project-report'
-
     group = 'com.kromatik.dasshy'
     version = dasshyTargetVersion
 
     dependencies {
 
-        testCompile(libs.junit)
+        testCompile(libs.testNg)
+        testCompile(libs.mockito)
+        testCompile(libs.fest)
     }
 
     javadoc {
 
         failOnError = true
 
+    }
+
+    test {
+        useTestNG()
+        include '**/*'
+
+        minHeapSize = "128m"
+        maxHeapSize = "512m"
+
+        jvmArgs '-XX:MaxPermSize=256m'
+
+        ext.useDefaultListeners = true
+        ext.workingDirectory = 'build/'
+
+        // listen to events in the test execution lifecycle
+        beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
+        }
+
+        // listen to standard out and standard error of the test JVM(s)
+        onOutput { descriptor, event ->
+            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+        }
+
+        testLogging {
+            showStandardStreams = true
+
+            // log results to "build/test-results" directory
+            exceptionFormat "full"
+            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+        }
     }
 
     targetCompatibility = javaLanguageLevel

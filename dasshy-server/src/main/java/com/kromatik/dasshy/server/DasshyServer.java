@@ -21,9 +21,9 @@ import com.kromatik.dasshy.server.policy.DefaultPolicyFactory;
 import com.kromatik.dasshy.server.policy.JobsOnPolicyListener;
 import com.kromatik.dasshy.server.policy.PolicyFactory;
 import com.kromatik.dasshy.server.policy.PolicyListener;
-import com.kromatik.dasshy.server.scheduler.ConcurrentPolicyScheduler;
+import com.kromatik.dasshy.server.scheduler.ConcurrentJobScheduler;
 import com.kromatik.dasshy.server.scheduler.JobUpdateListener;
-import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
+import com.kromatik.dasshy.server.scheduler.JobScheduler;
 import com.kromatik.dasshy.server.service.PolicyService;
 import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.streaming.DasshyRuntime;
@@ -108,25 +108,24 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 		final StagePluginService stagePluginService = new StagePluginService(stagePluginDao);
 		final PolicyFactory policyFactory = new DefaultPolicyFactory(stagePluginService);
 
-		final PolicyScheduler policyScheduler = new ConcurrentPolicyScheduler(Executors.newScheduledThreadPool(10));
+		final JobScheduler jobScheduler = new ConcurrentJobScheduler(Executors.newScheduledThreadPool(10));
 		final PolicyListener policyListener = new JobsOnPolicyListener(
 						dasshyRuntime.getRuntimeContext(),
-						policyFactory,
-						policyScheduler,
+						policyFactory, jobScheduler,
 						new JobUpdateListener(policyDao));
+		final PolicyService policyService = new PolicyService(policyDao, policyListener, policyFactory);
 
 		// 3. manage jetty component
-		final PolicyService policyService = new PolicyService(policyDao, policyListener, policyFactory);
 		engineRuntime.manage(new JettyEngineComponent(configuration, policyService, stagePluginService));
 
 		// 4. manage policy streaming
-		engineRuntime.manage(new StreamingEngineComponent(policyListener, policyScheduler, policyDao));
+		engineRuntime.manage(new StreamingEngineComponent(policyListener, jobScheduler, policyDao));
 	}
 
 	/**
 	 * Build the server context from the input arguments
 	 */
-	private static final class DasshyServerContext implements IEngineContext<DasshyConfiguration>
+	protected static final class DasshyServerContext implements IEngineContext<DasshyConfiguration>
 	{
 
 		/**
@@ -161,7 +160,7 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 	/**
 	 * Shutdown thread called on {@link Runtime#addShutdownHook}}
 	 */
-	private static final class DasshyServerShutdownThread extends Thread
+	protected static final class DasshyServerShutdownThread extends Thread
 	{
 		private final DasshyServer	dasshyServer;
 

@@ -3,8 +3,8 @@ package com.kromatik.dasshy.server.policy;
 import com.kromatik.dasshy.sdk.RuntimeContext;
 import com.kromatik.dasshy.server.scheduler.Job;
 import com.kromatik.dasshy.server.scheduler.JobListener;
-import com.kromatik.dasshy.server.scheduler.PolicyJob;
-import com.kromatik.dasshy.server.scheduler.PolicyScheduler;
+import com.kromatik.dasshy.server.streaming.PolicyJob;
+import com.kromatik.dasshy.server.scheduler.JobScheduler;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 
 /**
@@ -19,7 +19,7 @@ public class JobsOnPolicyListener implements PolicyListener
 	private final PolicyFactory				policyFactory;
 
 	/** scheduler */
-	private final PolicyScheduler			policyScheduler;
+	private final JobScheduler				jobScheduler;
 
 	/** job update listener */
 	private final JobListener				jobListener;
@@ -29,19 +29,19 @@ public class JobsOnPolicyListener implements PolicyListener
 	 *
 	 * @param runtimeContext runtime context
 	 * @param policyFactory policy factory
-	 * @param policyScheduler scheduler
+	 * @param jobScheduler scheduler
 	 * @param jobListener job update listener
 	 */
 	public JobsOnPolicyListener(
 					final RuntimeContext runtimeContext,
 					final PolicyFactory policyFactory,
-					final PolicyScheduler policyScheduler,
+					final JobScheduler jobScheduler,
 					final JobListener jobListener
 	)
 	{
 		this.runtimeContext = runtimeContext;
 		this.policyFactory = policyFactory;
-		this.policyScheduler = policyScheduler;
+		this.jobScheduler = jobScheduler;
 		this.jobListener = jobListener;
 	}
 
@@ -50,22 +50,22 @@ public class JobsOnPolicyListener implements PolicyListener
 	{
 		String policyId = policyModel.getId();
 
-		Job existingPolicyJob = policyScheduler.get(policyId);
+		Job existingPolicyJob = jobScheduler.get(policyId);
 		if (existingPolicyJob != null)
 		{
 			// TODO (pai) stop and restart only if the job has been updated
-			policyScheduler.stop(policyId);
+			jobScheduler.stop(policyId);
 		}
 
 		Policy policy = policyFactory.buildPolicy(policyModel);
 		PolicyJob policyJob = new PolicyJob(policy, runtimeContext, jobListener);
 
-		policyScheduler.submit(policyJob);
+		jobScheduler.submit(policyJob);
 	}
 
 	@Override
 	public void onPolicyDelete(TPolicy policyModel)
 	{
-		policyScheduler.stop(policyModel.getId());
+		jobScheduler.stop(policyModel.getId());
 	}
 }

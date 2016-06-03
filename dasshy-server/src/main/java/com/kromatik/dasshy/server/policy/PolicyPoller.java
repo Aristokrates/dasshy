@@ -15,7 +15,7 @@ public class PolicyPoller extends Thread
 	private long								pollingInterval;
 
 	/** flag indicating if the thread is terminated */
-	private boolean								terminate					=	false;
+	private boolean								terminate					= false;
 
 	/** policy listener */
 	private final PolicyListener				policyListener;

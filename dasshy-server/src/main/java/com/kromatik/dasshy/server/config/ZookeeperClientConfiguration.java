@@ -99,4 +99,15 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	{
 		return 3000;
 	}
+
+	/**
+	 * Set zk connection string
+	 *
+	 * @param zkConnect zk connect
+	 */
+	public void setConnectionString(final String zkConnect)
+	{
+		String propertyName = ZOOKEEPER_CONNECTION_STRING.getPropertyName();
+		zookeeperProperties.put(propertyName, new DynamicStringProperty(propertyName, zkConnect));
+	}
 }
