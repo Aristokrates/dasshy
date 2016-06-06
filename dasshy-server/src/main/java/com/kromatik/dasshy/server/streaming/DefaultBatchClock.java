@@ -10,7 +10,7 @@ public class DefaultBatchClock extends BatchClock
 {
 	private static final Logger LOGGER	=	LoggerFactory.getLogger(DefaultBatchClock.class);
 
-	private final Long interval;
+	private final Long intervalSeconds;
 
 	/** batch time*/
 	private Long batchTime;
@@ -18,11 +18,11 @@ public class DefaultBatchClock extends BatchClock
 	/**
 	 * Default constructor
 	 *
-	 * @param interval batch interval
+	 * @param intervalSeconds batch interval in seconds
 	 */
-	public DefaultBatchClock(Long interval)
+	public DefaultBatchClock(final Long intervalSeconds)
 	{
-		this.interval = interval;
+		this.intervalSeconds = intervalSeconds;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class DefaultBatchClock extends BatchClock
 	@Override
 	public void increment(final Integer count)
 	{
-		final Long sleepTimeMillis = Math.max(getBatchTime() + interval * 1000 - System.currentTimeMillis(), 0);
+		final Long sleepTimeMillis = Math.max(getBatchTime() + intervalSeconds * 1000 - System.currentTimeMillis(), 0);
 		try
 		{
 			Thread.sleep(sleepTimeMillis);
@@ -66,7 +66,7 @@ public class DefaultBatchClock extends BatchClock
 	{
 		final Long nowMs = System.currentTimeMillis();
 		final Long millisSinceEpoch = nowMs - EPOCH_TIME_MS;
-		final long periodNumber = millisSinceEpoch / interval;
-		batchTime = EPOCH_TIME_MS + periodNumber * interval;
+		final long periodNumber = millisSinceEpoch / (intervalSeconds * 1000);
+		batchTime = EPOCH_TIME_MS + periodNumber * intervalSeconds * 1000;
 	}
 }

@@ -9,4 +9,9 @@ import org.testng.annotations.Test;
 public class JobSchedulerTest
 {
 
+	public void jobSubmit() throws Exception
+	{
+		// TODO
+	}
+
 }
