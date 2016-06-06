@@ -6,6 +6,7 @@ import com.kromatik.dasshy.thrift.model.TStagePlugin;
 import com.kromatik.dasshy.thrift.model.TStageType;
 
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class StagePluginService
 	private final StagePluginDao						dao;
 
 	/** available plugins */
-	private Map<TStageType, Map<String, TStagePlugin>>	stagePlugins;
+	private EnumMap<TStageType, Map<String, TStagePlugin>> stagePlugins;
 
 	/**
 	 * Default constructor
@@ -113,7 +114,7 @@ public class StagePluginService
 	 */
 	private final void fetchPlugins()
 	{
-		this.stagePlugins = new HashMap<>();
+		this.stagePlugins = new EnumMap<>(TStageType.class);
 
 		for (final DefaultStagePlugin defaultPlugin : DefaultStagePlugin.values())
 		{

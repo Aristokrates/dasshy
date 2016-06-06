@@ -180,7 +180,7 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	@Override
 	public Set<Class<?>> getClasses()
 	{
-		Set<Class<?>> classes = new HashSet<Class<?>>();
+		Set<Class<?>> classes = new HashSet<>();
 
 		// add other providers here
 		classes.add(SimpleJsonPayLoadProvider.class);

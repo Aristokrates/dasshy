@@ -104,13 +104,10 @@ public class ZookeeperClient implements IZookeeperClient
 	@Override
 	public void close()
 	{
-		if (!closed)
+		if (!closed && curatorFramework != null)
 		{
-			if (curatorFramework != null)
-			{
-				curatorFramework.close();
-				closed = true;
-			}
+			curatorFramework.close();
+			closed = true;
 		}
 	}
 }

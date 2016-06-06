@@ -57,12 +57,9 @@ public abstract class AbstractExceptionMapper<T extends Throwable> implements Ex
 						null;
 
 		// check the status
-		if (status != null)
+		if (status != null && Response.Status.NOT_ACCEPTABLE.getStatusCode() == status.getStatusCode())
 		{
-			if (Response.Status.NOT_ACCEPTABLE.getStatusCode() == status.getStatusCode())
-			{
-				return builder.type(MediaType.APPLICATION_JSON_TYPE).build();
-			}
+			return builder.type(MediaType.APPLICATION_JSON_TYPE).build();
 		}
 		if (acceptType == null || acceptType.isWildcardType())
 		{

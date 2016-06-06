@@ -46,6 +46,7 @@ public abstract class AbstractEngineCompositeConfiguration implements IEngineCom
 	/**
 	 * @see IEngineCompositeConfiguration#addConfiguration(IEngineConfiguration)
 	 */
+	@Override
 	public void addConfiguration(final IEngineConfiguration configuration)
 	{
 		engineConfigurations.add(configuration);

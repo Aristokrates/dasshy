@@ -3,6 +3,7 @@ package com.kromatik.dasshy.server.config;
 import com.kromatik.dasshy.core.config.IEngineCompositeConfiguration;
 import com.kromatik.dasshy.core.config.IEngineConfiguration;
 import com.kromatik.dasshy.core.config.impl.AbstractEngineConfiguration;
+import com.kromatik.dasshy.core.exception.EngineConfigurationException;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClientProperties;
 import com.netflix.config.ConfigurationBackedDynamicPropertySupportImpl;
 import com.netflix.config.DynamicPropertyFactory;
@@ -56,6 +57,11 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 		if (backingConfigurationSource instanceof AbstractConfiguration)
 		{
 			configuration = (AbstractConfiguration) backingConfigurationSource;
+		}
+
+		if (configuration == null)
+		{
+			throw new EngineConfigurationException("Configuration cannot be found", null);
 		}
 
 		Iterator<String> zookeeperPropertiesIt = configuration.getKeys("zookeeper");
