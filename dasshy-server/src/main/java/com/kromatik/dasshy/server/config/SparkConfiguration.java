@@ -40,22 +40,28 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	{
 		// get all properties that starts with spark.
 		final Object backingConfigurationSource = dynamicPropertyFactory.getBackingConfigurationSource();
+		AbstractConfiguration configuration = null;
+
 		if (backingConfigurationSource instanceof ConfigurationBackedDynamicPropertySupportImpl)
 		{
-			final AbstractConfiguration configuration =
-							((ConfigurationBackedDynamicPropertySupportImpl) backingConfigurationSource)
+			configuration = ((ConfigurationBackedDynamicPropertySupportImpl) backingConfigurationSource)
 							.getConfiguration();
+		}
 
-			final Iterator<String> sparkPropertiesIt = configuration.getKeys("spark");
-			while (sparkPropertiesIt.hasNext())
+		if (backingConfigurationSource instanceof AbstractConfiguration)
+		{
+			configuration = (AbstractConfiguration) backingConfigurationSource;
+		}
+
+		final Iterator<String> sparkPropertiesIt = configuration.getKeys("spark");
+		while (sparkPropertiesIt.hasNext())
+		{
+			final String propertyName = sparkPropertiesIt.next();
+			final DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
+							DasshyProperties.forName(propertyName).getDefaultValue());
+			if (propertyValue != null)
 			{
-				final String propertyName = sparkPropertiesIt.next();
-				final DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
-								DasshyProperties.forName(propertyName).getDefaultValue());
-				if (propertyValue != null)
-				{
-					sparkProperties.put(propertyName, propertyValue);
-				}
+				sparkProperties.put(propertyName, propertyValue);
 			}
 		}
 	}

@@ -7,6 +7,7 @@ import com.kromatik.dasshy.server.zookeeper.IZookeeperClientProperties;
 import com.netflix.config.ConfigurationBackedDynamicPropertySupportImpl;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
+import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
@@ -44,22 +45,28 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	{
 		// get all properties that starts with zookeeper.
 		Object backingConfigurationSource = dynamicPropertyFactory.getBackingConfigurationSource();
+		AbstractConfiguration configuration = null;
+
 		if (backingConfigurationSource instanceof ConfigurationBackedDynamicPropertySupportImpl)
 		{
-			org.apache.commons.configuration.AbstractConfiguration configuration =
-							((ConfigurationBackedDynamicPropertySupportImpl) backingConfigurationSource)
-											.getConfiguration();
+			configuration = ((ConfigurationBackedDynamicPropertySupportImpl) backingConfigurationSource)
+							.getConfiguration();
+		}
 
-			Iterator<String> zookeeperPropertiesIt = configuration.getKeys("zookeeper");
-			while (zookeeperPropertiesIt.hasNext())
+		if (backingConfigurationSource instanceof AbstractConfiguration)
+		{
+			configuration = (AbstractConfiguration) backingConfigurationSource;
+		}
+
+		Iterator<String> zookeeperPropertiesIt = configuration.getKeys("zookeeper");
+		while (zookeeperPropertiesIt.hasNext())
+		{
+			String propertyName = zookeeperPropertiesIt.next();
+			DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
+							DasshyProperties.forName(propertyName).getDefaultValue());
+			if (propertyValue != null)
 			{
-				String propertyName = zookeeperPropertiesIt.next();
-				DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
-								DasshyProperties.valueOf(propertyName).getDefaultValue());
-				if (propertyValue != null)
-				{
-					zookeeperProperties.put(propertyName, propertyValue);
-				}
+				zookeeperProperties.put(propertyName, propertyValue);
 			}
 		}
 	}
