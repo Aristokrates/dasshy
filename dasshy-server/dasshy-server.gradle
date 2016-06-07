@@ -27,7 +27,7 @@ dependencies {
 
     compile project(':dasshy-core')
     compile project(':dasshy-model')
-    compile project(':dasshy-lib')
+    compile project(':dasshy-sdk')
 }
 
 
