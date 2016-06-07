@@ -64,6 +64,16 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 			throw new EngineConfigurationException("Configuration cannot be found", null);
 		}
 
+		// first load the default zk properties
+		for (DasshyProperties dasshyProperty : DasshyProperties.values())
+		{
+			String propName = dasshyProperty.getPropertyName();
+			if (propName.startsWith("zookeeper"))
+			{
+				zookeeperProperties.put(propName, new DynamicStringProperty(propName, dasshyProperty.getDefaultValue()));
+			}
+		}
+
 		Iterator<String> zookeeperPropertiesIt = configuration.getKeys("zookeeper");
 		while (zookeeperPropertiesIt.hasNext())
 		{

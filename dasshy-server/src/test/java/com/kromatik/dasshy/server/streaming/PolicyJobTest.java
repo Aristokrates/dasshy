@@ -42,7 +42,6 @@ public class PolicyJobTest
 
 		SparkConfiguration sparkConfiguration = new SparkConfiguration(new DasshyConfiguration());
 		sparkConfiguration.setSparkProperty(DasshyProperties.SPARK_MASTER.getPropertyName(), "local[2]");
-		sparkConfiguration.setSparkProperty("spark.driver.allowMultipleContexts", "true");
 
 		SparkContextFactory factory = new DasshySparkContextFactory(sparkConfiguration);
 
@@ -71,7 +70,7 @@ public class PolicyJobTest
 
 		PolicyJob job = new PolicyJob(policyInstance, runtimeContext, jobListener);
 
-		// verify that the job state is READY for running
+		// verify that the job state is READY to run
 		Assertions.assertThat(job.getJobState()).isEqualTo(TJobState.READY);
 
 		// start the job
@@ -118,7 +117,7 @@ public class PolicyJobTest
 
 		PolicyJob job = new PolicyJob(policyInstance, runtimeContext, jobListener);
 
-		// verify that the job state is READY for running
+		// verify that the job state is READY to run
 		Assertions.assertThat(job.getJobState()).isEqualTo(TJobState.READY);
 
 		// start the job

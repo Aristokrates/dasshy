@@ -59,6 +59,16 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 			throw new EngineConfigurationException("Configuration cannot be found", null);
 		}
 
+		// first load the default spark properties
+		for (DasshyProperties dasshyProperty : DasshyProperties.values())
+		{
+			String propName = dasshyProperty.getPropertyName();
+			if (propName.startsWith("spark"))
+			{
+				sparkProperties.put(propName, new DynamicStringProperty(propName, dasshyProperty.getDefaultValue()));
+			}
+		}
+
 		final Iterator<String> sparkPropertiesIt = configuration.getKeys("spark");
 		while (sparkPropertiesIt.hasNext())
 		{
