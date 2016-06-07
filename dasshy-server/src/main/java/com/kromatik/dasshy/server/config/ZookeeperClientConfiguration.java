@@ -86,6 +86,17 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	}
 
 	/**
+	 * Set zookeeper property
+	 *
+	 * @param propertyName name of the property
+	 * @param propertyValue value for the given property
+	 */
+	public void setZookeeperProperty(final String propertyName, String propertyValue)
+	{
+		zookeeperProperties.put(propertyName, new DynamicStringProperty(propertyName, propertyValue));
+	}
+
+	/**
 	 * @see IZookeeperClientProperties#getConnectionString()
 	 */
 	@Override
@@ -121,6 +132,6 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	public void setConnectionString(final String zkConnect)
 	{
 		String propertyName = ZOOKEEPER_CONNECTION_STRING.getPropertyName();
-		zookeeperProperties.put(propertyName, new DynamicStringProperty(propertyName, zkConnect));
+		setZookeeperProperty(propertyName, zkConnect);
 	}
 }

@@ -61,14 +61,11 @@ public abstract class Job
 		}
 		catch (Exception throwable)
 		{
+			endTime = System.currentTimeMillis();
 			this.exception = throwable;
 			jobResult = throwable.getMessage();
 			errorMessage = getStackTrace(throwable);
 			setJobState(TJobState.ERROR);
-		}
-		finally
-		{
-			endTime = System.currentTimeMillis();
 		}
 	}
 
@@ -164,5 +161,35 @@ public abstract class Job
 
 		Throwable cause = ExceptionUtils.getRootCause(e);
 		return ExceptionUtils.getFullStackTrace(cause != null ? cause : e);
+	}
+
+	public Long getStartTime()
+	{
+		return startTime;
+	}
+
+	public Long getEndTime()
+	{
+		return endTime;
+	}
+
+	public Object getJobResult()
+	{
+		return jobResult;
+	}
+
+	public String getErrorMessage()
+	{
+		return errorMessage;
+	}
+
+	public Throwable getException()
+	{
+		return exception;
+	}
+
+	public boolean isAborted()
+	{
+		return aborted;
 	}
 }

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Default batch clock
  */
-public class DefaultBatchClock extends BatchClock
+public class StreamingBatchClock extends BatchClock
 {
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(DefaultBatchClock.class);
+	private static final Logger LOGGER	=	LoggerFactory.getLogger(StreamingBatchClock.class);
 
 	private final Long intervalSeconds;
 
@@ -20,7 +20,7 @@ public class DefaultBatchClock extends BatchClock
 	 *
 	 * @param intervalSeconds batch interval in seconds
 	 */
-	public DefaultBatchClock(final Long intervalSeconds)
+	public StreamingBatchClock(final Long intervalSeconds)
 	{
 		this.intervalSeconds = intervalSeconds;
 	}

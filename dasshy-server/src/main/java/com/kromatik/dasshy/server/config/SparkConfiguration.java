@@ -82,6 +82,17 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	}
 
 	/**
+	 * Set spark property
+	 *
+	 * @param propertyName name of the spark property
+	 * @param propertyValue value for the given property
+	 */
+	public void setSparkProperty(final String propertyName, final String propertyValue)
+	{
+		sparkProperties.put(propertyName, new DynamicStringProperty(propertyName, propertyValue));
+	}
+
+	/**
 	 * @return spark master
 	 */
 	public String getMaster()

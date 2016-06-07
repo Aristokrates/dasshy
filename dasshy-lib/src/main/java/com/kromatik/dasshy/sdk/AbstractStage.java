@@ -22,7 +22,10 @@ public abstract class AbstractStage implements IStage
 	@Override
 	public void init(final RuntimeContext runtimeContext, final StageConfiguration configuration)
 	{
-		attributes = configuration.getValues();
+		if (configuration != null)
+		{
+			attributes = configuration.getValues();
+		}
 	}
 
 	@Override

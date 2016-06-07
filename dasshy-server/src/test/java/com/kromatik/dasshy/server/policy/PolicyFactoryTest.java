@@ -4,7 +4,7 @@ import com.kromatik.dasshy.server.service.DefaultStagePlugin;
 import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.streaming.BatchClock;
 import com.kromatik.dasshy.server.streaming.CassandraLoader;
-import com.kromatik.dasshy.server.streaming.DefaultBatchClock;
+import com.kromatik.dasshy.server.streaming.StreamingBatchClock;
 import com.kromatik.dasshy.server.streaming.IdentityTransformer;
 import com.kromatik.dasshy.server.streaming.KafkaExtractor;
 import com.kromatik.dasshy.thrift.model.TPolicy;
@@ -181,7 +181,7 @@ public class PolicyFactoryTest
 		Assertions.assertThat(policyInstance).isNotNull();
 
 		Assertions.assertThat(policyInstance.getModel()).isEqualsToByComparingFields(policyModel);
-		Assertions.assertThat(policyInstance.getClock()).isInstanceOf(DefaultBatchClock.class);
+		Assertions.assertThat(policyInstance.getClock()).isInstanceOf(StreamingBatchClock.class);
 
 		Assertions.assertThat(policyInstance.getExtractor().stage()).isExactlyInstanceOf(KafkaExtractor.class);
 		Assertions.assertThat(policyInstance.getExtractor().configuration().getValues()).isNotEmpty().isEqualTo(kafkaConfig);
