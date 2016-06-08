@@ -28,6 +28,10 @@ dependencies {
     compile project(':dasshy-core')
     compile project(':dasshy-model')
     compile project(':dasshy-sdk')
+
+    testCompile(libs.jersey_test)
+    testCompile(libs.jersey_grizzly)
+    testCompile(libs.jersey_inmemory)
 }
 
 

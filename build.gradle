@@ -26,6 +26,8 @@ ext {
     jacksonGroup    =   'org.codehaus.jackson'
     jacksonVersion  =   '1.9.13'
 
+    jerseyVersion   =   '2.22.2'
+
     libs = [
 
             spark_core:         "$sparkGroup:spark-core_$scalaVersion:$sparkVersion",
@@ -52,9 +54,14 @@ ext {
             thrift:             "org.apache.thrift:libthrift:$thriftVersion",
 
             groovy:             "org.codehaus.groovy:groovy-all:$groovyVersion",
+
             testNg:             "org.testng:testng:$testNgVersion",
             mockito:            "org.mockito:mockito-all:$mockitoVersion",
-            fest:               "org.easytesting:fest-assert-core:$festVersion"
+            fest:               "org.easytesting:fest-assert-core:$festVersion",
+
+            jersey_test:        "org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
+            jersey_grizzly:     "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion",
+            jersey_inmemory:    "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-inmemory:$jerseyVersion"
     ]
 }
 
