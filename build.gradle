@@ -70,6 +70,8 @@ allprojects { project ->
     apply plugin: 'idea'
     apply plugin: 'eclipse'
 
+    apply plugin: 'jacoco'
+
     defaultTasks 'build'
 
     repositories {
@@ -130,10 +132,86 @@ subprojects { subProject ->
             exceptionFormat "full"
             events "started", "passed", "skipped", "failed", "standardOut", "standardError"
         }
+
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        }
     }
+
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestRuntime.extendsFrom testRuntime
+    }
+
+    sourceSets {
+        integrationTest {
+            java {
+                compileClasspath += main.output + test.output
+                runtimeClasspath += main.output + test.output
+                srcDir file('src/integration-test/java')
+            }
+            resources.srcDir file('src/integration-test/resources')
+        }
+    }
+
+    task integrationTest(type: Test) {
+        testClassesDir = sourceSets.integrationTest.output.classesDir
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        outputs.upToDateWhen { false }
+
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/jacocoIntegTest.exec")
+        }
+    }
+
+    tasks.withType(Test) {
+        reports.html.destination = file("${reporting.baseDir}/${name}")
+    }
+
+    check.dependsOn integrationTest
+    integrationTest.mustRunAfter test
 
     targetCompatibility = javaLanguageLevel
     sourceCompatibility = javaLanguageLevel
+}
+
+
+
+// custom tasks
+task docs(type: Javadoc) {
+
+    options.encoding = 'utf-8'
+    options.docEncoding = 'utf-8'
+    options.charSet = 'utf-8'
+
+    source subprojects.collect {project -> project.sourceSets.main.allJava }
+    classpath = files(subprojects.collect {project -> [project.sourceSets.main.compileClasspath, project.sourceSets.main.output] })
+    destinationDir = new File(projectDir, 'docs')
+}
+
+task jacocoMerge(type: JacocoMerge) {
+
+    description = 'Merge test code coverage results from all java projects'
+
+    destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    doFirst {delete destinationFile}
+
+    // get all execution data from subprojects and merge them
+    subprojects.each { subproject ->
+        executionData subproject.tasks.withType(Test)
+    }
+
+    doFirst {
+        executionData = files(executionData.findAll { it.exists() })
+    }
+}
+
+task mergedReport(type: JacocoReport) {
+    executionData jacocoMerge.destinationFile
+    dependsOn jacocoMerge
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
 }
 
 // build/ plugin configuration
@@ -149,6 +227,13 @@ buildscript {
     }
 }
 
+sonarqube {
+    properties {
+        property "sonar.jacoco.reportPath", "$buildDir/jacoco/jacoco.exec"
+        property "sonar.java.coveragePlugin", "jacoco"
+    }
+}
+
 project(":dasshy-model") {
     sonarqube {
         properties {
@@ -158,15 +243,4 @@ project(":dasshy-model") {
     }
 }
 
-
-// custom tasks
-task docs(type: Javadoc) {
-
-    options.encoding = 'utf-8'
-    options.docEncoding = 'utf-8'
-    options.charSet = 'utf-8'
-
-    source subprojects.collect {project -> project.sourceSets.main.allJava }
-    classpath = files(subprojects.collect {project -> [project.sourceSets.main.compileClasspath, project.sourceSets.main.output] })
-    destinationDir = new File(projectDir, 'docs')
-}
+project.tasks["sonarqube"].dependsOn jacocoMerge
