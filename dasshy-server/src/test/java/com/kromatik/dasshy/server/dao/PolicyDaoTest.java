@@ -5,6 +5,7 @@ import com.kromatik.dasshy.server.config.DasshyConfiguration;
 import com.kromatik.dasshy.server.config.ZookeeperClientConfiguration;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClientFactory;
 import com.kromatik.dasshy.server.zookeeper.ZookeeperClientFactory;
+import com.kromatik.dasshy.thrift.model.TJobState;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.netflix.config.DynamicPropertyFactory;
 import org.fest.assertions.api.Assertions;
@@ -73,6 +74,7 @@ public class PolicyDaoTest
 		policy.setStartTime(startTime);
 		policy.setEndTime(endTime);
 		policy.setError(errorMessage);
+		policy.setState(TJobState.ERROR);
 
 		policyDao.update(policy);
 		TPolicy existing = policyDao.get(policy.getId());

@@ -104,35 +104,6 @@ subprojects { subProject ->
     }
 
     test {
-        useTestNG()
-        include '**/*'
-
-        minHeapSize = "128m"
-        maxHeapSize = "512m"
-
-        jvmArgs '-XX:MaxPermSize=256m'
-
-        ext.useDefaultListeners = true
-        ext.workingDirectory = 'build/'
-
-        // listen to events in the test execution lifecycle
-        beforeTest { descriptor ->
-            logger.lifecycle("Running test: " + descriptor)
-        }
-
-        // listen to standard out and standard error of the test JVM(s)
-        onOutput { descriptor, event ->
-            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-        }
-
-        testLogging {
-            showStandardStreams = true
-
-            // log results to "build/test-results" directory
-            exceptionFormat "full"
-            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
-        }
-
         jacoco {
             destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
         }
@@ -165,7 +136,37 @@ subprojects { subProject ->
     }
 
     tasks.withType(Test) {
+
         reports.html.destination = file("${reporting.baseDir}/${name}")
+
+        useTestNG()
+        include '**/*'
+
+        minHeapSize = "128m"
+        maxHeapSize = "512m"
+
+        jvmArgs '-XX:MaxPermSize=256m'
+
+        ext.useDefaultListeners = true
+        ext.workingDirectory = 'build/'
+
+        // listen to events in the test execution lifecycle
+        beforeTest { descriptor ->
+            logger.lifecycle("Running test: " + descriptor)
+        }
+
+        // listen to standard out and standard error of the test JVM(s)
+        onOutput { descriptor, event ->
+            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+        }
+
+        testLogging {
+            showStandardStreams = true
+
+            // log results to "build/test-results" directory
+            exceptionFormat "full"
+            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+        }
     }
 
     check.dependsOn integrationTest
@@ -191,8 +192,7 @@ task docs(type: Javadoc) {
 
 task jacocoMerge(type: JacocoMerge) {
 
-    description = 'Merge test code coverage results from all java projects'
-
+    description = 'Merge test code coverage results'
     destinationFile = file("$buildDir/jacoco/jacoco.exec")
     doFirst {delete destinationFile}
 
@@ -200,7 +200,6 @@ task jacocoMerge(type: JacocoMerge) {
     subprojects.each { subproject ->
         executionData subproject.tasks.withType(Test)
     }
-
     doFirst {
         executionData = files(executionData.findAll { it.exists() })
     }
