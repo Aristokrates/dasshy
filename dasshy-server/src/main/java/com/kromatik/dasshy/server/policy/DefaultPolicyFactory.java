@@ -7,13 +7,20 @@ import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.Transformer;
 import com.kromatik.dasshy.server.service.StagePluginService;
 import com.kromatik.dasshy.server.spark.BatchClock;
+import com.kromatik.dasshy.server.spark.ExecuteNTimesBackoffBatchClock;
+import com.kromatik.dasshy.server.spark.ExecuteNTimesBatchClock;
 import com.kromatik.dasshy.server.spark.StreamingIntervalBatchClock;
+import com.kromatik.dasshy.thrift.model.TBatchClock;
+import com.kromatik.dasshy.thrift.model.TBatchClockN;
+import com.kromatik.dasshy.thrift.model.TBatchClockNBackoff;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TStage;
 import com.kromatik.dasshy.thrift.model.TStagePlugin;
 import com.kromatik.dasshy.thrift.model.TStageType;
 
 import java.util.Map;
+
+import static com.kromatik.dasshy.thrift.model.TBatchClock._Fields.*;
 
 /**
  * Default factory for building policy instance out of the model
@@ -50,7 +57,25 @@ public class DefaultPolicyFactory implements PolicyFactory
 	@Override
 	public BatchClock buildStreamingClock(final TPolicy policyModel)
 	{
-		return new StreamingIntervalBatchClock(policyModel.getInterval());
+		TBatchClock clock = policyModel.getClock();
+
+		switch (clock.getSetField())
+		{
+			case STREAMING:
+				Long interval = clock.getStreaming().getInterval();
+				return new StreamingIntervalBatchClock(interval);
+
+			case N_TIMES:
+				TBatchClockN nTimes = clock.getNTimes();
+				return new ExecuteNTimesBatchClock(nTimes.getMaxBatches());
+
+			case N_TIMES_BACKOFF:
+				TBatchClockNBackoff nTimesBackoff = clock.getNTimesBackoff();
+				return new ExecuteNTimesBackoffBatchClock(nTimesBackoff.getMaxBatches(), nTimesBackoff.getSleepMs());
+
+			default:
+				return null;
+		}
 	}
 
 	@Override

@@ -7,10 +7,12 @@ import com.kromatik.dasshy.server.spark.CassandraLoader;
 import com.kromatik.dasshy.server.spark.StreamingIntervalBatchClock;
 import com.kromatik.dasshy.server.spark.IdentityTransformer;
 import com.kromatik.dasshy.server.spark.KafkaExtractor;
+import com.kromatik.dasshy.thrift.model.TBatchClock;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TStage;
 import com.kromatik.dasshy.thrift.model.TStagePlugin;
 import com.kromatik.dasshy.thrift.model.TStageType;
+import com.kromatik.dasshy.thrift.model.TStreamingBatchClock;
 import org.fest.assertions.api.Assertions;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
@@ -43,7 +45,7 @@ public class PolicyFactoryTest
 		Long interval = 1L;
 
 		TPolicy policyModel = new TPolicy();
-		policyModel.setInterval(interval);
+		policyModel.setClock(new TBatchClock(TBatchClock._Fields.STREAMING, new TStreamingBatchClock(interval)));
 
 		BatchClock batchClock = policyFactory.buildStreamingClock(policyModel);
 		Assertions.assertThat(batchClock).isNotNull();
@@ -171,7 +173,7 @@ public class PolicyFactoryTest
 		String policyId = "id";
 		TPolicy policyModel = new TPolicy();
 		policyModel.setId(policyId);
-		policyModel.setInterval(1L);
+		policyModel.setClock(new TBatchClock(TBatchClock._Fields.STREAMING, new TStreamingBatchClock(1L)));
 		policyModel.setExtractor(kafkaStage);
 		policyModel.setTransformer(transformerStage);
 		policyModel.setLoader(loaderStage);

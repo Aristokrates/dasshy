@@ -14,8 +14,10 @@ import com.kromatik.dasshy.server.spark.KafkaExtractor;
 import com.kromatik.dasshy.server.thrift.SimpleJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftJsonPayLoadProvider;
 import com.kromatik.dasshy.server.thrift.ThriftPayLoadProvider;
+import com.kromatik.dasshy.thrift.model.TBatchClock;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TStage;
+import com.kromatik.dasshy.thrift.model.TStreamingBatchClock;
 import com.netflix.config.DynamicPropertyFactory;
 import org.fest.assertions.api.Assertions;
 import org.glassfish.jersey.filter.LoggingFilter;
@@ -70,7 +72,7 @@ public class PolicyIT
 		String policyId = "id";
 		TPolicy policyModel = new TPolicy();
 		policyModel.setId(policyId);
-		policyModel.setInterval(15L);
+		policyModel.setClock(new TBatchClock(TBatchClock._Fields.STREAMING, new TStreamingBatchClock(15L)));
 
 		DefaultStagePlugin kafkaPluginEnum = DefaultStagePlugin.KAFKA;
 		DefaultStagePlugin identityPluginEnum = DefaultStagePlugin.IDENTITY;

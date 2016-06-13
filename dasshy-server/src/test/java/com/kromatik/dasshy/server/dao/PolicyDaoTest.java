@@ -5,8 +5,10 @@ import com.kromatik.dasshy.server.config.DasshyConfiguration;
 import com.kromatik.dasshy.server.config.ZookeeperClientConfiguration;
 import com.kromatik.dasshy.server.zookeeper.IZookeeperClientFactory;
 import com.kromatik.dasshy.server.zookeeper.ZookeeperClientFactory;
+import com.kromatik.dasshy.thrift.model.TBatchClock;
 import com.kromatik.dasshy.thrift.model.TJobState;
 import com.kromatik.dasshy.thrift.model.TPolicy;
+import com.kromatik.dasshy.thrift.model.TStreamingBatchClock;
 import com.netflix.config.DynamicPropertyFactory;
 import org.fest.assertions.api.Assertions;
 import org.testng.annotations.AfterClass;
@@ -70,7 +72,7 @@ public class PolicyDaoTest
 		Long endTime = System.currentTimeMillis();
 		String errorMessage = "Error message";
 
-		policy.setInterval(interval);
+		policy.setClock(new TBatchClock(TBatchClock._Fields.STREAMING, new TStreamingBatchClock(interval)));
 		policy.setStartTime(startTime);
 		policy.setEndTime(endTime);
 		policy.setError(errorMessage);

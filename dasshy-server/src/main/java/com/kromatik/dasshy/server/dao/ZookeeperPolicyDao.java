@@ -88,7 +88,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			final CuratorFramework curatorFramework = zkClient.getCuratorFramework();
 
 			// merge the policies
-			existing.setInterval(policy.getInterval());
+			existing.setClock(policy.getClock());
 			existing.setExtractor(policy.getExtractor());
 			existing.setTransformer(policy.getTransformer());
 			existing.setLoader(policy.getLoader());

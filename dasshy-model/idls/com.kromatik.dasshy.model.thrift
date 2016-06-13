@@ -39,9 +39,28 @@ struct TStage {
     2:  optional map<string,string>             configuration
 }
 
+union TBatchClock {
+    1:  TStreamingBatchClock                    streaming,
+    2:  TBatchClockN                            nTimes;
+    3:  TBatchClockNBackoff                     nTimesBackoff;
+}
+
+struct TStreamingBatchClock {
+    1:  required i64                            interval,
+}
+
+struct TBatchClockN {
+    1:  required i32                            maxBatches,
+}
+
+struct TBatchClockNBackoff {
+    1:  required i32                            maxBatches,
+    2:  required i64                            sleepMs
+}
+
 struct TPolicy {
     1:  string                                  id,
-    2:  i64                                     interval,
+    2:  TBatchClock                             clock,
     3:  string                                  error,
     4:  i64                                     lastUpdated,
     5:  TStage                                  extractor,
@@ -63,8 +82,7 @@ struct TStagePlugin {
     1:  required TStageType                     type,
     2:  required string                         identifier,
     3:  required string                         classpath,
-    4:  string                                  description,
-    5:  bool                                    registered
+    4:  string                                  description
 }
 
 struct TStagePluginList {
