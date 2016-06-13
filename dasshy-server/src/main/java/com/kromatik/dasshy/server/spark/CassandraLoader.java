@@ -34,7 +34,7 @@ public class CassandraLoader extends AbstractLoader
 	@Override
 	public Dataset<Row> load(RuntimeContext context, Map<String, Dataset<Row>> input)
 	{
-	// load the data into cassandra tables
+		// load the data into cassandra tables
 
 		// get from the configuration the database name to load the data in; if no such columns exists, create them
 		// insert the data in the database table

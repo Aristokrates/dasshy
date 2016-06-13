@@ -29,16 +29,16 @@ public class DasshyConfiguration extends AbstractEngineCompositeConfiguration
 {
 
 	/** spark related configuration */
-	private final SparkConfiguration			sparkConfiguration;
+	private final SparkConfiguration sparkConfiguration;
 
 	/** kafka related configuration */
-	private final KafkaConfiguration			kafkaConfiguration;
+	private final KafkaConfiguration kafkaConfiguration;
 
 	/** zookeeper related configurations */
-	private final ZookeeperClientConfiguration	zookeeperClientConfiguration;
+	private final ZookeeperClientConfiguration zookeeperClientConfiguration;
 
 	/** configuration for the embedded jetty server */
-	private final JettyServerConfiguration		jettyConfiguration;
+	private final JettyServerConfiguration jettyConfiguration;
 
 	/**
 	 * Default constructor

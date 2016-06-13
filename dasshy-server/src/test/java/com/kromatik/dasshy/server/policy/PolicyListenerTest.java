@@ -31,19 +31,19 @@ import org.testng.annotations.Test;
 /**
  * Tests for policy listeners
  */
-@Test(groups = {"policy"})
+@Test(groups = { "policy" })
 public class PolicyListenerTest
 {
 
-	private PolicyListener		policyListener;
+	private PolicyListener policyListener;
 
-	private RuntimeContext		context;
+	private RuntimeContext context;
 
-	private PolicyFactory		factory;
+	private PolicyFactory factory;
 
-	private JobScheduler		scheduler;
+	private JobScheduler scheduler;
 
-	private JobListener			jobListener;
+	private JobListener jobListener;
 
 	@BeforeMethod
 	public void setup() throws Exception

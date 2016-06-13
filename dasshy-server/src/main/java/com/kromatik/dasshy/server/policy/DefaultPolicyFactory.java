@@ -47,7 +47,7 @@ import static com.kromatik.dasshy.thrift.model.TBatchClock._Fields.*;
 public class DefaultPolicyFactory implements PolicyFactory
 {
 	/** stage plugin service */
-	private final StagePluginService		stagePluginService;
+	private final StagePluginService stagePluginService;
 
 	/**
 	 * Default constructor
@@ -80,20 +80,20 @@ public class DefaultPolicyFactory implements PolicyFactory
 
 		switch (clock.getSetField())
 		{
-			case STREAMING:
-				Long interval = clock.getStreaming().getInterval();
-				return new StreamingIntervalBatchClock(interval);
+		case STREAMING:
+			Long interval = clock.getStreaming().getInterval();
+			return new StreamingIntervalBatchClock(interval);
 
-			case N_TIMES:
-				TBatchClockN nTimes = clock.getNTimes();
-				return new ExecuteNTimesBatchClock(nTimes.getMaxBatches());
+		case N_TIMES:
+			TBatchClockN nTimes = clock.getNTimes();
+			return new ExecuteNTimesBatchClock(nTimes.getMaxBatches());
 
-			case N_TIMES_BACKOFF:
-				TBatchClockNBackoff nTimesBackoff = clock.getNTimesBackoff();
-				return new ExecuteNTimesBackoffBatchClock(nTimesBackoff.getMaxBatches(), nTimesBackoff.getSleepMs());
+		case N_TIMES_BACKOFF:
+			TBatchClockNBackoff nTimesBackoff = clock.getNTimesBackoff();
+			return new ExecuteNTimesBackoffBatchClock(nTimesBackoff.getMaxBatches(), nTimesBackoff.getSleepMs());
 
-			default:
-				return null;
+		default:
+			return null;
 		}
 	}
 
@@ -112,7 +112,6 @@ public class DefaultPolicyFactory implements PolicyFactory
 
 		return new ExtractorHolder(extractor, new StageConfiguration(extractorConfig));
 	}
-
 
 	@Override
 	public TransformerHolder buildTransformer(final TStage transformerModel)
@@ -149,9 +148,8 @@ public class DefaultPolicyFactory implements PolicyFactory
 	/**
 	 * Get plugin by type and id
 	 *
-	 * @param type stage type
+	 * @param type       stage type
 	 * @param identifier stage identifier
-	 *
 	 * @return a stage plugin
 	 */
 	private TStagePlugin getPlugin(final TStageType type, final String identifier)
@@ -164,8 +162,7 @@ public class DefaultPolicyFactory implements PolicyFactory
 	 * Creates an instance of a given class
 	 *
 	 * @param className classname
-	 * @param <M>  class for the instance
-	 *
+	 * @param <M>       class for the instance
 	 * @return instance
 	 */
 	private <M> M instanceOf(final String className)

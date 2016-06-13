@@ -44,13 +44,13 @@ import java.util.UUID;
 public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDao
 {
 
-	public static final String	POLICY_PATH	=	"/policy";
+	public static final String POLICY_PATH = "/policy";
 
 	/**
 	 * Zookeeper policy dao
 	 *
 	 * @param clientFactory factory
-	 * @param properties properties
+	 * @param properties    properties
 	 */
 	public ZookeeperPolicyDao(final IZookeeperClientFactory clientFactory, final IZookeeperClientProperties properties)
 	{
@@ -160,7 +160,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			// read from ZK
 			zkObject = zkClient.getCuratorFramework().getData().forPath(getPolicyPath(id));
 		}
-		catch (final KeeperException.NoNodeException noNodeEx)	//NOSONAR
+		catch (final KeeperException.NoNodeException noNodeEx)    //NOSONAR
 		{
 			return null;
 		}
@@ -190,7 +190,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			final IZookeeperClient zkClient = super.getClient();
 			final Stat stat = zkClient.getCuratorFramework().checkExists().forPath(getPolicyPath(id));
 
-			return stat != null ;
+			return stat != null;
 		}
 		catch (final Exception e)
 		{
@@ -211,8 +211,7 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 			/** Check if the path exists */
 			if (policyPath != null)
 			{
-				final List<String> policyIds = zkClient.getCuratorFramework()
-								.getChildren().forPath(POLICY_PATH);
+				final List<String> policyIds = zkClient.getCuratorFramework().getChildren().forPath(POLICY_PATH);
 				for (final String policyId : policyIds)
 				{
 					policies.add(get(policyId));
@@ -231,7 +230,6 @@ public class ZookeeperPolicyDao extends AbstractZookeeperDao implements PolicyDa
 	 * ZNode path of the policy
 	 *
 	 * @param policyId id of the policy
-	 *
 	 * @return policy path
 	 */
 	private String getPolicyPath(final String policyId)

@@ -40,7 +40,7 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 {
 
 	/** map containing all spark properties */
-	private final Map<String, DynamicStringProperty>				sparkProperties	=	new HashMap<>();
+	private final Map<String, DynamicStringProperty> sparkProperties = new HashMap<>();
 
 	/**
 	 * Default constructor
@@ -92,8 +92,8 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 		while (sparkPropertiesIt.hasNext())
 		{
 			final String propertyName = sparkPropertiesIt.next();
-			final DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
-							DasshyProperties.forName(propertyName).getDefaultValue());
+			final DynamicStringProperty propertyValue = dynamicPropertyFactory
+							.getStringProperty(propertyName, DasshyProperties.forName(propertyName).getDefaultValue());
 			if (propertyValue != null)
 			{
 				sparkProperties.put(propertyName, propertyValue);
@@ -102,7 +102,6 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	}
 
 	/**
-	 *
 	 * @return unmodifiable map of spark properties
 	 */
 	public Map<String, DynamicStringProperty> getSparkProperties()
@@ -113,7 +112,7 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	/**
 	 * Set spark property
 	 *
-	 * @param propertyName name of the spark property
+	 * @param propertyName  name of the spark property
 	 * @param propertyValue value for the given property
 	 */
 	public void setSparkProperty(final String propertyName, final String propertyValue)
@@ -135,7 +134,8 @@ public class SparkConfiguration extends AbstractEngineConfiguration
 	 */
 	public long getBatchDuration()
 	{
-		final DynamicStringProperty batchDuration = getSparkProperties().get(DasshyProperties.SPARK_BATCH_DURATION.getPropertyName());
+		final DynamicStringProperty batchDuration = getSparkProperties()
+						.get(DasshyProperties.SPARK_BATCH_DURATION.getPropertyName());
 		return batchDuration != null ?
 						Long.valueOf(batchDuration.get()) :
 						Long.valueOf(DasshyProperties.SPARK_BATCH_DURATION.getDefaultValue());

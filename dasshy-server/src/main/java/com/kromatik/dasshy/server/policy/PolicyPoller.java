@@ -28,30 +28,27 @@ import com.kromatik.dasshy.thrift.model.TPolicy;
 public class PolicyPoller extends Thread
 {
 
-	public static final long 					DEFAULT_POLLING_INTERVAL	= 50000;
+	public static final long DEFAULT_POLLING_INTERVAL = 50000;
 
 	/** polling interval */
-	private long								pollingInterval;
+	private long pollingInterval;
 
 	/** flag indicating if the thread is terminated */
-	private boolean								terminate					= false;
+	private boolean terminate = false;
 
 	/** policy listener */
-	private final PolicyListener				policyListener;
+	private final PolicyListener policyListener;
 
 	/** policy dao */
-	private final PolicyDao						policyDao;
+	private final PolicyDao policyDao;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param policyListener policy listener
-	 * @param dao dao
+	 * @param dao            dao
 	 */
-	public PolicyPoller(
-					final PolicyListener policyListener,
-					final PolicyDao dao
-	)
+	public PolicyPoller(final PolicyListener policyListener, final PolicyDao dao)
 	{
 		this.policyListener = policyListener;
 		this.policyDao = dao;
@@ -60,15 +57,11 @@ public class PolicyPoller extends Thread
 	/**
 	 * Constructor with pooling interval
 	 *
-	 * @param policyListener policy listener
-	 * @param dao dao
+	 * @param policyListener  policy listener
+	 * @param dao             dao
 	 * @param pollingInterval an interval
 	 */
-	public PolicyPoller(
-					final PolicyListener policyListener,
-					final PolicyDao dao,
-					final Long pollingInterval
-	)
+	public PolicyPoller(final PolicyListener policyListener, final PolicyDao dao, final Long pollingInterval)
 	{
 		this.policyListener = policyListener;
 		this.policyDao = dao;
@@ -109,7 +102,8 @@ public class PolicyPoller extends Thread
 	/**
 	 * Terminate the thread
 	 */
-	public void terminate() {
+	public void terminate()
+	{
 		terminate = true;
 	}
 }

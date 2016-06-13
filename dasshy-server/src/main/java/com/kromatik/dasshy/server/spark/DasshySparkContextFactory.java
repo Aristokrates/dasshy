@@ -35,7 +35,7 @@ import java.util.Map;
 public class DasshySparkContextFactory implements SparkContextFactory
 {
 	/** spark configuration */
-	private final SparkConfiguration			sparkConfiguration;
+	private final SparkConfiguration sparkConfiguration;
 
 	/**
 	 * Default constructor
@@ -50,9 +50,7 @@ public class DasshySparkContextFactory implements SparkContextFactory
 	@Override
 	public SparkSession createSparkSession()
 	{
-		SparkConf conf = new SparkConf()
-						.setMaster(sparkConfiguration.getMaster())
-						.setAppName(this.getClass().getName())
+		SparkConf conf = new SparkConf().setMaster(sparkConfiguration.getMaster()).setAppName(this.getClass().getName())
 						.setJars(JavaStreamingContext.jarOfClass(this.getClass()));
 
 		SparkSession.Builder sessionBuilder = SparkSession.builder().config(conf);

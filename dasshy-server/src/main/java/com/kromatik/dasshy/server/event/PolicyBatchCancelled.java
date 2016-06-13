@@ -25,7 +25,7 @@ package com.kromatik.dasshy.server.event;
 public class PolicyBatchCancelled extends JobEvent
 {
 
-	private final String		batchId;
+	private final String batchId;
 
 	/***
 	 * New batch cancelled event
@@ -33,7 +33,7 @@ public class PolicyBatchCancelled extends JobEvent
 	 * @param id        event id
 	 * @param jobId     job id
 	 * @param timestamp creation timestamp
-	 * @param batchId	batch id
+	 * @param batchId   batch id
 	 */
 	public PolicyBatchCancelled(String id, String jobId, Long timestamp, String batchId)
 	{

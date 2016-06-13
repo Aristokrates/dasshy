@@ -19,7 +19,6 @@
  */
 package com.kromatik.dasshy.server.rest;
 
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -41,7 +40,8 @@ public class DasshyRestApi extends AbstractRestApi
 
 	@GET
 	@Path("version")
-	public Response getVersion() {
+	public Response getVersion()
+	{
 		return Response.status(Response.Status.OK).entity("Version").build();
 	}
 }

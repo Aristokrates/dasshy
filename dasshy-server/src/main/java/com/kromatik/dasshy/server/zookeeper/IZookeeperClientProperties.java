@@ -36,7 +36,7 @@ public interface IZookeeperClientProperties
 	 *
 	 * @return retry policy
 	 */
-	RetryPolicy	getRetryPolicy();
+	RetryPolicy getRetryPolicy();
 
 	/**
 	 * Zookeeper connection timeout (in miliseconds)

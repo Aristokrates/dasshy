@@ -29,13 +29,13 @@ import javax.ws.rs.core.Response;
 public class DeletePolicyCommand extends DasshyHttpCommand<Void>
 {
 
-	private String	policyId;
+	private String policyId;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param webTarget web target
-	 * @param policyId policy id to be deleted
+	 * @param policyId  policy id to be deleted
 	 */
 	public DeletePolicyCommand(final WebTarget webTarget, final String policyId)
 	{
@@ -52,10 +52,7 @@ public class DeletePolicyCommand extends DasshyHttpCommand<Void>
 	@Override
 	protected Invocation.Builder getWebTargetBuilder()
 	{
-		return webTarget.path("policy")
-						.path(policyId)
-						.request()
-						.accept(mediaType);
+		return webTarget.path("policy").path(policyId).request().accept(mediaType);
 	}
 
 	@Override

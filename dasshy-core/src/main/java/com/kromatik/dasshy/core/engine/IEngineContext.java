@@ -35,12 +35,12 @@ public interface IEngineContext<T extends IEngineConfiguration>
 	 *
 	 * @return configuration factory
 	 */
-	IConfigurationFactory<T>	getConfigurationFactory();
+	IConfigurationFactory<T> getConfigurationFactory();
 
 	/**
 	 * Get the factory used for creating the engine runtime environment
 	 *
 	 * @return engine runtime factory
 	 */
-	IEngineRuntimeFactory<T>	getEngineRuntimeFactory();
+	IEngineRuntimeFactory<T> getEngineRuntimeFactory();
 }

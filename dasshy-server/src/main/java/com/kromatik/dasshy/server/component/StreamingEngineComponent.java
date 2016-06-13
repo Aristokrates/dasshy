@@ -31,23 +31,20 @@ import com.kromatik.dasshy.server.scheduler.JobScheduler;
 public class StreamingEngineComponent implements IEngineComponent
 {
 	/** scheduler */
-	private final JobScheduler				jobScheduler;
+	private final JobScheduler jobScheduler;
 
 	/** policy poller */
-	private final PolicyPoller				policyPoller;
+	private final PolicyPoller policyPoller;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param policyListener policy listener
-	 * @param jobScheduler scheduler
-	 * @param policyDao policy dao
+	 * @param jobScheduler   scheduler
+	 * @param policyDao      policy dao
 	 */
-	public StreamingEngineComponent(
-					final PolicyListener policyListener,
-					final JobScheduler jobScheduler,
-					final PolicyDao policyDao
-	)
+	public StreamingEngineComponent(final PolicyListener policyListener, final JobScheduler jobScheduler,
+					final PolicyDao policyDao)
 	{
 		this.jobScheduler = jobScheduler;
 		policyPoller = new PolicyPoller(policyListener, policyDao);

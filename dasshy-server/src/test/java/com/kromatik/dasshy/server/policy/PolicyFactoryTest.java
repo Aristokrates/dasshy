@@ -43,13 +43,13 @@ import java.util.Map;
 /**
  * Tests for policy factory
  */
-@Test(groups = {"policy"})
+@Test(groups = { "policy" })
 public class PolicyFactoryTest
 {
 
-	private StagePluginService	pluginService;
+	private StagePluginService pluginService;
 
-	private PolicyFactory		policyFactory;
+	private PolicyFactory policyFactory;
 
 	@BeforeMethod
 	public void setup() throws Exception
@@ -84,14 +84,13 @@ public class PolicyFactoryTest
 		Assertions.assertThat(nextBatchTime).isGreaterThan(currentTime);
 
 		// check if time difference between the batch times is exactly the batch interval
-		Assertions.assertThat(nextBatchTime-previousBatchTime).isEqualTo(interval*1000);
+		Assertions.assertThat(nextBatchTime - previousBatchTime).isEqualTo(interval * 1000);
 	}
 
 	public void buildExtractor() throws Exception
 	{
 		DefaultStagePlugin kafkaPluginEnum = DefaultStagePlugin.KAFKA;
-		TStagePlugin kafkaPlugin = new TStagePlugin(
-						kafkaPluginEnum.getType(), kafkaPluginEnum.getIdentifier(),
+		TStagePlugin kafkaPlugin = new TStagePlugin(kafkaPluginEnum.getType(), kafkaPluginEnum.getIdentifier(),
 						kafkaPluginEnum.getClasspath(), kafkaPluginEnum.getDescription());
 
 		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.EXTRACTOR, kafkaPluginEnum.getIdentifier()))
@@ -117,11 +116,11 @@ public class PolicyFactoryTest
 	public void buildTransformer() throws Exception
 	{
 		DefaultStagePlugin identityPluginEnum = DefaultStagePlugin.IDENTITY;
-		TStagePlugin identityPlugin = new TStagePlugin(
-						identityPluginEnum.getType(), identityPluginEnum.getIdentifier(),
+		TStagePlugin identityPlugin = new TStagePlugin(identityPluginEnum.getType(), identityPluginEnum.getIdentifier(),
 						identityPluginEnum.getClasspath(), identityPluginEnum.getDescription());
 
-		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.TRANSFORMER, identityPluginEnum.getIdentifier()))
+		Mockito.when(pluginService
+						.getStagePluginByTypeAndId(TStageType.TRANSFORMER, identityPluginEnum.getIdentifier()))
 						.thenReturn(identityPlugin);
 
 		TStage transformerStage = new TStage(identityPlugin.getIdentifier());
@@ -136,9 +135,9 @@ public class PolicyFactoryTest
 	public void buildLoader() throws Exception
 	{
 		DefaultStagePlugin cassandraPluginEnum = DefaultStagePlugin.CASANDRA;
-		TStagePlugin cassandraPlugin = new TStagePlugin(
-						cassandraPluginEnum.getType(), cassandraPluginEnum.getIdentifier(),
-						cassandraPluginEnum.getClasspath(), cassandraPluginEnum.getDescription());
+		TStagePlugin cassandraPlugin = new TStagePlugin(cassandraPluginEnum.getType(),
+						cassandraPluginEnum.getIdentifier(), cassandraPluginEnum.getClasspath(),
+						cassandraPluginEnum.getDescription());
 
 		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.LOADER, cassandraPluginEnum.getIdentifier()))
 						.thenReturn(cassandraPlugin);
@@ -158,20 +157,18 @@ public class PolicyFactoryTest
 
 		DefaultStagePlugin kafkaPluginEnum = DefaultStagePlugin.KAFKA;
 		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.EXTRACTOR, kafkaPluginEnum.getIdentifier()))
-						.thenReturn(new TStagePlugin(
-										kafkaPluginEnum.getType(), kafkaPluginEnum.getIdentifier(),
+						.thenReturn(new TStagePlugin(kafkaPluginEnum.getType(), kafkaPluginEnum.getIdentifier(),
 										kafkaPluginEnum.getClasspath(), kafkaPluginEnum.getDescription()));
 
 		DefaultStagePlugin identityPluginEnum = DefaultStagePlugin.IDENTITY;
-		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.TRANSFORMER, identityPluginEnum.getIdentifier()))
-						.thenReturn(new TStagePlugin(
-										identityPluginEnum.getType(), identityPluginEnum.getIdentifier(),
+		Mockito.when(pluginService
+						.getStagePluginByTypeAndId(TStageType.TRANSFORMER, identityPluginEnum.getIdentifier()))
+						.thenReturn(new TStagePlugin(identityPluginEnum.getType(), identityPluginEnum.getIdentifier(),
 										identityPluginEnum.getClasspath(), identityPluginEnum.getDescription()));
 
 		DefaultStagePlugin cassandraPluginEnum = DefaultStagePlugin.CASANDRA;
 		Mockito.when(pluginService.getStagePluginByTypeAndId(TStageType.LOADER, cassandraPluginEnum.getIdentifier()))
-						.thenReturn(new TStagePlugin(
-										cassandraPluginEnum.getType(), cassandraPluginEnum.getIdentifier(),
+						.thenReturn(new TStagePlugin(cassandraPluginEnum.getType(), cassandraPluginEnum.getIdentifier(),
 										cassandraPluginEnum.getClasspath(), cassandraPluginEnum.getDescription()));
 
 		// build the kafka extractor stage with configuration
@@ -205,7 +202,8 @@ public class PolicyFactoryTest
 		Assertions.assertThat(policyInstance.getClock()).isInstanceOf(StreamingIntervalBatchClock.class);
 
 		Assertions.assertThat(policyInstance.getExtractor().stage()).isExactlyInstanceOf(KafkaExtractor.class);
-		Assertions.assertThat(policyInstance.getExtractor().configuration().getValues()).isNotEmpty().isEqualTo(kafkaConfig);
+		Assertions.assertThat(policyInstance.getExtractor().configuration().getValues()).isNotEmpty()
+						.isEqualTo(kafkaConfig);
 
 		Assertions.assertThat(policyInstance.getTransformer().stage()).isExactlyInstanceOf(IdentityTransformer.class);
 		Assertions.assertThat(policyInstance.getTransformer().configuration().getValues()).isNullOrEmpty();

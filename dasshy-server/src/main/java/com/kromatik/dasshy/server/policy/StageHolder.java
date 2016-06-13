@@ -31,14 +31,14 @@ import com.kromatik.dasshy.sdk.IStage;
 public abstract class StageHolder<S extends IStage, C extends StageConfiguration>
 {
 
-	private final S		stage;
+	private final S stage;
 
-	private final C		configuration;
+	private final C configuration;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param stage stage
+	 * @param stage         stage
 	 * @param configuration configuration
 	 */
 	public StageHolder(final S stage, final C configuration)

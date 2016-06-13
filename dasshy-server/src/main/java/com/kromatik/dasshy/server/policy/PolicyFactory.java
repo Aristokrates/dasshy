@@ -33,7 +33,6 @@ public interface PolicyFactory
 	 * Build a policy instance out of its model
 	 *
 	 * @param policyModel policy model
-	 *
 	 * @return policy instance
 	 */
 	Policy buildPolicy(final TPolicy policyModel);
@@ -42,7 +41,6 @@ public interface PolicyFactory
 	 * Builds streaming clock from the policy model
 	 *
 	 * @param policyModel policy model
-	 *
 	 * @return streaming clock
 	 */
 	BatchClock buildStreamingClock(final TPolicy policyModel);
@@ -51,7 +49,6 @@ public interface PolicyFactory
 	 * Builds an extractor instance from its model
 	 *
 	 * @param extractorModel extractor model
-	 *
 	 * @return extractor holder
 	 */
 	ExtractorHolder buildExtractor(final TStage extractorModel);
@@ -60,7 +57,6 @@ public interface PolicyFactory
 	 * Builds an transformer instance from its model
 	 *
 	 * @param transformerModel transformer model
-	 *
 	 * @return transformer holder
 	 */
 	TransformerHolder buildTransformer(final TStage transformerModel);
@@ -69,7 +65,6 @@ public interface PolicyFactory
 	 * Builds a loader instance from its model
 	 *
 	 * @param loaderModel loader model
-	 *
 	 * @return loader holder
 	 */
 	LoaderHolder buildLoader(final TStage loaderModel);

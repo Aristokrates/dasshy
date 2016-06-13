@@ -27,7 +27,7 @@ import java.util.Map;
 public class StageConfiguration
 {
 	/** values */
-	private final Map<String, String>			values;
+	private final Map<String, String> values;
 
 	/**
 	 * Default constructor

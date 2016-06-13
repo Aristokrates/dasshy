@@ -45,13 +45,16 @@ import java.util.Map;
 public class KafkaExtractor extends AbstractExtractor
 {
 
-	public static final String			HOST 		=	"host";
-	public static final String			PORT 		=	"port";
-	public static final String			TOPIC 		=	"topic";
-	public static final String			OFFSET 		=	"offset";
+	public static final String HOST   = "host";
+
+	public static final String PORT   = "port";
+
+	public static final String TOPIC  = "topic";
+
+	public static final String OFFSET = "offset";
 
 	/** input stream */
-	private JavaInputDStream<byte[]>	dStream;
+	private JavaInputDStream<byte[]> dStream;
 
 	/**
 	 * Default constructor
@@ -59,12 +62,10 @@ public class KafkaExtractor extends AbstractExtractor
 	public KafkaExtractor()
 	{
 		// set the attribute definitions for this extractor
-		setAttributeDefinitions(
-						new StageAttribute(HOST, StageAttribute.Type.STRING, true),
+		setAttributeDefinitions(new StageAttribute(HOST, StageAttribute.Type.STRING, true),
 						new StageAttribute(PORT, StageAttribute.Type.INTEGER, true),
 						new StageAttribute(TOPIC, StageAttribute.Type.STRING, true),
-						new StageAttribute(OFFSET, StageAttribute.Type.STRING, false)
-		);
+						new StageAttribute(OFFSET, StageAttribute.Type.STRING, false));
 	}
 
 	@Override
@@ -76,11 +77,10 @@ public class KafkaExtractor extends AbstractExtractor
 			dStream = extract(context);
 		}
 		final JavaRDD<byte[]> rdd = dStream.compute(time);
-		extractMap.put("kafka", context.getSparkSession().createDataset(rdd.rdd(), (Encoder)Encoders.BINARY()));
+		extractMap.put("kafka", context.getSparkSession().createDataset(rdd.rdd(), (Encoder) Encoders.BINARY()));
 
 		return extractMap;
 	}
-
 
 	@Override
 	public void commit()
@@ -103,11 +103,10 @@ public class KafkaExtractor extends AbstractExtractor
 	private JavaInputDStream<byte[]> extract(final RuntimeContext context)
 	{
 		final Map<String, String> kafkaMap = buildKafkaMap();
-		Map<TopicAndPartition, Long> initialOffsets  = getInitialOffsets();
+		Map<TopicAndPartition, Long> initialOffsets = getInitialOffsets();
 
 		return KafkaUtils.createDirectStream(context.getJavaStreamingContext(), String.class, byte[].class,
-						StringDecoder.class, DefaultDecoder.class, byte[].class, kafkaMap,
-						initialOffsets,
+						StringDecoder.class, DefaultDecoder.class, byte[].class, kafkaMap, initialOffsets,
 						new KafkaMessageAndMetadataFunction());
 	}
 

@@ -36,21 +36,21 @@ import java.util.List;
 public class EngineBootstrap<T extends IEngineConfiguration> implements IEngineBootstrap<T>
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(EngineBootstrap.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EngineBootstrap.class);
 
 	/** engine itself */
-	private final AbstractEngine<T>					engine;
+	private final AbstractEngine<T> engine;
 
 	/** list of loaded bundles as part of the bootstrap */
-	private final List<IEngineBundle<? super T>>	bundles;
+	private final List<IEngineBundle<? super T>> bundles;
 
 	/** engine init context */
-	private final IEngineContext<T> 				engineContext;
+	private final IEngineContext<T> engineContext;
 
 	/**
 	 * Creates a new engine bootstrap
 	 *
-	 * @param engine      an engine
+	 * @param engine        an engine
 	 * @param engineContext initialization context for the engine
 	 */
 	public EngineBootstrap(final AbstractEngine<T> engine, final IEngineContext<T> engineContext)
@@ -83,7 +83,6 @@ public class EngineBootstrap<T extends IEngineConfiguration> implements IEngineB
 	}
 
 	/**
-	 *
 	 * @return the engine
 	 */
 	public AbstractEngine<T> getEngine()
@@ -92,7 +91,6 @@ public class EngineBootstrap<T extends IEngineConfiguration> implements IEngineB
 	}
 
 	/**
-	 *
 	 * @return engine context
 	 */
 	public IEngineContext<T> getEngineContext()

@@ -40,7 +40,7 @@ public class StageInitException extends EngineException
 	/**
 	 * Message only constructor
 	 *
-	 * @param message	message
+	 * @param message message
 	 */
 	public StageInitException(final String message)
 	{

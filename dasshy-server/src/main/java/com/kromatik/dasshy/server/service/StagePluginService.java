@@ -35,7 +35,7 @@ import java.util.Map;
 public class StagePluginService
 {
 	/** stage plugin dao */
-	private final StagePluginDao						dao;
+	private final StagePluginDao dao;
 
 	/** available plugins */
 	private EnumMap<TStageType, Map<String, TStagePlugin>> stagePlugins;
@@ -54,7 +54,7 @@ public class StagePluginService
 	/**
 	 * Registers a new plugin
 	 *
-	 * @param type plugin type
+	 * @param type       plugin type
 	 * @param identifier plugin identifier
 	 */
 	public void registerStagePlugin(final TStageType type, final String identifier, final TStagePlugin plugin)
@@ -65,9 +65,9 @@ public class StagePluginService
 	/**
 	 * Updates a given stage plugin
 	 *
-	 * @param type plugin type
+	 * @param type       plugin type
 	 * @param identifier plugin identifier
-	 * @param plugin plugin
+	 * @param plugin     plugin
 	 */
 	public void updateStagePlugin(final TStageType type, final String identifier, final TStagePlugin plugin)
 	{
@@ -77,7 +77,7 @@ public class StagePluginService
 	/**
 	 * Deletes a stage plugin
 	 *
-	 * @param type plugin type
+	 * @param type       plugin type
 	 * @param identifier plugin identifier
 	 */
 	public void deleteStagePlugin(final TStageType type, final String identifier)
@@ -89,7 +89,6 @@ public class StagePluginService
 	 * List stage plugins by type
 	 *
 	 * @param type type
-	 *
 	 * @return list of plugins
 	 */
 	public Collection<TStagePlugin> listStagePluginsByType(final TStageType type)
@@ -103,9 +102,8 @@ public class StagePluginService
 	/**
 	 * Find plugin by type and id
 	 *
-	 * @param type plugin type
+	 * @param type       plugin type
 	 * @param identifier plugin identifier
-	 *
 	 * @return a stage plugin
 	 */
 	public TStagePlugin getStagePluginByTypeAndId(final TStageType type, final String identifier)
@@ -120,9 +118,8 @@ public class StagePluginService
 		final TStagePlugin savedPlugin = dao.getByTypeAndId(type, identifier);
 		if (savedPlugin == null)
 		{
-			throw new StagePluginNotFoundException(
-							"Could not find plugin of type: " + type +
-											" with identifier: " + identifier);
+			throw new StagePluginNotFoundException("Could not find plugin of type: " + type +
+							" with identifier: " + identifier);
 		}
 
 		return savedPlugin;
@@ -143,9 +140,9 @@ public class StagePluginService
 				pluginByIdMap = new HashMap<>();
 			}
 
-			pluginByIdMap.put(defaultPlugin.getIdentifier(), new TStagePlugin(
-							defaultPlugin.getType(), defaultPlugin.getIdentifier(),
-							defaultPlugin.getClasspath(), defaultPlugin.getDescription()));
+			pluginByIdMap.put(defaultPlugin.getIdentifier(),
+							new TStagePlugin(defaultPlugin.getType(), defaultPlugin.getIdentifier(),
+											defaultPlugin.getClasspath(), defaultPlugin.getDescription()));
 
 			stagePlugins.put(defaultPlugin.getType(), pluginByIdMap);
 		}

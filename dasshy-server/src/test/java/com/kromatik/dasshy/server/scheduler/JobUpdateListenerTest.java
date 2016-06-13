@@ -32,12 +32,12 @@ import org.testng.annotations.Test;
 /**
  * Tests the Job listener
  */
-@Test(groups = {"listener"})
+@Test(groups = { "listener" })
 public class JobUpdateListenerTest
 {
-	private PolicyDao			policyDao;
+	private PolicyDao policyDao;
 
-	private JobUpdateListener	jobUpdateListener;
+	private JobUpdateListener jobUpdateListener;
 
 	@BeforeMethod
 	public void setup() throws Exception

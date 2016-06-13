@@ -44,7 +44,6 @@ public interface JobScheduler
 	 * Remove a job from the scheduler
 	 *
 	 * @param jobId id of the job
-	 *
 	 * @return removed policy job; null if not found
 	 */
 	Job stop(final String jobId);
@@ -57,8 +56,7 @@ public interface JobScheduler
 	/**
 	 * Get the job by its id
 	 *
-	 * @param jobId  job id
-	 *
+	 * @param jobId job id
 	 * @return Job
 	 */
 	Job get(final String jobId);

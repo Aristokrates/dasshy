@@ -42,7 +42,7 @@ public class PolicyNotFoundException extends EngineException
 	/**
 	 * Message only constructor
 	 *
-	 * @param message	message
+	 * @param message message
 	 */
 	public PolicyNotFoundException(final String message)
 	{

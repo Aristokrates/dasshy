@@ -31,7 +31,7 @@ import com.kromatik.dasshy.thrift.model.TPolicy;
 public class JobUpdateListener implements JobListener
 {
 	/** policy dao */
-	private final PolicyDao			policyDao;
+	private final PolicyDao policyDao;
 
 	/**
 	 * Default constructor

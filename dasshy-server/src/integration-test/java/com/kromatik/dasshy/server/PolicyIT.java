@@ -55,14 +55,14 @@ import java.util.Map;
 /**
  * Integration tests for policy
  */
-@Test(groups = {"IT"})
+@Test(groups = { "IT" })
 public class PolicyIT
 {
 	protected static EmbeddedZooKeeper testingServer;
 
-	protected DasshyServer	server;
+	protected DasshyServer server;
 
-	protected WebTarget		dasshyServerApi;
+	protected WebTarget dasshyServerApi;
 
 	@BeforeClass
 	public void setup() throws Exception
@@ -81,8 +81,8 @@ public class PolicyIT
 		client.register(new LoggingFilter());
 
 		dasshyServerApi = client.target(UriBuilder.fromUri("http://{host}:{port}/{path}")
-										.resolveTemplate("host", InetAddress.getLocalHost().getHostName())
-										.resolveTemplate("port", "8081").resolveTemplate("path", "api"));
+						.resolveTemplate("host", InetAddress.getLocalHost().getHostName())
+						.resolveTemplate("port", "8081").resolveTemplate("path", "api"));
 	}
 
 	public void createPolicy() throws Exception
@@ -133,7 +133,6 @@ public class PolicyIT
 		testingServer.close();
 	}
 
-
 	private IEngineContext<DasshyConfiguration> buildITDasshyContext()
 	{
 		return new IEngineContext<DasshyConfiguration>()
@@ -158,7 +157,6 @@ public class PolicyIT
 			}
 		};
 	}
-
 
 	private static final class ITDasshyConfiguration implements IConfigurationFactory
 	{

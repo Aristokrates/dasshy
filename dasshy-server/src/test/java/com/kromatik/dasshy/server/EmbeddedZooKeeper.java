@@ -33,15 +33,15 @@ import java.nio.file.Path;
  */
 public class EmbeddedZooKeeper
 {
-	private static final String 	HOST = "localhost";
+	private static final String HOST = "localhost";
 
-	private static final int 		TICK_TIME = 500;
+	private static final int TICK_TIME = 500;
 
-	private static final int 		MAXCC = 10;
+	private static final int MAXCC = 10;
 
-	private final int 				port;
+	private final int port;
 
-	private ZooKeeperServer 		zooKeeperServer;
+	private ZooKeeperServer zooKeeperServer;
 
 	public EmbeddedZooKeeper()
 	{

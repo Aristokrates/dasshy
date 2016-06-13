@@ -30,7 +30,7 @@ public class ExtractorHolder extends StageHolder<Extractor, StageConfiguration>
 	/**
 	 * Default constructor
 	 *
-	 * @param extractor extractor instance
+	 * @param extractor       extractor instance
 	 * @param extractorConfig extractor instance config
 	 */
 	public ExtractorHolder(final Extractor extractor, final StageConfiguration extractorConfig)

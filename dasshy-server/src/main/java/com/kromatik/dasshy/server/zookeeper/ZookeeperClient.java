@@ -33,16 +33,16 @@ import org.slf4j.LoggerFactory;
 public class ZookeeperClient implements IZookeeperClient
 {
 
-	private static final Logger	LOGGER	=	LoggerFactory.getLogger(ZookeeperClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperClient.class);
 
 	/** underlying curator client */
-	private CuratorFramework							curatorFramework = null;
+	private CuratorFramework curatorFramework = null;
 
 	/** zk properties */
-	private final IZookeeperClientProperties			zookeeperClientProperties;
+	private final IZookeeperClientProperties zookeeperClientProperties;
 
 	/** tracks the state of the underlying zookeeper connection */
-	private boolean										closed		=	true;
+	private boolean closed = true;
 
 	/**
 	 * Creates zookeeper client for the given properties
@@ -56,7 +56,8 @@ public class ZookeeperClient implements IZookeeperClient
 		try
 		{
 
-			curatorFramework = CuratorFrameworkFactory.builder().connectString(zookeeperClientProperties.getConnectionString())
+			curatorFramework = CuratorFrameworkFactory.builder()
+							.connectString(zookeeperClientProperties.getConnectionString())
 							.connectionTimeoutMs(zookeeperClientProperties.getConnectionSessionTimeout())
 							.sessionTimeoutMs(zookeeperClientProperties.getConnectionSessionTimeout())
 							.retryPolicy(zookeeperClientProperties.getRetryPolicy()).build();
@@ -93,20 +94,20 @@ public class ZookeeperClient implements IZookeeperClient
 		{
 			switch (newState)
 			{
-				case LOST:
-					LOGGER.warn("Zookeeper connection has been lost");
-					break;
+			case LOST:
+				LOGGER.warn("Zookeeper connection has been lost");
+				break;
 
-				case RECONNECTED:
-					LOGGER.info("Zookeeper connection has been re-established");
-					break;
+			case RECONNECTED:
+				LOGGER.info("Zookeeper connection has been re-established");
+				break;
 
-				case SUSPENDED:
-					LOGGER.warn("Zookeeper connection has been suspended");
-					break;
+			case SUSPENDED:
+				LOGGER.warn("Zookeeper connection has been suspended");
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 	}

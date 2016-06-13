@@ -27,7 +27,7 @@ public abstract class EngineException extends RuntimeException
 	/**
 	 * Default constructor
 	 *
-	 * @param message message
+	 * @param message   message
 	 * @param exception underlying cause
 	 */
 	public EngineException(final String message, final Throwable exception)

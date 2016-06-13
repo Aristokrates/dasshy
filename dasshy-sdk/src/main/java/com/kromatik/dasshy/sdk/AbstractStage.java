@@ -27,16 +27,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *	Abstract stage
+ * Abstract stage
  */
 public abstract class AbstractStage implements IStage
 {
 
 	/** attributes */
-	private List<StageAttribute>			attributeDefinitions	=	Collections.emptyList();
+	private List<StageAttribute> attributeDefinitions = Collections.emptyList();
 
 	/** attribute values */
-	private Map<String, String>				attributes				=	new HashMap<>();
+	private Map<String, String> attributes = new HashMap<>();
 
 	@Override
 	public void init(final RuntimeContext runtimeContext, final StageConfiguration configuration)
@@ -72,9 +72,8 @@ public abstract class AbstractStage implements IStage
 	/**
 	 * Return the attribute value as String if it exists, or the given default value if it doesn't
 	 *
-	 * @param name attribute name
+	 * @param name         attribute name
 	 * @param defaultValue default value, if attribute not defined
-	 *
 	 * @return attribute value, or default if not defined
 	 */
 	protected String getAttribute(final String name, final String defaultValue)
@@ -86,11 +85,9 @@ public abstract class AbstractStage implements IStage
 	/**
 	 * Return the attribute value as Integer if it exists, or the given default value if it doesn't
 	 *
-	 * @param name attribute name
+	 * @param name         attribute name
 	 * @param defaultValue default value, if attribute not defined
-	 *
 	 * @return attribute value, or default if not defined
-	 *
 	 * @throws StageException thrown if attribute count not be parsed as Integer
 	 */
 	protected Integer getAttribute(final String name, final Integer defaultValue) throws StageException
@@ -103,11 +100,9 @@ public abstract class AbstractStage implements IStage
 	/**
 	 * Return the attribute value as Boolean if it exists, or the given default value if it doesn't
 	 *
-	 * @param name attribute name
+	 * @param name         attribute name
 	 * @param defaultValue default value, if attribute not defined
-	 *
 	 * @return attribute value, or default if not defined
-	 *
 	 * @throws StageException thrown if attribute count not be parsed as Boolean
 	 */
 	protected Boolean getAttribute(final String name, final Boolean defaultValue) throws StageException
@@ -120,11 +115,9 @@ public abstract class AbstractStage implements IStage
 	/**
 	 * Return the attribute value as BigDecimal if it exists, or the given default value if it doesn't
 	 *
-	 * @param name attribute name
+	 * @param name         attribute name
 	 * @param defaultValue default value, if attribute not defined
-	 *
 	 * @return attribute value, or default if not defined
-	 *
 	 * @throws StageException thrown if attribute count not be parsed as BigDecimal
 	 */
 	protected BigDecimal getAttribute(final String name, final BigDecimal defaultValue) throws StageException

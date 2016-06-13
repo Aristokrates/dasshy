@@ -41,16 +41,16 @@ import java.lang.reflect.Type;
 public abstract class PayloadProvider<T extends TBase> implements MessageBodyReader<T>, MessageBodyWriter<T>
 {
 	/** media type */
-	protected final DasshyMediaType			providerMediaType;
+	protected final DasshyMediaType providerMediaType;
 
 	/** serializer */
-	protected final EntitySerializer<T> 	serializer;
+	protected final EntitySerializer<T> serializer;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param providerMediaType media type
-	 * @param serializer serializer per media type
+	 * @param serializer        serializer per media type
 	 */
 	public PayloadProvider(final DasshyMediaType providerMediaType, final EntitySerializer<T> serializer)
 	{

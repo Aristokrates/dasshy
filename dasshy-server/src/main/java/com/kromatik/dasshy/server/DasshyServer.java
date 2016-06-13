@@ -61,16 +61,16 @@ import java.util.concurrent.Executors;
 public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(DasshyServer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DasshyServer.class);
 
-	private static DasshyServer		INSTANCE;
+	private static DasshyServer INSTANCE;
 
 	/**
 	 * Runs the dasshy server as java App
 	 *
 	 * @param args command line arguments
 	 */
-	public static void main(final String [] args)
+	public static void main(final String[] args)
 	{
 		final IEngineContext<DasshyConfiguration> dasshyServerContext = new DasshyServerContext(args);
 
@@ -116,22 +116,18 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 		engineRuntime.manage(new SparkEngineComponent(configuration, dasshyRuntime));
 
 		// init daos and services
-		final PolicyDao policyDao = new ZookeeperPolicyDao(
-						ZookeeperClientFactory.getInstance(),
+		final PolicyDao policyDao = new ZookeeperPolicyDao(ZookeeperClientFactory.getInstance(),
 						configuration.getZookeeperClientConfiguration());
 
-		final StagePluginDao stagePluginDao = new ZookeeperStagePluginDao(
-						ZookeeperClientFactory.getInstance(),
+		final StagePluginDao stagePluginDao = new ZookeeperStagePluginDao(ZookeeperClientFactory.getInstance(),
 						configuration.getZookeeperClientConfiguration());
 
 		final StagePluginService stagePluginService = new StagePluginService(stagePluginDao);
 		final PolicyFactory policyFactory = new DefaultPolicyFactory(stagePluginService);
 
 		final JobScheduler jobScheduler = new ConcurrentJobScheduler(Executors.newScheduledThreadPool(10));
-		final PolicyListener policyListener = new JobsOnPolicyListener(
-						dasshyRuntime.getRuntimeContext(),
-						policyFactory, jobScheduler,
-						new JobUpdateListener(policyDao));
+		final PolicyListener policyListener = new JobsOnPolicyListener(dasshyRuntime.getRuntimeContext(), policyFactory,
+						jobScheduler, new JobUpdateListener(policyDao));
 		final PolicyService policyService = new PolicyService(policyDao, policyListener, policyFactory);
 
 		// 3. manage jetty component
@@ -181,7 +177,7 @@ public class DasshyServer extends AbstractEngine<DasshyConfiguration>
 	 */
 	protected static final class DasshyServerShutdownThread extends Thread
 	{
-		private final DasshyServer	dasshyServer;
+		private final DasshyServer dasshyServer;
 
 		/**
 		 * @param dasshyServer the server

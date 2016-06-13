@@ -33,9 +33,9 @@ public interface Transformer extends IStage
 	/**
 	 * Transforms the input data frame
 	 *
-	 * @param context		runtime context
-	 * @param input			input data
-	 * @return				transformed data
+	 * @param context runtime context
+	 * @param input   input data
+	 * @return transformed data
 	 */
 	Map<String, Dataset<Row>> transform(final RuntimeContext context, final Map<String, Dataset<Row>> input);
 }

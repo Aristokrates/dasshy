@@ -31,7 +31,6 @@ public interface IConfigurationFactory<T extends IEngineConfiguration>
 	 * Builds the configuration
 	 *
 	 * @param klass configuration class
-	 *
 	 * @return configuration
 	 */
 	T build(final Class<T> klass);

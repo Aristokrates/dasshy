@@ -39,7 +39,7 @@ import java.io.OutputStream;
 public class JsonSerializer<T extends TBase> implements EntitySerializer<T>
 {
 	/** object mapper */
-	private final ObjectMapper			objectMapper;
+	private final ObjectMapper objectMapper;
 
 	/**
 	 * Default constructor
@@ -95,8 +95,9 @@ public class JsonSerializer<T extends TBase> implements EntitySerializer<T>
 		}
 		catch (final Exception e)
 		{
-			throw new SerializationException("Failed to deserialize Simple JSON format to Thrift entity. Thrift type: " + tClass
-							.getName(), e);
+			throw new SerializationException(
+							"Failed to deserialize Simple JSON format to Thrift entity. Thrift type: " + tClass
+											.getName(), e);
 		}
 	}
 }

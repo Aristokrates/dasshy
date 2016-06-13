@@ -28,16 +28,16 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 public class RuntimeContext
 {
 	/** streaming context */
-	private final JavaStreamingContext				javaStreamingContext;
+	private final JavaStreamingContext javaStreamingContext;
 
 	/** spark session */
-	private final SparkSession						sparkSession;
+	private final SparkSession sparkSession;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param javaStreamingContext spark streaming context
-	 * @param sparkSession spark session
+	 * @param sparkSession         spark session
 	 */
 	public RuntimeContext(final JavaStreamingContext javaStreamingContext, final SparkSession sparkSession)
 	{

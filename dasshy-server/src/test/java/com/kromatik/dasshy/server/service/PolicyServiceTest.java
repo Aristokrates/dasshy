@@ -35,17 +35,17 @@ import org.testng.annotations.Test;
 /**
  * Tests for policy service
  */
-@Test(groups = {"service"})
+@Test(groups = { "service" })
 public class PolicyServiceTest
 {
 
-	private PolicyDao		policyDao;
+	private PolicyDao policyDao;
 
-	private PolicyListener	policyListener;
+	private PolicyListener policyListener;
 
-	private PolicyFactory	policyFactory;
+	private PolicyFactory policyFactory;
 
-	private PolicyService	policyService;
+	private PolicyService policyService;
 
 	@BeforeMethod
 	public void setup() throws Exception
@@ -56,7 +56,6 @@ public class PolicyServiceTest
 
 		policyService = new PolicyService(policyDao, policyListener, policyFactory);
 	}
-
 
 	public void createPolicy() throws Exception
 	{
@@ -104,7 +103,8 @@ public class PolicyServiceTest
 
 	}
 
-	public void deletePolicy() throws Exception{
+	public void deletePolicy() throws Exception
+	{
 
 		String policyId = "delete_id";
 		TPolicy policyModel = new TPolicy();
@@ -117,7 +117,8 @@ public class PolicyServiceTest
 		Assertions.assertThat(isDeleted).isTrue();
 	}
 
-	public void deleteNonExistingPolicy() throws Exception{
+	public void deleteNonExistingPolicy() throws Exception
+	{
 
 		String policyId = "delete_id_not_found";
 
@@ -128,7 +129,8 @@ public class PolicyServiceTest
 		Mockito.verify(policyDao, Mockito.times(1)).get(policyId);
 	}
 
-	public void getPolicy() throws Exception{
+	public void getPolicy() throws Exception
+	{
 
 		String policyId = "policy_id";
 		TPolicy policyModel = new TPolicy();
@@ -140,7 +142,8 @@ public class PolicyServiceTest
 		Assertions.assertThat(existingPolicy).isEqualsToByComparingFields(policyModel);
 	}
 
-	public void getPolicyNotFound() throws Exception{
+	public void getPolicyNotFound() throws Exception
+	{
 
 		String policyId = "policy_id";
 		Mockito.when(policyDao.get(policyId)).thenReturn(null);

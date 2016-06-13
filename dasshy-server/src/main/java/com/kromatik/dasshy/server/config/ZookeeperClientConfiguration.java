@@ -45,7 +45,7 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 {
 
 	/** zookeeper properties */
-	private final Map<String, DynamicStringProperty>		zookeeperProperties	=	new HashMap<>();
+	private final Map<String, DynamicStringProperty> zookeeperProperties = new HashMap<>();
 
 	/**
 	 * Default constructor
@@ -89,7 +89,8 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 			String propName = dasshyProperty.getPropertyName();
 			if (propName.startsWith("zookeeper"))
 			{
-				zookeeperProperties.put(propName, new DynamicStringProperty(propName, dasshyProperty.getDefaultValue()));
+				zookeeperProperties
+								.put(propName, new DynamicStringProperty(propName, dasshyProperty.getDefaultValue()));
 			}
 		}
 
@@ -97,8 +98,8 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 		while (zookeeperPropertiesIt.hasNext())
 		{
 			String propertyName = zookeeperPropertiesIt.next();
-			DynamicStringProperty propertyValue = dynamicPropertyFactory.getStringProperty(propertyName,
-							DasshyProperties.forName(propertyName).getDefaultValue());
+			DynamicStringProperty propertyValue = dynamicPropertyFactory
+							.getStringProperty(propertyName, DasshyProperties.forName(propertyName).getDefaultValue());
 			if (propertyValue != null)
 			{
 				zookeeperProperties.put(propertyName, propertyValue);
@@ -117,7 +118,7 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	/**
 	 * Set zookeeper property
 	 *
-	 * @param propertyName name of the property
+	 * @param propertyName  name of the property
 	 * @param propertyValue value for the given property
 	 */
 	public void setZookeeperProperty(final String propertyName, String propertyValue)
@@ -131,7 +132,8 @@ public class ZookeeperClientConfiguration extends AbstractEngineConfiguration im
 	@Override
 	public String getConnectionString()
 	{
-		final DynamicStringProperty zkConnect = getZookeeperProperties().get(ZOOKEEPER_CONNECTION_STRING.getPropertyName());
+		final DynamicStringProperty zkConnect = getZookeeperProperties()
+						.get(ZOOKEEPER_CONNECTION_STRING.getPropertyName());
 		return zkConnect != null ? zkConnect.get() : ZOOKEEPER_CONNECTION_STRING.getDefaultValue();
 	}
 

@@ -58,21 +58,21 @@ import java.util.Set;
 public class JettyEngineComponent extends Application implements IEngineComponent
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(JettyEngineComponent.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JettyEngineComponent.class);
 
 	/** underlying jetty server */
-	private Server							jettyServer;
+	private Server jettyServer;
 
 	/** jetty server configuration */
-	private JettyServerConfiguration		jettyConfiguration;
+	private JettyServerConfiguration jettyConfiguration;
 
 	// all objects used by methods #getClasses and #getSingletons needs to be static!!!
 
 	/** policy service */
-	private static PolicyService			policyService;
+	private static PolicyService policyService;
 
 	/** plugin service */
-	private static StagePluginService		pluginService;
+	private static StagePluginService pluginService;
 
 	/**
 	 * Constructor called by Jersey to initialize the Application and its resources
@@ -86,18 +86,16 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 	/**
 	 * Default constructor, entry point of this component
 	 *
-	 * @param configuration engine configuration
-	 * @param service policy service
+	 * @param configuration      engine configuration
+	 * @param service            policy service
 	 * @param stagePluginService plugin service
 	 */
-	public JettyEngineComponent(
-					final DasshyConfiguration configuration,
-					final PolicyService service,
+	public JettyEngineComponent(final DasshyConfiguration configuration, final PolicyService service,
 					final StagePluginService stagePluginService)
 	{
 		jettyConfiguration = configuration.getJettyConfiguration();
-		policyService = service;	//NOSONAR
-		pluginService = stagePluginService;	//NOSONAR
+		policyService = service;    //NOSONAR
+		pluginService = stagePluginService;    //NOSONAR
 	}
 
 	@Override
@@ -108,7 +106,7 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 
 		// add handlers
 		final ContextHandlerCollection contexts = new ContextHandlerCollection();
-		contexts.setHandlers(new Handler[]{apiContext});
+		contexts.setHandlers(new Handler[] { apiContext });
 		jettyServer.setHandler(contexts);
 
 		LOGGER.info("Starting embedded jetty server");
@@ -161,12 +159,10 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 		// this line results in calling the no-arg constructor and methods(getSingletons and getClasses) on jetty start
 		servletHolder.setInitParameter("javax.ws.rs.Application", JettyEngineComponent.class.getName());
 
-
 		final ServletContextHandler context = new ServletContextHandler();
 		context.setSessionHandler(new SessionHandler());
 		context.setContextPath(jettyConfiguration.getContextPath());
 		context.addServlet(servletHolder, "/api/*");
-
 
 		// TODO (pai) enable CORS and auth
 		/*
@@ -226,7 +222,6 @@ public class JettyEngineComponent extends Application implements IEngineComponen
 		singletons.add(root);
 		singletons.add(policyRestApi);
 		singletons.add(stagePluginRestApi);
-
 
 		// add more mappers
 

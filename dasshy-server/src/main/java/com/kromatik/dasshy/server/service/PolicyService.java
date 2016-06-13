@@ -35,22 +35,23 @@ import java.util.ArrayList;
 public class PolicyService
 {
 	/** policy dao */
-	private final PolicyDao			policyDao;
+	private final PolicyDao policyDao;
 
 	/** policy listener */
-	private final PolicyListener	policyListener;
+	private final PolicyListener policyListener;
 
 	/** policy factory */
-	private final PolicyFactory		policyFactory;
+	private final PolicyFactory policyFactory;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param policyDao policy dao
+	 * @param policyDao      policy dao
 	 * @param policyListener policy listener
-	 * @param policyFactory policy factory
+	 * @param policyFactory  policy factory
 	 */
-	public PolicyService(final PolicyDao policyDao, final PolicyListener policyListener, final PolicyFactory policyFactory)
+	public PolicyService(final PolicyDao policyDao, final PolicyListener policyListener,
+					final PolicyFactory policyFactory)
 	{
 		this.policyDao = policyDao;
 		this.policyListener = policyListener;
@@ -61,7 +62,6 @@ public class PolicyService
 	 * Creates a policy
 	 *
 	 * @param policy policy to be created
-	 *
 	 * @return an created policy
 	 */
 	public TPolicy createPolicy(final TPolicy policy)
@@ -77,7 +77,6 @@ public class PolicyService
 	 * Updates a policy
 	 *
 	 * @param policy policy to be updated
-	 *
 	 * @return updated policy
 	 */
 	public TPolicy updatePolicy(final TPolicy policy)
@@ -95,7 +94,6 @@ public class PolicyService
 	 * Deletes a policy
 	 *
 	 * @param policyId policy Id
-	 *
 	 * @return true/false
 	 */
 	public boolean deletePolicy(final String policyId)
@@ -115,7 +113,6 @@ public class PolicyService
 	 * Retrieves a policy based on the given Id
 	 *
 	 * @param policyId policy Id
-	 *
 	 * @return policy
 	 */
 	public TPolicy getPolicy(final String policyId)

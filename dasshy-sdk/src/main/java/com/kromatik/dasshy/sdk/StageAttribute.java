@@ -33,13 +33,13 @@ public class StageAttribute
 	}
 
 	/** name of the attribute */
-	private String			name;
+	private String name;
 
 	/** attribute type */
-	private Type			type 		=	Type.STRING;
+	private Type type = Type.STRING;
 
 	/** mark as required */
-	private boolean 		required 	=	false;
+	private boolean required = false;
 
 	/**
 	 * Default constructor
@@ -74,8 +74,8 @@ public class StageAttribute
 	/**
 	 * Constructing mandatory/optional attribute with name, type
 	 *
-	 * @param name name of the attribute
-	 * @param type attribute type
+	 * @param name     name of the attribute
+	 * @param type     attribute type
 	 * @param required mandatory or optional attribute
 	 */
 	public StageAttribute(final String name, final Type type, boolean required)

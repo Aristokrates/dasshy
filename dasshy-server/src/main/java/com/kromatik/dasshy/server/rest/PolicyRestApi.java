@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response;
 public class PolicyRestApi extends AbstractRestApi
 {
 	/** policy service */
-	private final PolicyService			policyService;
+	private final PolicyService policyService;
 
 	/**
 	 * Default constructor
@@ -54,7 +54,6 @@ public class PolicyRestApi extends AbstractRestApi
 	 * Creates a policy
 	 *
 	 * @param policy policy to be created
-	 *
 	 * @return created policy
 	 */
 	@POST
@@ -68,7 +67,6 @@ public class PolicyRestApi extends AbstractRestApi
 	 * Updates an existing policy
 	 *
 	 * @param policy policy to be updated
-	 *
 	 * @return updated policy
 	 */
 	@PUT
@@ -82,12 +80,13 @@ public class PolicyRestApi extends AbstractRestApi
 	 * Gets policy by id
 	 *
 	 * @param policyId id of the policy
-	 *
 	 * @return policy
 	 */
 	@GET
 	@Path("/{id:(\\S*)}")
-	public TPolicy getPolicy(@PathParam("id") final String policyId)
+	public TPolicy getPolicy(
+					@PathParam("id")
+					final String policyId)
 	{
 		return policyService.getPolicy(policyId);
 	}
@@ -107,12 +106,13 @@ public class PolicyRestApi extends AbstractRestApi
 	 * Deletes a policy
 	 *
 	 * @param policyId id of the policy
-	 *
 	 * @return response status
 	 */
 	@DELETE
 	@Path("/{id:(\\S*)}")
-	public Response deletePolicy(@PathParam("id") final String policyId)
+	public Response deletePolicy(
+					@PathParam("id")
+					final String policyId)
 	{
 		policyService.deletePolicy(policyId);
 		return Response.ok().build();

@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
  */
 public class StreamingIntervalBatchClock extends BatchClock
 {
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(StreamingIntervalBatchClock.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StreamingIntervalBatchClock.class);
 
 	private final Long intervalSeconds;
 
-	/** batch time*/
+	/** batch time */
 	private Long batchTime;
 
 	/**

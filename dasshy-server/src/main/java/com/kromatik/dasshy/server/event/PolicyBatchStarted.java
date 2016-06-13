@@ -25,7 +25,7 @@ package com.kromatik.dasshy.server.event;
 public class PolicyBatchStarted extends JobEvent
 {
 	/** batch id */
-	private final String		batchId;
+	private final String batchId;
 
 	/***
 	 * New batch started event

@@ -30,7 +30,7 @@ public interface IStage
 	 * Initializes the stage at the beginning of its execution
 	 *
 	 * @param runtimeContext running context
-	 * @param configuration stage configuration
+	 * @param configuration  stage configuration
 	 */
 	void init(final RuntimeContext runtimeContext, final StageConfiguration configuration);
 

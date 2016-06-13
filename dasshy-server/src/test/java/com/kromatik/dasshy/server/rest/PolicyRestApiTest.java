@@ -53,10 +53,10 @@ import java.util.Arrays;
 /**
  * Tests the policy rest api
  */
-@Test(groups = {"rest"})
+@Test(groups = { "rest" })
 public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 {
-	private PolicyService	policyService;
+	private PolicyService policyService;
 
 	@Override
 	protected Application configure()
@@ -199,8 +199,8 @@ public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 		String policyId = "id";
 		Mockito.when(policyService.deletePolicy(Mockito.eq(policyId))).thenReturn(true);
 
-		Response response = getPolicyWebTarget().path(policyId)
-						.request().accept(MediaType.APPLICATION_JSON_TYPE).delete();
+		Response response = getPolicyWebTarget().path(policyId).request().accept(MediaType.APPLICATION_JSON_TYPE)
+						.delete();
 
 		Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 	}
@@ -212,8 +212,7 @@ public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 
 		Mockito.when(policyService.getPolicy(Mockito.eq(policyId))).thenReturn(policyModel);
 
-		Response response = getPolicyWebTarget().path(policyId)
-						.request().accept(MediaType.APPLICATION_JSON_TYPE).get();
+		Response response = getPolicyWebTarget().path(policyId).request().accept(MediaType.APPLICATION_JSON_TYPE).get();
 
 		TPolicy responsePolicyModel = response.readEntity(TPolicy.class);
 
@@ -227,8 +226,7 @@ public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 		Mockito.when(policyService.getPolicy(Mockito.eq(policyId)))
 						.thenThrow(new PolicyNotFoundException("Policy with id: " + policyId + " not found"));
 
-		Response response = getPolicyWebTarget().path(policyId)
-						.request().accept(MediaType.APPLICATION_JSON_TYPE).get();
+		Response response = getPolicyWebTarget().path(policyId).request().accept(MediaType.APPLICATION_JSON_TYPE).get();
 
 		Assertions.assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
 	}
@@ -238,8 +236,7 @@ public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 		TPolicy policyModel = new TPolicy();
 		Mockito.when(policyService.listPolicies()).thenReturn(new TPolicyList(Arrays.asList(policyModel)));
 
-		Response response = getPolicyWebTarget()
-						.request().accept(MediaType.APPLICATION_JSON_TYPE).get();
+		Response response = getPolicyWebTarget().request().accept(MediaType.APPLICATION_JSON_TYPE).get();
 
 		TPolicyList responsePolicyList = response.readEntity(TPolicyList.class);
 
@@ -247,7 +244,6 @@ public class PolicyRestApiTest extends JerseyTestNg.ContainerPerMethodTest
 		Assertions.assertThat(responsePolicyList.getPoliciesSize()).isEqualTo(1);
 		Assertions.assertThat(responsePolicyList.getPolicies()).contains(policyModel);
 	}
-
 
 	private WebTarget getPolicyWebTarget()
 	{

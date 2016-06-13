@@ -51,26 +51,26 @@ import java.util.UUID;
 public class PolicyJob extends Job
 {
 
-	private static final Integer 			MAX_RESULTS = 1000;
+	private static final Integer MAX_RESULTS = 1000;
 
 	/** runtime context for execution of the policy job */
-	private final RuntimeContext			runtimeContext;
+	private final RuntimeContext runtimeContext;
 
 	/** policy instance */
-	private final Policy					policy;
+	private final Policy policy;
 
 	/** spark env */
-	private final SparkEnv					sparkEnvironment;
+	private final SparkEnv sparkEnvironment;
 
 	/** id of the current running batch */
-	private String 							currentBatchId;
+	private String currentBatchId;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param policy policy instance
+	 * @param policy         policy instance
 	 * @param runtimeContext runtime context
-	 * @param listener listener
+	 * @param listener       listener
 	 */
 	public PolicyJob(final Policy policy, final RuntimeContext runtimeContext, final JobListener listener)
 	{
@@ -107,16 +107,13 @@ public class PolicyJob extends Job
 			Time batchTime;
 			int i;
 
-			for (i = 0, batchTime = getBatchTime();
-				 policy.getClock().acquire();
-				 policy.getClock().increment(i), i++, batchTime = getBatchTime())
+			for (i = 0, batchTime = getBatchTime(); policy.getClock().acquire(); policy.getClock()
+							.increment(i), i++, batchTime = getBatchTime())
 			{
 				final String batchId = getBatchId(batchTime);
 				currentBatchId = batchId;
 
-				fireEvent(new PolicyBatchStarted(
-								UUID.randomUUID().toString(),
-								id, System.currentTimeMillis(),
+				fireEvent(new PolicyBatchStarted(UUID.randomUUID().toString(), id, System.currentTimeMillis(),
 								currentBatchId));
 
 				// set job group without interruption on cancel
@@ -157,10 +154,7 @@ public class PolicyJob extends Job
 		}
 		catch (Exception e)
 		{
-			fireEvent(new PolicyBatchCancelled(
-							UUID.randomUUID().toString(),
-							id,
-							System.currentTimeMillis(),
+			fireEvent(new PolicyBatchCancelled(UUID.randomUUID().toString(), id, System.currentTimeMillis(),
 							currentBatchId));
 			evaluateExtractorCheckpoint(currentBatchId, false);
 			throw e;
@@ -229,7 +223,6 @@ public class PolicyJob extends Job
 	 * Get the id of the batch
 	 *
 	 * @param batchTime batch time
-	 *
 	 * @return batch Id
 	 */
 	private String getBatchId(final Time batchTime)

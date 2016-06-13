@@ -32,31 +32,27 @@ import com.kromatik.dasshy.thrift.model.TPolicy;
 public class JobsOnPolicyListener implements PolicyListener
 {
 	/** runtime context */
-	private final RuntimeContext			runtimeContext;
+	private final RuntimeContext runtimeContext;
 
 	/** policy factory */
-	private final PolicyFactory				policyFactory;
+	private final PolicyFactory policyFactory;
 
 	/** scheduler */
-	private final JobScheduler				jobScheduler;
+	private final JobScheduler jobScheduler;
 
 	/** job update listener */
-	private final JobListener				jobListener;
+	private final JobListener jobListener;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param runtimeContext runtime context
-	 * @param policyFactory policy factory
-	 * @param jobScheduler scheduler
-	 * @param jobListener job update listener
+	 * @param policyFactory  policy factory
+	 * @param jobScheduler   scheduler
+	 * @param jobListener    job update listener
 	 */
-	public JobsOnPolicyListener(
-					final RuntimeContext runtimeContext,
-					final PolicyFactory policyFactory,
-					final JobScheduler jobScheduler,
-					final JobListener jobListener
-	)
+	public JobsOnPolicyListener(final RuntimeContext runtimeContext, final PolicyFactory policyFactory,
+					final JobScheduler jobScheduler, final JobListener jobListener)
 	{
 		this.runtimeContext = runtimeContext;
 		this.policyFactory = policyFactory;

@@ -24,11 +24,11 @@ package com.kromatik.dasshy.server.spark;
  */
 public class ExecuteNTimesBatchClock extends BatchClock
 {
-	/**maximum allowed batches*/
-	private final Integer		maximumBatches;
+	/** maximum allowed batches */
+	private final Integer maximumBatches;
 
-	/**current batch*/
-	private Integer				currentBatchNumber;
+	/** current batch */
+	private Integer currentBatchNumber;
 
 	/**
 	 * Default constructor

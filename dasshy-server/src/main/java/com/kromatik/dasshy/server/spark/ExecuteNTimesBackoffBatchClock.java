@@ -25,7 +25,7 @@ package com.kromatik.dasshy.server.spark;
 public class ExecuteNTimesBackoffBatchClock extends ExecuteNTimesBatchClock
 {
 
-	private final Long	sleepMs;
+	private final Long sleepMs;
 
 	/**
 	 * Default constructor
@@ -39,7 +39,7 @@ public class ExecuteNTimesBackoffBatchClock extends ExecuteNTimesBatchClock
 	 * With max batches and sleep interval
 	 *
 	 * @param maxBatches max batches
-	 * @param sleepMs sleep interval between the batches
+	 * @param sleepMs    sleep interval between the batches
 	 */
 	public ExecuteNTimesBackoffBatchClock(Integer maxBatches, Long sleepMs)
 	{

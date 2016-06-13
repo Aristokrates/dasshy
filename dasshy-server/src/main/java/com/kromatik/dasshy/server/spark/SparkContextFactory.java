@@ -32,14 +32,13 @@ public interface SparkContextFactory
 	 *
 	 * @return spark session
 	 */
-	SparkSession			createSparkSession();
+	SparkSession createSparkSession();
 
 	/**
 	 * Creates streaming context for the given spark session
 	 *
 	 * @param sparkSession spark session
-	 *
 	 * @return streaming context
 	 */
-	JavaStreamingContext	createStreamingContext(final SparkSession sparkSession);
+	JavaStreamingContext createStreamingContext(final SparkSession sparkSession);
 }

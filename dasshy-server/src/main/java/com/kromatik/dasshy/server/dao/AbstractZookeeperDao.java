@@ -29,21 +29,19 @@ import com.kromatik.dasshy.server.zookeeper.IZookeeperClientProperties;
 public class AbstractZookeeperDao
 {
 	/** client factory */
-	private final IZookeeperClientFactory			clientFactory;
+	private final IZookeeperClientFactory clientFactory;
 
 	/** properties */
-	private final IZookeeperClientProperties		properties;
+	private final IZookeeperClientProperties properties;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param clientFactory zookeeper factory
-	 * @param properties zookeeper properties
+	 * @param properties    zookeeper properties
 	 */
-	public AbstractZookeeperDao(
-					final IZookeeperClientFactory clientFactory,
-					final IZookeeperClientProperties properties
-	)
+	public AbstractZookeeperDao(final IZookeeperClientFactory clientFactory,
+					final IZookeeperClientProperties properties)
 	{
 		this.clientFactory = clientFactory;
 		this.properties = properties;

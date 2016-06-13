@@ -50,9 +50,7 @@ public class ListPolicyCommand extends DasshyHttpCommand<TPolicyList>
 	@Override
 	protected Invocation.Builder getWebTargetBuilder()
 	{
-		return webTarget.path("policy")
-						.request()
-						.accept(mediaType);
+		return webTarget.path("policy").request().accept(mediaType);
 	}
 
 	@Override

@@ -26,15 +26,15 @@ import java.util.List;
  */
 public class PolicyBatchEnded extends JobEvent
 {
-	private boolean				success;
+	private boolean success;
 
-	private List<ErrorInfo>		errors;
+	private List<ErrorInfo> errors;
 
-	private ExtractorInfo		extractorInfo;
+	private ExtractorInfo extractorInfo;
 
-	private TransformerInfo		transformerInfo;
+	private TransformerInfo transformerInfo;
 
-	private LoaderInfo			loaderInfo;
+	private LoaderInfo loaderInfo;
 
 	/***
 	 * New job event

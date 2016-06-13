@@ -33,7 +33,7 @@ import org.fest.assertions.api.Assertions;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
-@Test(groups = {"server"})
+@Test(groups = { "server" })
 public class DasshyServerTest
 {
 
@@ -43,7 +43,7 @@ public class DasshyServerTest
 		Mockito.doNothing().when(server).start(Mockito.any(IEngineContext.class));
 
 		DasshyServer.setInstance(server);
-		server.main(new String[]{});
+		server.main(new String[] {});
 
 		DasshyServer.getInstance().stop();
 	}
@@ -51,11 +51,12 @@ public class DasshyServerTest
 	public void serverStartThrowsEngineException() throws Exception
 	{
 		final DasshyServer engine = Mockito.mock(DasshyServer.class);
-		Mockito.doThrow(new EngineStartupException("Engine start failed", new Exception()))
-						.when(engine).start(Mockito.any(IEngineContext.class));;
+		Mockito.doThrow(new EngineStartupException("Engine start failed", new Exception())).when(engine)
+						.start(Mockito.any(IEngineContext.class));
+		;
 
 		DasshyServer.setInstance(engine);
-		engine.main(new String[]{});
+		engine.main(new String[] {});
 
 		DasshyServer.getInstance().stop();
 	}
@@ -66,7 +67,7 @@ public class DasshyServerTest
 		Mockito.doThrow(new RuntimeException()).when(engine).start(Mockito.any(IEngineContext.class));
 
 		DasshyServer.setInstance(engine);
-		engine.main(new String[]{});
+		engine.main(new String[] {});
 
 		DasshyServer.getInstance().stop();
 	}
@@ -98,7 +99,8 @@ public class DasshyServerTest
 		final DasshyServer engine = Mockito.mock(DasshyServer.class);
 		Mockito.doNothing().when(engine).stop();
 
-		final DasshyServer.DasshyServerShutdownThread shutdownThread = new DasshyServer.DasshyServerShutdownThread(engine);
+		final DasshyServer.DasshyServerShutdownThread shutdownThread = new DasshyServer.DasshyServerShutdownThread(
+						engine);
 		shutdownThread.run();
 
 		Mockito.verify(engine, Mockito.times(1)).stop();
@@ -106,7 +108,7 @@ public class DasshyServerTest
 
 	public void serverContext() throws Exception
 	{
-		final DasshyServer.DasshyServerContext engineContext = new DasshyServer.DasshyServerContext(new String[]{});
+		final DasshyServer.DasshyServerContext engineContext = new DasshyServer.DasshyServerContext(new String[] {});
 
 		Assertions.assertThat(engineContext.getConfigurationFactory()).isNotNull();
 		Assertions.assertThat(engineContext.getEngineRuntimeFactory()).isNotNull();

@@ -38,19 +38,19 @@ import static com.kromatik.dasshy.server.config.DasshyProperties.*;
 public class JettyServerConfiguration extends AbstractEngineConfiguration
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(JettyServerConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JettyServerConfiguration.class);
 
 	/** server host */
-	private DynamicStringProperty		host;
+	private DynamicStringProperty host;
 
 	/** server port */
-	private DynamicIntProperty			port;
+	private DynamicIntProperty port;
 
 	/** server max idle time */
-	private DynamicIntProperty			maxIdleTime;
+	private DynamicIntProperty maxIdleTime;
 
 	/** context path */
-	private DynamicStringProperty		contextPath;
+	private DynamicStringProperty contextPath;
 
 	/**
 	 * Default constructor
@@ -77,20 +77,15 @@ public class JettyServerConfiguration extends AbstractEngineConfiguration
 			localHost = SERVER_ADDRESS.getDefaultValue();
 		}
 
-		host = dynamicPropertyFactory
-						.getStringProperty(SERVER_ADDRESS.getPropertyName(), localHost);
+		host = dynamicPropertyFactory.getStringProperty(SERVER_ADDRESS.getPropertyName(), localHost);
 
-		port = dynamicPropertyFactory
-						.getIntProperty(SERVER_PORT.getPropertyName(),
-										SERVER_PORT.getDefaultValueAsInt());
+		port = dynamicPropertyFactory.getIntProperty(SERVER_PORT.getPropertyName(), SERVER_PORT.getDefaultValueAsInt());
 
 		maxIdleTime = dynamicPropertyFactory
-						.getIntProperty(SERVER_MAX_IDLE.getPropertyName(),
-										SERVER_MAX_IDLE.getDefaultValueAsInt());
+						.getIntProperty(SERVER_MAX_IDLE.getPropertyName(), SERVER_MAX_IDLE.getDefaultValueAsInt());
 
-		contextPath = dynamicPropertyFactory
-						.getStringProperty(SERVER_CONTEXT_PATH.getPropertyName(),
-										SERVER_CONTEXT_PATH.getDefaultValue());
+		contextPath = dynamicPropertyFactory.getStringProperty(SERVER_CONTEXT_PATH.getPropertyName(),
+						SERVER_CONTEXT_PATH.getDefaultValue());
 	}
 
 	public String getHost()

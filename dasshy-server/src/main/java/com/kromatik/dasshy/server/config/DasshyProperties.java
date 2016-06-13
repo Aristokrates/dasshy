@@ -27,23 +27,23 @@ import java.util.Map;
  */
 public enum DasshyProperties
 {
-	SERVER_ADDRESS						("dasshy.server.addr", "localhost"),
-	SERVER_PORT							("dasshy.server.port", "8081"),
-	SERVER_MAX_IDLE						("dasshy.server.max.idle", "3000"),
-	SERVER_CONTEXT_PATH					("dasshy.server.context.path", "/"),
+	SERVER_ADDRESS("dasshy.server.addr", "localhost"),
+	SERVER_PORT("dasshy.server.port", "8081"),
+	SERVER_MAX_IDLE("dasshy.server.max.idle", "3000"),
+	SERVER_CONTEXT_PATH("dasshy.server.context.path", "/"),
 
-	ZOOKEEPER_CONNECTION_STRING			("zookeeper.connect", "localhost:2181"),
-	ZOOKEEPER_SESSION_TIMEOUT			("zookeeper.session.timeout.ms", "3000"),
-	ZOOKEEPER_CONNECTION_TIMEOUT		("zookeeper.connection.timeout.ms", "3000"),
+	ZOOKEEPER_CONNECTION_STRING("zookeeper.connect", "localhost:2181"),
+	ZOOKEEPER_SESSION_TIMEOUT("zookeeper.session.timeout.ms", "3000"),
+	ZOOKEEPER_CONNECTION_TIMEOUT("zookeeper.connection.timeout.ms", "3000"),
 
-	SPARK_MASTER						("spark.master", "local[10]"),
-	SPARK_BATCH_DURATION				("spark.batch.duration", "1"),
-	SPARK_UI_PORT						("spark.ui.port", "4070"),
-	SPARK_SCHEDULER_MODE				("spark.scheduler.mode", "FAIR"),
-	SPARK_CORES_MAX						("spark.cores.max", "10"),
-	SPARK_SERIALIZER					("spark.serializer", "org.apache.spark.serializer.KryoSerializer"),
+	SPARK_MASTER("spark.master", "local[10]"),
+	SPARK_BATCH_DURATION("spark.batch.duration", "1"),
+	SPARK_UI_PORT("spark.ui.port", "4070"),
+	SPARK_SCHEDULER_MODE("spark.scheduler.mode", "FAIR"),
+	SPARK_CORES_MAX("spark.cores.max", "10"),
+	SPARK_SERIALIZER("spark.serializer", "org.apache.spark.serializer.KryoSerializer"),
 	SPARK_DRIVER_ALLOW_MULTIPLE_CONTEXTS("spark.driver.allowMultipleContexts", "true"),
-	SPARK_SQL_SHUFFLE_PARTITIONS		("spark.sql.shuffle.partitions", "5");
+	SPARK_SQL_SHUFFLE_PARTITIONS("spark.sql.shuffle.partitions", "5");
 
 	private static final Map<String, DasshyProperties> BY_NAME_MAP = new LinkedHashMap<>();
 
@@ -56,6 +56,7 @@ public enum DasshyProperties
 	}
 
 	private final String propertyName;
+
 	private final String propertyDefaultValue;
 
 	DasshyProperties(final String name, final String defaultValue)

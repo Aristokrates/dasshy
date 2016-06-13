@@ -54,13 +54,13 @@ import java.util.Map;
 /**
  * Test for policy job streaming
  */
-@Test(groups = {"streaming"})
+@Test(groups = { "streaming" })
 public class PolicyJobTest
 {
 
-	private RuntimeContext	runtimeContext;
+	private RuntimeContext runtimeContext;
 
-	private PolicyDao		policyDao;
+	private PolicyDao policyDao;
 
 	@BeforeClass
 	public void setup() throws Exception

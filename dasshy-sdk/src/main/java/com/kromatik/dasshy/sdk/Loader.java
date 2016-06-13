@@ -36,8 +36,7 @@ public interface Loader extends IStage
 	 * Optionally, the output data can be loaded into a persistent storage
 	 *
 	 * @param context runtime context
-	 * @param input input data frames
-	 *
+	 * @param input   input data frames
 	 * @return the result data
 	 */
 	Dataset<Row> load(final RuntimeContext context, final Map<String, Dataset<Row>> input);

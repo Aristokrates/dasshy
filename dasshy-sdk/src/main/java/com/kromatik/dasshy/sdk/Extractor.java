@@ -37,8 +37,7 @@ public interface Extractor extends IStage
 	 * Calculates the extracted data set
 	 *
 	 * @param context runtime context
-	 * @param time time, valid in case of a streaming job
-	 *
+	 * @param time    time, valid in case of a streaming job
 	 * @return extracted data frames by name
 	 */
 	Map<String, Dataset<Row>> extract(final RuntimeContext context, final Time time);

@@ -36,8 +36,8 @@ public class CommonExceptionMapper extends AbstractExceptionMapper<Exception>
 		final Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
 		final TError responseErrorMessage = new TError(exception.getMessage());
 
-		final Response.ResponseBuilder responseBuilder = Response.status(status).entity(
-						buildResponsePayload(responseErrorMessage, exception, status));
+		final Response.ResponseBuilder responseBuilder = Response.status(status)
+						.entity(buildResponsePayload(responseErrorMessage, exception, status));
 
 		return buildResponseWithContentType(responseBuilder);
 	}

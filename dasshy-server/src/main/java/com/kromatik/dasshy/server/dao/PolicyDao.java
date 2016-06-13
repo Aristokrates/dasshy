@@ -61,7 +61,6 @@ public interface PolicyDao
 	 * Checks if a policy with the same id exists
 	 *
 	 * @param id
-	 *
 	 * @return true/false
 	 */
 	boolean exists(final String id);

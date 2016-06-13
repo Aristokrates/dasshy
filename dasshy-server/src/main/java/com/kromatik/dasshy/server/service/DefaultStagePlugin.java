@@ -37,23 +37,23 @@ public enum DefaultStagePlugin
 	CASANDRA(TStageType.LOADER, "cassandra", CassandraLoader.class.getName(), "Cassandra loader");
 
 	/** stage type */
-	private final TStageType	type;
+	private final TStageType type;
 
 	/** identifier */
-	private final String		identifier;
+	private final String identifier;
 
 	/** classpath */
-	private final String		classpath;
+	private final String classpath;
 
 	/** description */
-	private final String		description;
+	private final String description;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param type	plugin type
-	 * @param identifier plugin identifier
-	 * @param classpath	plugin classpath
+	 * @param type        plugin type
+	 * @param identifier  plugin identifier
+	 * @param classpath   plugin classpath
 	 * @param description plugin description
 	 */
 	DefaultStagePlugin(final TStageType type, final String identifier, final String classpath, final String description)

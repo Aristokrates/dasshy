@@ -32,10 +32,10 @@ import java.io.IOException;
 public class ZookeeperEngineComponent implements IEngineComponent
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(ZookeeperEngineComponent.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperEngineComponent.class);
 
 	/** factory for creating zookeeper client connections */
-	private final IZookeeperClientFactory		clientFactory;
+	private final IZookeeperClientFactory clientFactory;
 
 	/**
 	 * Default constructor

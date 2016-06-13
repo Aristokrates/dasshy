@@ -30,16 +30,16 @@ import com.kromatik.dasshy.sdk.RuntimeContext;
 public class Rule implements Action
 {
 	/** condition */
-	private final Condition		condition;
+	private final Condition condition;
 
 	/** action */
-	private final Action		action;
+	private final Action action;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param condition	condition
-	 * @param action	action
+	 * @param condition condition
+	 * @param action    action
 	 */
 	public Rule(final Condition condition, final Action action)
 	{

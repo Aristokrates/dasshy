@@ -43,13 +43,12 @@ public class PolicyExistsException extends EngineException
 	/**
 	 * Message only constructor
 	 *
-	 * @param message	message
+	 * @param message message
 	 */
 	public PolicyExistsException(final String message)
 	{
 		this(message, null);
 	}
-
 
 	@Override
 	public int getStatus()

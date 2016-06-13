@@ -40,10 +40,11 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 
 	protected WebTarget webTarget;
 
-	protected String	serviceName;
-	protected String	commandName;
+	protected String serviceName;
 
-	protected MediaType mediaType	=	DasshyMediaType.THRIFT.getMediaType();
+	protected String commandName;
+
+	protected MediaType mediaType = DasshyMediaType.THRIFT.getMediaType();
 
 	public DasshyHttpCommand(WebTarget webTarget, String serviceName, String commandName)
 	{
@@ -71,7 +72,6 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 	 * Read the result from the response
 	 *
 	 * @param response response
-	 *
 	 * @return result
 	 */
 	protected abstract R readResult(final Response response);
@@ -92,7 +92,8 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 	 *
 	 * @param message error message
 	 */
-	protected void processIllegalArguments(final String message) {
+	protected void processIllegalArguments(final String message)
+	{
 		throw new DasshyBadRequestException(message);
 	}
 
@@ -101,10 +102,10 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 	 *
 	 * @param mediaType media type
 	 */
-	public void setMediaType(final MediaType mediaType) {
+	public void setMediaType(final MediaType mediaType)
+	{
 		this.mediaType = mediaType;
 	}
-
 
 	@Override
 	public R run()
@@ -150,7 +151,6 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 	 * Get the error from the response
 	 *
 	 * @param response response
-	 *
 	 * @return error
 	 */
 	protected TError obtainErrorFromResponse(final Response response)

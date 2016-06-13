@@ -30,10 +30,10 @@ public class ZookeeperClientFactory implements IZookeeperClientFactory
 {
 
 	/** singleton instance */
-	private static final IZookeeperClientFactory	INSTANCE	=	new ZookeeperClientFactory();
+	private static final IZookeeperClientFactory INSTANCE = new ZookeeperClientFactory();
 
 	/** map of ZookeeperClients by zookeeper cluster */
-	private final Map<String, IZookeeperClient>		zkClients 	=	new HashMap<>();
+	private final Map<String, IZookeeperClient> zkClients = new HashMap<>();
 
 	/**
 	 * Default private constructor
@@ -46,7 +46,7 @@ public class ZookeeperClientFactory implements IZookeeperClientFactory
 	/**
 	 * @return ZookeeperClientFactory instance
 	 */
-	public static IZookeeperClientFactory	getInstance()
+	public static IZookeeperClientFactory getInstance()
 	{
 		return INSTANCE;
 	}

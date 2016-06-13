@@ -33,10 +33,10 @@ import static com.kromatik.dasshy.server.config.DasshyProperties.*;
 public class KafkaConfiguration extends AbstractEngineConfiguration
 {
 	/** zookeeper session timeout */
-	private DynamicIntProperty		zookeeperSessionTimeoutMs;
+	private DynamicIntProperty zookeeperSessionTimeoutMs;
 
 	/** zookeeper connection timeout */
-	private DynamicIntProperty		zookeeperConnectionTimeoutMs;
+	private DynamicIntProperty zookeeperConnectionTimeoutMs;
 
 	/**
 	 * Default constructor
@@ -54,9 +54,8 @@ public class KafkaConfiguration extends AbstractEngineConfiguration
 	@Override
 	public void loadConfiguration(final DynamicPropertyFactory dynamicPropertyFactory)
 	{
-		zookeeperSessionTimeoutMs = dynamicPropertyFactory
-						.getIntProperty(ZOOKEEPER_SESSION_TIMEOUT.getPropertyName(),
-										ZOOKEEPER_SESSION_TIMEOUT.getDefaultValueAsInt());
+		zookeeperSessionTimeoutMs = dynamicPropertyFactory.getIntProperty(ZOOKEEPER_SESSION_TIMEOUT.getPropertyName(),
+						ZOOKEEPER_SESSION_TIMEOUT.getDefaultValueAsInt());
 
 		zookeeperConnectionTimeoutMs = dynamicPropertyFactory
 						.getIntProperty(ZOOKEEPER_CONNECTION_TIMEOUT.getPropertyName(),

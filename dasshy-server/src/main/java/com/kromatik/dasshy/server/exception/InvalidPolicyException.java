@@ -42,7 +42,7 @@ public class InvalidPolicyException extends EngineException
 	/**
 	 * Message only constructor
 	 *
-	 * @param message	message
+	 * @param message message
 	 */
 	public InvalidPolicyException(final String message)
 	{

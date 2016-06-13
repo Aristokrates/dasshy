@@ -34,12 +34,14 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class SimpleJsonPayLoadProvider<T extends TBase> extends PayloadProvider<T> {
+public class SimpleJsonPayLoadProvider<T extends TBase> extends PayloadProvider<T>
+{
 
 	/**
 	 * Default constructor
 	 */
-	public SimpleJsonPayLoadProvider() {
+	public SimpleJsonPayLoadProvider()
+	{
 		super(DasshyMediaType.JSON, new JsonSerializer<T>());
 	}
 }

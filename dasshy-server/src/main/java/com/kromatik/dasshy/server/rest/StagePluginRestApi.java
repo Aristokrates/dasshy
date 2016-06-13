@@ -30,7 +30,7 @@ import javax.ws.rs.Path;
 public class StagePluginRestApi extends AbstractRestApi
 {
 	/** plugins service */
-	private final StagePluginService		service;
+	private final StagePluginService service;
 
 	/**
 	 * Default constructor

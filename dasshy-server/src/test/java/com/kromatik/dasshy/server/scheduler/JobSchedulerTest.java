@@ -29,7 +29,7 @@ import java.util.Collection;
 /**
  * Tests for job scheduler
  */
-@Test(groups = {"scheduler"})
+@Test(groups = { "scheduler" })
 public class JobSchedulerTest
 {
 

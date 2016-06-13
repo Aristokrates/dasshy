@@ -37,7 +37,7 @@ public class GetPolicyCommand extends DasshyHttpCommand<TPolicy>
 	 * Default constructor
 	 *
 	 * @param webTarget web target
-	 * @param policyId policy id
+	 * @param policyId  policy id
 	 */
 	public GetPolicyCommand(final WebTarget webTarget, final String policyId)
 	{
@@ -54,10 +54,7 @@ public class GetPolicyCommand extends DasshyHttpCommand<TPolicy>
 	@Override
 	protected Invocation.Builder getWebTargetBuilder()
 	{
-		return webTarget.path("policy")
-						.path(policyId)
-						.request()
-						.accept(mediaType);
+		return webTarget.path("policy").path(policyId).request().accept(mediaType);
 	}
 
 	@Override

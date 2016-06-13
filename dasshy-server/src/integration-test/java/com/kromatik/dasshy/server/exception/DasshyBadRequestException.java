@@ -26,9 +26,9 @@ import com.kromatik.dasshy.thrift.model.TError;
  */
 public class DasshyBadRequestException extends RuntimeException
 {
-	private Integer	status;
+	private Integer status;
 
-	private TError	error;
+	private TError error;
 
 	public DasshyBadRequestException(final String message)
 	{

@@ -71,9 +71,10 @@ public class ThriftSerializer<T extends TBase> implements EntitySerializer<T>
 		}
 		catch (final TException e)
 		{
-			throw new SerializationException("Failed to deserialize Thrift JSON format to Thrift entity. JSON: '{" + new String(
-							bytesEntity, Charset.forName("UTF-8")) + "}'." +
-							" Thrift type: {" + tClass.getName() + "}", e);
+			throw new SerializationException(
+							"Failed to deserialize Thrift JSON format to Thrift entity. JSON: '{" + new String(
+											bytesEntity, Charset.forName("UTF-8")) + "}'." +
+											" Thrift type: {" + tClass.getName() + "}", e);
 		}
 		catch (final InstantiationException e)
 		{
@@ -96,9 +97,8 @@ public class ThriftSerializer<T extends TBase> implements EntitySerializer<T>
 	/**
 	 * Deserializes a thrift entity
 	 *
-	 * @param bytes byte array
-	 * @param entity  thrift entity
-	 *
+	 * @param bytes  byte array
+	 * @param entity thrift entity
 	 * @throws TException exception
 	 */
 	protected void deserialize(byte[] bytes, final T entity) throws TException
@@ -110,9 +110,7 @@ public class ThriftSerializer<T extends TBase> implements EntitySerializer<T>
 	 * Serializes a thrift entity
 	 *
 	 * @param t thrift entity
-	 *
 	 * @return byte array
-	 *
 	 * @throws TException exception
 	 */
 	protected byte[] serialize(final T t) throws TException

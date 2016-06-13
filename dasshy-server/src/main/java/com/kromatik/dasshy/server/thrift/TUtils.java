@@ -45,9 +45,7 @@ public class TUtils
 	 * Serialize the thrift entity using Json protocol
 	 *
 	 * @param tEntity thrift entity
-	 *
 	 * @return byte[]
-	 *
 	 * @throws TException
 	 */
 	public static byte[] serializeJson(final TBase tEntity) throws TException
@@ -73,9 +71,7 @@ public class TUtils
 	 * Deserialize into thrift entity using JSON protocol
 	 *
 	 * @param bytesEntity byte[] to deserialize
-	 *
-	 * @param tBase thrift entity
-	 *
+	 * @param tBase       thrift entity
 	 * @throws TException
 	 */
 	public static void deserializeJson(byte[] bytesEntity, final TBase tBase) throws TException
@@ -90,9 +86,7 @@ public class TUtils
 	 * Serialize the thrift entity using Compact protocol
 	 *
 	 * @param tEntity thrift entity
-	 *
 	 * @return byte[]
-	 *
 	 * @throws TException
 	 */
 	public static byte[] serializeCompact(final TBase tEntity) throws TException
@@ -114,9 +108,7 @@ public class TUtils
 	 * Deserialize into thrift entity using Compact protocol
 	 *
 	 * @param bytesEntity byte[] to deserialize
-	 *
-	 * @param tBase thrift entity
-	 *
+	 * @param tBase       thrift entity
 	 * @throws TException
 	 */
 	public static void deserializeCompact(byte[] bytesEntity, final TBase tBase) throws TException

@@ -28,16 +28,16 @@ import java.util.List;
 public class RuleGroup
 {
 	/** wheter the rule is active */
-	private boolean				active;
+	private boolean active;
 
 	/** name of the rule set */
-	private String				name;
+	private String name;
 
 	/** rule description */
-	private String				description;
+	private String description;
 
 	/** rules composing this rule group */
-	private List<Rule>			rules		=	new LinkedList<>();
+	private List<Rule> rules = new LinkedList<>();
 
 	public boolean isActive()
 	{

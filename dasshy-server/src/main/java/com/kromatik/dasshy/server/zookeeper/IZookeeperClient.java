@@ -32,5 +32,5 @@ public interface IZookeeperClient extends Closeable
 	/**
 	 * @return underlying Curator Framework Client
 	 */
-	CuratorFramework	getCuratorFramework();
+	CuratorFramework getCuratorFramework();
 }

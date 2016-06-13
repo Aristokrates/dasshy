@@ -33,12 +33,14 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Produces("application/x-thrift+json")
 @Consumes("application/x-thrift+json")
-public class ThriftJsonPayLoadProvider<T extends TBase> extends PayloadProvider<T> {
+public class ThriftJsonPayLoadProvider<T extends TBase> extends PayloadProvider<T>
+{
 
 	/**
 	 * Default constructor
 	 */
-	public ThriftJsonPayLoadProvider() {
+	public ThriftJsonPayLoadProvider()
+	{
 		super(DasshyMediaType.THRIFT_JSON, new ThriftJsonSerializer<T>());
 	}
 }

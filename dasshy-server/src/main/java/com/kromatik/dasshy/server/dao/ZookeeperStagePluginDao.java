@@ -34,9 +34,9 @@ import java.util.Collection;
 public class ZookeeperStagePluginDao extends AbstractZookeeperDao implements StagePluginDao
 {
 
-	public static final String	PLUGINS_PATH	=	"/plugins";
+	public static final String PLUGINS_PATH = "/plugins";
 
-	public static final String	JARS_PATH		=	"/jars";
+	public static final String JARS_PATH = "/jars";
 
 	/**
 	 * Default constructor

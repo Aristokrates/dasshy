@@ -42,7 +42,7 @@ public class AttributeUtils
 	/**
 	 * Validate stage configuration
 	 *
-	 * @param stage stage
+	 * @param stage  stage
 	 * @param config configuration
 	 */
 	public static void validateConfiguration(final IStage stage, final Map<String, String> config) throws StageException
@@ -96,11 +96,8 @@ public class AttributeUtils
 	}
 
 	/**
-	 *
 	 * @param value string value
-	 *
 	 * @return integer value
-	 *
 	 * @throws StageException if conversion fails
 	 */
 	public static Integer parseInteger(final String value) throws StageException
@@ -127,11 +124,8 @@ public class AttributeUtils
 	}
 
 	/**
-	 *
 	 * @param value string value
-	 *
 	 * @return decimal value
-	 *
 	 * @throws StageException if conversion fails
 	 */
 	public static BigDecimal parseDecimal(final String value) throws StageException
@@ -158,11 +152,8 @@ public class AttributeUtils
 	}
 
 	/**
-	 *
 	 * @param value string value
-	 *
 	 * @return boolean value
-	 *
 	 * @throws StageException if conversion fails
 	 */
 	public static Boolean parseBoolean(final String value) throws StageException
@@ -192,7 +183,6 @@ public class AttributeUtils
 	 * Is Blank String check
 	 *
 	 * @param str string to check
-	 *
 	 * @return true, is string is blank; false otherwise
 	 */
 	public static boolean isBlank(final String str)

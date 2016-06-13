@@ -37,16 +37,16 @@ import org.testng.annotations.Test;
 import java.util.Collection;
 
 /**
- *	Tests for policy dao
+ * Tests for policy dao
  */
-@Test(groups = {"dao"})
+@Test(groups = { "dao" })
 public class PolicyDaoTest
 {
 
 	protected static EmbeddedZooKeeper testingServer;
 
-	protected static ZookeeperClientConfiguration zookeeperConfiguration =
-					new ZookeeperClientConfiguration(new DasshyConfiguration());
+	protected static ZookeeperClientConfiguration zookeeperConfiguration = new ZookeeperClientConfiguration(
+					new DasshyConfiguration());
 
 	protected static IZookeeperClientFactory zookeeperClientFactory = ZookeeperClientFactory.getInstance();
 
@@ -69,7 +69,6 @@ public class PolicyDaoTest
 		zookeeperClientFactory.close();
 		testingServer.close();
 	}
-
 
 	public void savePolicy()
 	{

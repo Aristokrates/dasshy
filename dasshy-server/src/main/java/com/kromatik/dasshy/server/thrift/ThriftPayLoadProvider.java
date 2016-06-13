@@ -33,12 +33,14 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Produces("application/x-thrift")
 @Consumes("application/x-thrift")
-public class ThriftPayLoadProvider<T extends TBase> extends PayloadProvider<T> {
+public class ThriftPayLoadProvider<T extends TBase> extends PayloadProvider<T>
+{
 
 	/**
 	 * Default constructor
 	 */
-	public ThriftPayLoadProvider() {
+	public ThriftPayLoadProvider()
+	{
 		super(DasshyMediaType.THRIFT, new ThriftSerializer<T>());
 	}
 }

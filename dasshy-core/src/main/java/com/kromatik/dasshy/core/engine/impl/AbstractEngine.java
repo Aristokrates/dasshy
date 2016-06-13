@@ -36,17 +36,16 @@ import java.lang.reflect.Type;
  * Base abstract class for all running engines.
  * Provides standardized ways of configuring the engines, injecting dependencies on bootstrap and running the engine
  *
- * @see IEngine
- *
  * @param <T> engine's configuration
+ * @see IEngine
  */
 public abstract class AbstractEngine<T extends IEngineConfiguration> implements IEngine<T>
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(AbstractEngine.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEngine.class);
 
 	/** engine's runtime environment */
-	private IEngineRuntime			engineRuntime;
+	private IEngineRuntime engineRuntime;
 
 	/**
 	 * Initialize the engine
@@ -114,12 +113,12 @@ public abstract class AbstractEngine<T extends IEngineConfiguration> implements 
 	/**
 	 * Build the engine's runtime environment
 	 *
-	 * @param configuration engine configuration
+	 * @param configuration        engine configuration
 	 * @param engineRuntimeFactory engine runtime environment factory
-	 *
 	 * @return engine runtime environment
 	 */
-	protected IEngineRuntime buildEngineRuntime(final T configuration, final IEngineRuntimeFactory<T> engineRuntimeFactory)
+	protected IEngineRuntime buildEngineRuntime(final T configuration,
+					final IEngineRuntimeFactory<T> engineRuntimeFactory)
 	{
 		return engineRuntimeFactory.build(configuration);
 	}
@@ -128,7 +127,6 @@ public abstract class AbstractEngine<T extends IEngineConfiguration> implements 
 	 * Build the configuration using the provided factory
 	 *
 	 * @param configurationFactory configuration factory
-	 *
 	 * @return engine configuration
 	 */
 	protected T buildEngineConfiguration(final IConfigurationFactory<T> configurationFactory)

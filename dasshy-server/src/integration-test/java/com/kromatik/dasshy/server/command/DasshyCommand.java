@@ -25,7 +25,7 @@ package com.kromatik.dasshy.server.command;
 public abstract class DasshyCommand<R>
 {
 	/** command key */
-	private	String	commandKey;
+	private String commandKey;
 
 	/**
 	 * Default command constructor
@@ -41,7 +41,6 @@ public abstract class DasshyCommand<R>
 	 * Run the command
 	 *
 	 * @return result of command execution
-	 *
 	 * @throws Exception
 	 */
 	public abstract R run() throws Exception;

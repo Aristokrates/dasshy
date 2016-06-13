@@ -42,7 +42,7 @@ public class StagePluginNotFoundException extends EngineException
 	/**
 	 * Message only constructor
 	 *
-	 * @param message	message
+	 * @param message message
 	 */
 	public StagePluginNotFoundException(final String message)
 	{

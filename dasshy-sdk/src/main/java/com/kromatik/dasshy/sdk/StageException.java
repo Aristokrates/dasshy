@@ -47,7 +47,7 @@ public class StageException extends RuntimeException
 	 * Exception with message and cause
 	 *
 	 * @param message message
-	 * @param cause a cause
+	 * @param cause   a cause
 	 */
 	public StageException(final String message, final Throwable cause)
 	{

@@ -36,10 +36,10 @@ public class ConcurrentJobScheduler implements JobScheduler
 {
 
 	/** underlying executor service used to run the jobs */
-	private final ExecutorService				executorService;
+	private final ExecutorService executorService;
 
 	/** job map */
-	private Map<String, Tuple2<Job, Future<?>>>	jobsMap	=	new ConcurrentHashMap<>();
+	private Map<String, Tuple2<Job, Future<?>>> jobsMap = new ConcurrentHashMap<>();
 
 	/**
 	 * Default constructor
@@ -113,7 +113,7 @@ public class ConcurrentJobScheduler implements JobScheduler
 	private static class JobRunner implements Runnable
 	{
 		/** job */
-		private final Job				job;
+		private final Job job;
 
 		/**
 		 * Default constructor

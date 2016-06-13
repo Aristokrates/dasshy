@@ -31,13 +31,13 @@ import javax.ws.rs.core.Response;
  */
 public class UpdatePolicyCommand extends DasshyHttpCommand<TPolicy>
 {
-	private TPolicy		policy;
+	private TPolicy policy;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param webTarget web target
-	 * @param policy policy to be updated
+	 * @param policy    policy to be updated
 	 */
 	public UpdatePolicyCommand(final WebTarget webTarget, final TPolicy policy)
 	{
@@ -54,9 +54,7 @@ public class UpdatePolicyCommand extends DasshyHttpCommand<TPolicy>
 	@Override
 	protected Invocation.Builder getWebTargetBuilder()
 	{
-		return webTarget.path("policy")
-						.request()
-						.accept(mediaType);
+		return webTarget.path("policy").request().accept(mediaType);
 	}
 
 	@Override

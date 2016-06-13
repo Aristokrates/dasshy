@@ -30,22 +30,22 @@ public class Policy
 {
 
 	/** the model that built this policy instance */
-	private TPolicy											model;
+	private TPolicy model;
 
 	/** batch clock for this policy determining how many times this policy will be executed */
 	private BatchClock clock;
 
 	/** extractor holder: consisting of instance and its configuration */
-	private ExtractorHolder									extractor;
+	private ExtractorHolder extractor;
 
 	/** transformer tuple: consisting of instance and its configuration */
-	private TransformerHolder								transformer;
+	private TransformerHolder transformer;
 
 	/** loader tuple: consisting of instance and its configuration */
-	private LoaderHolder									loader;
+	private LoaderHolder loader;
 
 	/** rule group */
-	private RuleGroup										ruleGroup;
+	private RuleGroup ruleGroup;
 
 	public TPolicy getModel()
 	{

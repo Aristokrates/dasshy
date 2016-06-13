@@ -34,9 +34,8 @@ public interface EntitySerializer<T extends TBase>
 	/**
 	 * Serialize
 	 *
-	 * @param t entity to serialize
+	 * @param t            entity to serialize
 	 * @param outputStream output stream
-	 *
 	 * @throws Exception
 	 */
 	void write(final T t, final OutputStream outputStream);
@@ -44,11 +43,9 @@ public interface EntitySerializer<T extends TBase>
 	/**
 	 * Deserialize
 	 *
-	 * @param tClass thrift class to deserialize to
+	 * @param tClass      thrift class to deserialize to
 	 * @param inputStream input stream
-	 *
 	 * @return thrifr entity
-	 *
 	 * @throws Exception
 	 */
 	T read(final Class<T> tClass, final InputStream inputStream);

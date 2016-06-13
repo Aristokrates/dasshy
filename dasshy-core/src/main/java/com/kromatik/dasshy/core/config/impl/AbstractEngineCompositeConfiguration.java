@@ -34,10 +34,10 @@ import java.util.List;
 public abstract class AbstractEngineCompositeConfiguration implements IEngineCompositeConfiguration
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(AbstractEngineCompositeConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEngineCompositeConfiguration.class);
 
 	/** engine configurations */
-	private final List<IEngineConfiguration> 		engineConfigurations	=	new ArrayList<>();
+	private final List<IEngineConfiguration> engineConfigurations = new ArrayList<>();
 
 	/**
 	 * Default constructor

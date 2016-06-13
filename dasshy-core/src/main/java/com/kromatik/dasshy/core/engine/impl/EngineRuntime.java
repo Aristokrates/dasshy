@@ -33,10 +33,10 @@ import java.util.LinkedList;
 public class EngineRuntime implements IEngineRuntime
 {
 
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(EngineRuntime.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EngineRuntime.class);
 
 	/** components in the engine runtime environment */
-	private final Deque<IEngineComponent>				engineComponents;
+	private final Deque<IEngineComponent> engineComponents;
 
 	/**
 	 * Default constructor

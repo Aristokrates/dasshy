@@ -36,16 +36,16 @@ public class SparkEngineComponent implements IEngineComponent
 {
 
 	/** dasshy configuration */
-	private final DasshyConfiguration		configuration;
+	private final DasshyConfiguration configuration;
 
 	/** dasshy runtime */
-	private final DasshyRuntime				runtime;
+	private final DasshyRuntime runtime;
 
 	/**
 	 * Default constructor
 	 *
 	 * @param dasshyConfiguration dasshy configuration
-	 * @param engineRuntime server runtime
+	 * @param engineRuntime       server runtime
 	 */
 	public SparkEngineComponent(final DasshyConfiguration dasshyConfiguration, final DasshyRuntime engineRuntime)
 	{
@@ -62,8 +62,7 @@ public class SparkEngineComponent implements IEngineComponent
 		try
 		{
 
-			SparkContextFactory factory = new DasshySparkContextFactory(
-							configuration.getSparkConfiguration());
+			SparkContextFactory factory = new DasshySparkContextFactory(configuration.getSparkConfiguration());
 
 			final SparkSession sparkSession = factory.createSparkSession();
 			final JavaStreamingContext streamingContext = factory.createStreamingContext(sparkSession);

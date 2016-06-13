@@ -30,7 +30,7 @@ public interface JobListener
 	/**
 	 * Reports a job progress update
 	 *
-	 * @param job job
+	 * @param job      job
 	 * @param progress new progress
 	 */
 	void onProgressUpdate(final Job job, int progress);
@@ -38,9 +38,9 @@ public interface JobListener
 	/**
 	 * Called whenever job state changes
 	 *
-	 * @param job a job
+	 * @param job    a job
 	 * @param before previous state
-	 * @param after new state
+	 * @param after  new state
 	 */
 	void onStateChange(final Job job, final TJobState before, TJobState after);
 
@@ -54,7 +54,7 @@ public interface JobListener
 	/**
 	 * Called when a new job result is available
 	 *
-	 * @param job a job
+	 * @param job       a job
 	 * @param jobResult job result
 	 */
 	void onJobResult(final Job job, final Object jobResult);

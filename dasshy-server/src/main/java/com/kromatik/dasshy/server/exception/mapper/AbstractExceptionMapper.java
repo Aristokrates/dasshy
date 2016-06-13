@@ -36,20 +36,21 @@ import java.text.MessageFormat;
 public abstract class AbstractExceptionMapper<T extends Throwable> implements ExceptionMapper<T>
 {
 
-	/**HTTP headers*/
-	@Context HttpHeaders			headers;
+	/** HTTP headers */
+	@Context
+	HttpHeaders headers;
 
-	/**uri context*/
-	@Context UriInfo				uriInfo;
+	/** uri context */
+	@Context
+	UriInfo uriInfo;
 
 	/**
 	 * Adds content type of request to response builder if accept type is not provided, cause if accept type IS provided
 	 * then Jersey default behavior kicks in.
 	 * If request content type also missing, then falling back to "application/json" to prevent server failure.
 	 *
-	 * @param builder	response builder
-	 *
-	 * @return	http response
+	 * @param builder response builder
+	 * @return http response
 	 */
 	protected Response buildResponseWithContentType(final Response.ResponseBuilder builder)
 	{
@@ -61,15 +62,12 @@ public abstract class AbstractExceptionMapper<T extends Throwable> implements Ex
 	 * then Jersey default behavior kicks in.
 	 * If request content type also missing, then falling back to "application/json" to prevent server failure.
 	 *
-	 * @param builder	response builder
-	 * @param status	status code
-	 *
+	 * @param builder response builder
+	 * @param status  status code
 	 * @return http response
 	 */
-	protected Response buildResponseWithContentType(
-					final Response.ResponseBuilder builder,
-					final Response.Status status
-	)
+	protected Response buildResponseWithContentType(final Response.ResponseBuilder builder,
+					final Response.Status status)
 	{
 		final MediaType acceptType = headers.getAcceptableMediaTypes().isEmpty() ?
 						headers.getAcceptableMediaTypes().get(0) :
@@ -99,11 +97,10 @@ public abstract class AbstractExceptionMapper<T extends Throwable> implements Ex
 	/**
 	 * Builds the response payload.
 	 *
-	 * @param error		error message
-	 * @param e			exception
-	 * @param status	status code
-	 *
-	 * @return	detailed error entity
+	 * @param error  error message
+	 * @param e      exception
+	 * @param status status code
+	 * @return detailed error entity
 	 */
 	protected TError buildResponsePayload(final TError error, final Throwable e, final Response.Status status)
 	{
@@ -120,18 +117,15 @@ public abstract class AbstractExceptionMapper<T extends Throwable> implements Ex
 	/**
 	 * Builds debug message depending on thrown exception and passed ResponseErrorMessage.
 	 *
-	 * @param error 	error message
-	 * @param e			exception
-	 * @param status	status code
-	 *
+	 * @param error  error message
+	 * @param e      exception
+	 * @param status status code
 	 * @return debug message
 	 */
 	public String buildDebugMessage(final TError error, final Throwable e, final Response.Status status)
 	{
-		return MessageFormat.format("Service Host: {1}{0}" + "Stack Trace: {2}",
-						System.lineSeparator(),
-						uriInfo.getBaseUri().getHost(),
-						ExceptionUtils.getFullStackTrace(e));
+		return MessageFormat.format("Service Host: {1}{0}" + "Stack Trace: {2}", System.lineSeparator(),
+						uriInfo.getBaseUri().getHost(), ExceptionUtils.getFullStackTrace(e));
 	}
 
 }

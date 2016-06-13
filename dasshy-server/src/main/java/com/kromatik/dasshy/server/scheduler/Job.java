@@ -29,36 +29,36 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 public abstract class Job
 {
 	/** job id */
-	protected String			id;
+	protected String id;
 
 	/** state of the job */
-	protected TJobState			jobState;
+	protected TJobState jobState;
 
 	/** start time of this job */
-	protected Long				startTime;
+	protected Long startTime;
 
-	/** end time of this job*/
-	protected Long				endTime;
+	/** end time of this job */
+	protected Long endTime;
 
 	/** latest job result */
-	protected Object			jobResult;
+	protected Object jobResult;
 
 	/** error */
-	protected String			errorMessage;
+	protected String errorMessage;
 
 	/** exception */
-	protected Throwable			exception;
+	protected Throwable exception;
 
 	/** listener that listens on job changes */
-	protected JobListener		listener;
+	protected JobListener listener;
 
 	/** whether job is aborted */
-	protected boolean			aborted		=	false;
+	protected boolean aborted = false;
 
 	/**
 	 * Default constructor
 	 *
-	 * @param jobId job id
+	 * @param jobId       job id
 	 * @param jobListener listener
 	 */
 	public Job(final String jobId, final JobListener jobListener)
@@ -96,7 +96,6 @@ public abstract class Job
 		aborted = abort();
 	}
 
-
 	/**
 	 * Run the job and get a result of its execution
 	 */
@@ -109,12 +108,10 @@ public abstract class Job
 	 */
 	protected abstract boolean abort();
 
-
 	/**
 	 * Get stack trace as String
 	 *
 	 * @param e exception
-	 *
 	 * @return error message
 	 */
 	public static String getStackTrace(final Throwable e)
@@ -127,7 +124,6 @@ public abstract class Job
 		Throwable cause = ExceptionUtils.getRootCause(e);
 		return ExceptionUtils.getFullStackTrace(cause != null ? cause : e);
 	}
-
 
 	/**
 	 * Fires an event
