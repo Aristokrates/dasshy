@@ -16,7 +16,7 @@ com.kromatik.dasshy.server.policy
 com.kromatik.dasshy.server.rest
 com.kromatik.dasshy.server.scheduler
 com.kromatik.dasshy.server.service
-com.kromatik.dasshy.server.streaming
+com.kromatik.dasshy.server.spark
 com.kromatik.dasshy.server.thrift
 com.kromatik.dasshy.server.zookeeper
 com.kromatik.dasshy.thrift.model
