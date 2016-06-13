@@ -65,6 +65,19 @@ ext {
     ]
 }
 
+// build scripts
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
+        classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+    }
+}
+
 // all projects configuration
 allprojects { project ->
     apply plugin: 'idea'
@@ -85,7 +98,9 @@ allprojects { project ->
 
 // sub-projects configuration
 subprojects { subProject ->
+
     apply plugin: 'java'
+    apply plugin: "com.github.hierynomus.license"
 
     group = 'com.kromatik.dasshy'
     version = dasshyTargetVersion
@@ -101,6 +116,18 @@ subprojects { subProject ->
 
         failOnError = true
 
+    }
+
+    license {
+        header file("$rootDir/HEADER.txt")
+
+        includes(["**/*.java", "**/*.properties", "**/*.yml", "**/*.gradle"])
+
+        strictCheck true
+
+        ext.year = Calendar.getInstance().get(Calendar.YEAR)
+        ext.name = 'Dasshy'
+        ext.org = 'Kromatik Solutions'
     }
 
     test {
@@ -176,8 +203,6 @@ subprojects { subProject ->
     sourceCompatibility = javaLanguageLevel
 }
 
-
-
 // custom tasks
 task docs(type: Javadoc) {
 
@@ -213,26 +238,14 @@ task mergedReport(type: JacocoReport) {
     }
 }
 
-// build/ plugin configuration
+// sonarqube
 apply plugin: 'org.sonarqube'
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
-    }
-}
-
 sonarqube {
     properties {
         property "sonar.jacoco.reportPath", "$buildDir/jacoco/jacoco.exec"
         property "sonar.java.coveragePlugin", "jacoco"
     }
 }
-
 project(":dasshy-model") {
     sonarqube {
         properties {
@@ -241,5 +254,4 @@ project(":dasshy-model") {
         }
     }
 }
-
 project.tasks["sonarqube"].dependsOn jacocoMerge
