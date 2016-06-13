@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Batch clock for managing the streaming processing
  */
-public abstract class BatchClock
+public abstract class StreamingClock
 {
 	/**
 	 * epoch time in miliseconds

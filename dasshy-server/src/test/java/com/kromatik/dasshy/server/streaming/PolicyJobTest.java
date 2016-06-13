@@ -60,7 +60,7 @@ public class PolicyJobTest
 
 		Policy policyInstance = new Policy();
 		policyInstance.setModel(policyModel);
-		policyInstance.setClock(new ExecuteNTimesBatchClock(2));
+		policyInstance.setClock(new ExecuteNTimesStreamingClock(2));
 
 		policyInstance.setExtractor(new ExtractorHolder(new FakeEventExtractor(), null));
 		policyInstance.setTransformer(new TransformerHolder(new IdentityTransformer(), null));
@@ -97,7 +97,7 @@ public class PolicyJobTest
 
 		Policy policyInstance = new Policy();
 		policyInstance.setModel(policyModel);
-		policyInstance.setClock(new ExecuteNTimesBatchClock(2));
+		policyInstance.setClock(new ExecuteNTimesStreamingClock(2));
 
 		policyInstance.setExtractor(new ExtractorHolder(new FakeEventExtractor(), null));
 		policyInstance.setTransformer(new TransformerHolder(new IdentityTransformer(), null));

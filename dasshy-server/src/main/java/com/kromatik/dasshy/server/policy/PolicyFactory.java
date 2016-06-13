@@ -1,6 +1,6 @@
 package com.kromatik.dasshy.server.policy;
 
-import com.kromatik.dasshy.server.streaming.BatchClock;
+import com.kromatik.dasshy.server.streaming.StreamingClock;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TStage;
 
@@ -26,7 +26,7 @@ public interface PolicyFactory
 	 *
 	 * @return batch clock
 	 */
-	BatchClock buildBatchClock(final TPolicy policyModel);
+	StreamingClock buildBatchClock(final TPolicy policyModel);
 
 	/**
 	 * Builds an extractor instance from its model

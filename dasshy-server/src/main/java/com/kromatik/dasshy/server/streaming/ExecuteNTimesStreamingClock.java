@@ -1,9 +1,9 @@
 package com.kromatik.dasshy.server.streaming;
 
 /**
- * Implementation of {@link BatchClock} that is called N times
+ * Implementation of {@link StreamingClock} that is called N times
  */
-public class ExecuteNTimesBatchClock extends BatchClock
+public class ExecuteNTimesStreamingClock extends StreamingClock
 {
 	/**maximum allowed batches*/
 	private final Integer		maximumBatches;
@@ -14,7 +14,7 @@ public class ExecuteNTimesBatchClock extends BatchClock
 	/**
 	 * Default constructor
 	 */
-	public ExecuteNTimesBatchClock()
+	public ExecuteNTimesStreamingClock()
 	{
 		this(1);
 	}
@@ -24,7 +24,7 @@ public class ExecuteNTimesBatchClock extends BatchClock
 	 *
 	 * @param maxBatches max batches
 	 */
-	public ExecuteNTimesBatchClock(final Integer maxBatches)
+	public ExecuteNTimesStreamingClock(final Integer maxBatches)
 	{
 		currentBatchNumber = 0;
 		maximumBatches = maxBatches;

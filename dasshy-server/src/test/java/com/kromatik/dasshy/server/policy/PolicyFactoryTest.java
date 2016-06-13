@@ -2,9 +2,9 @@ package com.kromatik.dasshy.server.policy;
 
 import com.kromatik.dasshy.server.service.DefaultStagePlugin;
 import com.kromatik.dasshy.server.service.StagePluginService;
-import com.kromatik.dasshy.server.streaming.BatchClock;
+import com.kromatik.dasshy.server.streaming.StreamingClock;
 import com.kromatik.dasshy.server.streaming.CassandraLoader;
-import com.kromatik.dasshy.server.streaming.StreamingBatchClock;
+import com.kromatik.dasshy.server.streaming.IntervalStreamingClock;
 import com.kromatik.dasshy.server.streaming.IdentityTransformer;
 import com.kromatik.dasshy.server.streaming.KafkaExtractor;
 import com.kromatik.dasshy.thrift.model.TPolicy;
@@ -45,21 +45,21 @@ public class PolicyFactoryTest
 		TPolicy policyModel = new TPolicy();
 		policyModel.setInterval(interval);
 
-		BatchClock batchClock = policyFactory.buildBatchClock(policyModel);
-		Assertions.assertThat(batchClock).isNotNull();
+		StreamingClock streamingClock = policyFactory.buildBatchClock(policyModel);
+		Assertions.assertThat(streamingClock).isNotNull();
 
-		Assertions.assertThat(batchClock.acquire()).isTrue();
+		Assertions.assertThat(streamingClock.acquire()).isTrue();
 		Long currentTime = System.currentTimeMillis();
 
 		// check the batch time
-		Long previousBatchTime = batchClock.getBatchTime();
+		Long previousBatchTime = streamingClock.getBatchTime();
 		Assertions.assertThat(previousBatchTime).isLessThan(currentTime);
 
 		// increment the batch and sleep
-		batchClock.increment(1);
+		streamingClock.increment(1);
 
 		// check that the batch time has been incremented
-		Long nextBatchTime = batchClock.getBatchTime();
+		Long nextBatchTime = streamingClock.getBatchTime();
 		Assertions.assertThat(nextBatchTime).isGreaterThan(currentTime);
 
 		// check if time difference between the batch times is exactly the batch interval
@@ -181,7 +181,7 @@ public class PolicyFactoryTest
 		Assertions.assertThat(policyInstance).isNotNull();
 
 		Assertions.assertThat(policyInstance.getModel()).isEqualsToByComparingFields(policyModel);
-		Assertions.assertThat(policyInstance.getClock()).isInstanceOf(StreamingBatchClock.class);
+		Assertions.assertThat(policyInstance.getClock()).isInstanceOf(IntervalStreamingClock.class);
 
 		Assertions.assertThat(policyInstance.getExtractor().stage()).isExactlyInstanceOf(KafkaExtractor.class);
 		Assertions.assertThat(policyInstance.getExtractor().configuration().getValues()).isNotEmpty().isEqualTo(kafkaConfig);
