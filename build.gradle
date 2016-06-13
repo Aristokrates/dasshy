@@ -128,6 +128,7 @@ subprojects { subProject ->
         ext.year = Calendar.getInstance().get(Calendar.YEAR)
         ext.name = 'Dasshy'
         ext.org = 'Kromatik Solutions'
+        ext.url = 'http://kromatiksolutions.com'
     }
 
     test {

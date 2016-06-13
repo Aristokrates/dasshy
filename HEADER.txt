@@ -1,5 +1,5 @@
-${name} - Real time Streaming and Batch Analytics Open Source System
-Copyright (C) ${year} ${org}
+${name} - Real time and Batch Analytics Open Source System
+Copyright (C) ${year} ${org} (${url})
 
 This file is part of ${name}
 

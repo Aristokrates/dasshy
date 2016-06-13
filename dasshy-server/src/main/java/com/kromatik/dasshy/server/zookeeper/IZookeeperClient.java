@@ -1,6 +1,6 @@
 /**
- * Dasshy - Real time Streaming and Batch Analytics Open Source System
- * Copyright (C) 2016 Kromatik Solutions
+ * Dasshy - Real time and Batch Analytics Open Source System
+ * Copyright (C) 2016 Kromatik Solutions (http://kromatiksolutions.com)
  *
  * This file is part of Dasshy
  *
