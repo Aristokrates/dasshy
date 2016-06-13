@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;

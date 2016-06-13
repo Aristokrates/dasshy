@@ -1,10 +1,11 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import com.kromatik.dasshy.sdk.AbstractTransformer;
-import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.RuntimeContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+
+import java.util.Map;
 
 /**
  * identity pass through transformer
@@ -12,10 +13,7 @@ import org.apache.spark.sql.Row;
 public class IdentityTransformer extends AbstractTransformer
 {
 	@Override
-	public Dataset<Row> transform(
-					final RuntimeContext context,
-					final Dataset<Row> input
-	)
+	public Map<String, Dataset<Row>> transform(final RuntimeContext context, final Map<String, Dataset<Row>> input)
 	{
 		return input;
 	}

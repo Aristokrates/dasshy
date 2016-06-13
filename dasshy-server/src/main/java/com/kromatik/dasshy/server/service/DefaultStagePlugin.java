@@ -1,8 +1,8 @@
 package com.kromatik.dasshy.server.service;
 
-import com.kromatik.dasshy.server.streaming.CassandraLoader;
-import com.kromatik.dasshy.server.streaming.IdentityTransformer;
-import com.kromatik.dasshy.server.streaming.KafkaExtractor;
+import com.kromatik.dasshy.server.spark.CassandraLoader;
+import com.kromatik.dasshy.server.spark.IdentityTransformer;
+import com.kromatik.dasshy.server.spark.KafkaExtractor;
 import com.kromatik.dasshy.thrift.model.TStageType;
 
 public enum DefaultStagePlugin

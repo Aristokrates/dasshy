@@ -1,7 +1,7 @@
 package com.kromatik.dasshy.server.policy;
 
 import com.kromatik.dasshy.server.model.RuleGroup;
-import com.kromatik.dasshy.server.streaming.StreamingClock;
+import com.kromatik.dasshy.server.spark.BatchClock;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 
 /**
@@ -14,7 +14,7 @@ public class Policy
 	private TPolicy											model;
 
 	/** batch clock for this policy determining how many times this policy will be executed */
-	private StreamingClock clock;
+	private BatchClock clock;
 
 	/** extractor holder: consisting of instance and its configuration */
 	private ExtractorHolder									extractor;
@@ -38,12 +38,12 @@ public class Policy
 		this.model = model;
 	}
 
-	public StreamingClock getClock()
+	public BatchClock getClock()
 	{
 		return clock;
 	}
 
-	public void setClock(StreamingClock clock)
+	public void setClock(BatchClock clock)
 	{
 		this.clock = clock;
 	}

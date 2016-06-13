@@ -13,6 +13,11 @@ import com.kromatik.dasshy.server.policy.Policy;
 import com.kromatik.dasshy.server.policy.TransformerHolder;
 import com.kromatik.dasshy.server.scheduler.JobListener;
 import com.kromatik.dasshy.server.scheduler.JobUpdateListener;
+import com.kromatik.dasshy.server.spark.DasshySparkContextFactory;
+import com.kromatik.dasshy.server.spark.ExecuteNTimesBatchClock;
+import com.kromatik.dasshy.server.spark.IdentityTransformer;
+import com.kromatik.dasshy.server.spark.PolicyJob;
+import com.kromatik.dasshy.server.spark.SparkContextFactory;
 import com.kromatik.dasshy.thrift.model.TJobState;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import org.apache.spark.sql.Dataset;
@@ -23,6 +28,9 @@ import org.fest.assertions.api.Assertions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Test for policy job streaming
@@ -60,7 +68,7 @@ public class PolicyJobTest
 
 		Policy policyInstance = new Policy();
 		policyInstance.setModel(policyModel);
-		policyInstance.setClock(new ExecuteNTimesStreamingClock(2));
+		policyInstance.setClock(new ExecuteNTimesBatchClock(2));
 
 		policyInstance.setExtractor(new ExtractorHolder(new FakeEventExtractor(), null));
 		policyInstance.setTransformer(new TransformerHolder(new IdentityTransformer(), null));
@@ -81,7 +89,7 @@ public class PolicyJobTest
 		Assertions.assertThat(job.getEndTime()).isNotNull().isLessThanOrEqualTo(System.currentTimeMillis());
 		Assertions.assertThat(job.getErrorMessage()).isNullOrEmpty();
 		Assertions.assertThat(job.getException()).isNull();
-		Assertions.assertThat(job.getJobResult()).isNull();
+		Assertions.assertThat(job.getJobResult()).isNotNull().isInstanceOf(List.class);
 
 		// stop the job
 		job.stop();
@@ -97,7 +105,7 @@ public class PolicyJobTest
 
 		Policy policyInstance = new Policy();
 		policyInstance.setModel(policyModel);
-		policyInstance.setClock(new ExecuteNTimesStreamingClock(2));
+		policyInstance.setClock(new ExecuteNTimesBatchClock(2));
 
 		policyInstance.setExtractor(new ExtractorHolder(new FakeEventExtractor(), null));
 		policyInstance.setTransformer(new TransformerHolder(new IdentityTransformer(), null));
@@ -107,7 +115,7 @@ public class PolicyJobTest
 		policyInstance.setLoader(new LoaderHolder(new AbstractLoader()
 		{
 			@Override
-			public void load(RuntimeContext context, Dataset<Row> input)
+			public Dataset<Row> load(RuntimeContext context, Map<String, Dataset<Row>> input)
 			{
 				throw new RuntimeException(exceptionMessage);
 			}

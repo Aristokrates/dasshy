@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import com.kromatik.dasshy.server.config.SparkConfiguration;
 import com.netflix.config.DynamicStringProperty;

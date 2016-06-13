@@ -8,7 +8,7 @@ import com.kromatik.dasshy.core.engine.IEngineRuntime;
 import com.kromatik.dasshy.core.engine.IEngineRuntimeFactory;
 import com.kromatik.dasshy.core.exception.EngineStartupException;
 import com.kromatik.dasshy.server.config.DasshyConfiguration;
-import com.kromatik.dasshy.server.streaming.DasshyRuntime;
+import com.kromatik.dasshy.server.spark.DasshyRuntime;
 import com.netflix.config.DynamicPropertyFactory;
 import org.fest.assertions.api.Assertions;
 import org.mockito.Mockito;

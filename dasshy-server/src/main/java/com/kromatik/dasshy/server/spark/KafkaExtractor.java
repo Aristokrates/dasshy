@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import com.kromatik.dasshy.sdk.AbstractExtractor;
 import com.kromatik.dasshy.sdk.StageAttribute;
@@ -49,18 +49,17 @@ public class KafkaExtractor extends AbstractExtractor
 	}
 
 	@Override
-	public Dataset<Row> next(
-					final RuntimeContext context,
-					final Time time
-	)
+	public Map<String, Dataset<Row>> extract(final RuntimeContext context, final Time time)
 	{
-
+		Map<String, Dataset<Row>> extractMap = new HashMap<>();
 		if (dStream == null)
 		{
 			dStream = extract(context);
 		}
 		final JavaRDD<byte[]> rdd = dStream.compute(time);
-		return context.getSparkSession().createDataset(rdd.rdd(), (Encoder)Encoders.BINARY());
+		extractMap.put("kafka", context.getSparkSession().createDataset(rdd.rdd(), (Encoder)Encoders.BINARY()));
+
+		return extractMap;
 	}
 
 

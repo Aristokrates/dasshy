@@ -6,8 +6,8 @@ import com.kromatik.dasshy.sdk.Loader;
 import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.Transformer;
 import com.kromatik.dasshy.server.service.StagePluginService;
-import com.kromatik.dasshy.server.streaming.StreamingClock;
-import com.kromatik.dasshy.server.streaming.IntervalStreamingClock;
+import com.kromatik.dasshy.server.spark.BatchClock;
+import com.kromatik.dasshy.server.spark.StreamingIntervalBatchClock;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 import com.kromatik.dasshy.thrift.model.TStage;
 import com.kromatik.dasshy.thrift.model.TStagePlugin;
@@ -43,14 +43,14 @@ public class DefaultPolicyFactory implements PolicyFactory
 		policy.setTransformer(buildTransformer(policyModel.getTransformer()));
 		policy.setLoader(buildLoader(policyModel.getLoader()));
 
-		policy.setClock(buildBatchClock(policyModel));
+		policy.setClock(buildStreamingClock(policyModel));
 		return policy;
 	}
 
 	@Override
-	public StreamingClock buildBatchClock(final TPolicy policyModel)
+	public BatchClock buildStreamingClock(final TPolicy policyModel)
 	{
-		return new IntervalStreamingClock(policyModel.getInterval());
+		return new StreamingIntervalBatchClock(policyModel.getInterval());
 	}
 
 	@Override

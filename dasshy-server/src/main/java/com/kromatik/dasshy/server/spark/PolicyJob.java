@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import com.kromatik.dasshy.sdk.StageConfiguration;
 import com.kromatik.dasshy.sdk.RuntimeContext;
@@ -15,10 +15,15 @@ import org.apache.spark.SparkEnv;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.types.StructType;
 import org.apache.spark.streaming.StreamingContextState;
 import org.apache.spark.streaming.Time;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -26,6 +31,9 @@ import java.util.UUID;
  */
 public class PolicyJob extends Job
 {
+
+	private static final Integer 			MAX_RESULTS = 1000;
+
 	/** runtime context for execution of the policy job */
 	private final RuntimeContext			runtimeContext;
 
@@ -56,7 +64,7 @@ public class PolicyJob extends Job
 	}
 
 	@Override
-	protected Object run()
+	protected void run()
 	{
 		final JavaStreamingContext javaStreamingContext = runtimeContext.getJavaStreamingContext();
 		final JavaSparkContext sparkContext = javaStreamingContext.sparkContext();
@@ -95,16 +103,37 @@ public class PolicyJob extends Job
 				// set job group without interruption on cancel
 				sparkContext.setJobGroup(batchId, "Job group for Id", false);
 
-				final Dataset<Row> inputDF = policy.getExtractor().stage().next(runtimeContext, batchTime);
+				final Map<String, Dataset<Row>> inputDF = policy.getExtractor().stage()
+								.extract(runtimeContext, batchTime);
 
-				final Dataset<Row> transformedDF = policy.getTransformer().stage().transform(runtimeContext, inputDF);
+				final Map<String, Dataset<Row>> transformedDF = policy.getTransformer().stage()
+								.transform(runtimeContext, inputDF);
 
-				policy.getLoader().stage().load(runtimeContext, transformedDF);
+				Dataset<Row> resultDF = policy.getLoader().stage().load(runtimeContext, transformedDF);
 
 				// TODO (pai) get the batch information
 				fireEvent(new PolicyBatchEnded(UUID.randomUUID().toString(), id, System.currentTimeMillis()));
 				evaluateExtractorCheckpoint(currentBatchId, true);
 
+				// return the result from the resultDF
+				final List<Map<String, Object>> result = new ArrayList<>();
+
+				// TODO (pai) specify max results per policy
+				final List<Row> rows = resultDF.takeAsList(MAX_RESULTS);
+
+				final StructType schema = resultDF.queryExecution().analyzed().schema();
+				for (final Row row : rows)
+				{
+					final Map<String, Object> rowMap = new HashMap<>();
+					for (final String fieldName : schema.fieldNames())
+					{
+						final Object value = row.get(schema.fieldIndex(fieldName));
+						rowMap.put(fieldName, value);
+					}
+					result.add(rowMap);
+				}
+
+				setJobResult(result);
 			}
 		}
 		catch (Exception e)
@@ -120,14 +149,11 @@ public class PolicyJob extends Job
 		finally
 		{
 			// policy job has ended; fire events and clean the execution stages
-
 			fireEvent(new PolicyJobEnded(UUID.randomUUID().toString(), id, System.currentTimeMillis()));
 			policy.getExtractor().stage().clean(runtimeContext);
 			policy.getTransformer().stage().clean(runtimeContext);
 			policy.getLoader().stage().clean(runtimeContext);
 		}
-
-		return null;
 	}
 
 	/**

@@ -31,4 +31,12 @@ public interface JobListener
 	 * @param jobEvent job event
 	 */
 	void onJobEvent(final JobEvent jobEvent);
+
+	/**
+	 * Called when a new job result is available
+	 *
+	 * @param job a job
+	 * @param jobResult job result
+	 */
+	void onJobResult(final Job job, final Object jobResult);
 }

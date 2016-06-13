@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import com.kromatik.dasshy.core.engine.IEngineRuntime;
 import com.kromatik.dasshy.core.engine.IEngineRuntimeFactory;

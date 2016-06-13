@@ -1,4 +1,4 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Default batch clock
  */
-public class IntervalStreamingClock extends StreamingClock
+public class StreamingIntervalBatchClock extends BatchClock
 {
-	private static final Logger LOGGER	=	LoggerFactory.getLogger(IntervalStreamingClock.class);
+	private static final Logger LOGGER	=	LoggerFactory.getLogger(StreamingIntervalBatchClock.class);
 
 	private final Long intervalSeconds;
 
@@ -20,7 +20,7 @@ public class IntervalStreamingClock extends StreamingClock
 	 *
 	 * @param intervalSeconds batch interval in seconds
 	 */
-	public IntervalStreamingClock(final Long intervalSeconds)
+	public StreamingIntervalBatchClock(final Long intervalSeconds)
 	{
 		this.intervalSeconds = intervalSeconds;
 	}
@@ -45,7 +45,7 @@ public class IntervalStreamingClock extends StreamingClock
 			LOGGER.warn("Thread is interrupted while Spark Streaming Engine is running");
 		}
 
-		// calculate next batch time
+		// calculate extract batch time
 		calculateBatchTime();
 	}
 

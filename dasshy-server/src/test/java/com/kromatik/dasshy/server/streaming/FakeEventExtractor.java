@@ -6,13 +6,15 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.streaming.Time;
 
+import java.util.Map;
+
 /**
  * Fake extractor. Does nothing
  */
 public class FakeEventExtractor extends AbstractExtractor
 {
 	@Override
-	public Dataset<Row> next(RuntimeContext context, Time time)
+	public Map<String, Dataset<Row>> extract(RuntimeContext context, Time time)
 	{
 		return null;
 	}

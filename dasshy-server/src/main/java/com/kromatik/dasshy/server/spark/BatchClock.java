@@ -1,11 +1,11 @@
-package com.kromatik.dasshy.server.streaming;
+package com.kromatik.dasshy.server.spark;
 
 import java.util.Calendar;
 
 /**
  * Batch clock for managing the streaming processing
  */
-public abstract class StreamingClock
+public abstract class BatchClock
 {
 	/**
 	 * epoch time in miliseconds
@@ -20,14 +20,14 @@ public abstract class StreamingClock
 	}
 
 	/**
-	 * Acquires a permit to continue with the next batch processing
+	 * Acquires a permit to continue with the extract batch processing
 	 *
 	 * @return true, if permit is granted; false otherwise
 	 */
 	public abstract boolean acquire();
 
 	/**
-	 * Increment the batch and advance to the next batch
+	 * Increment the batch and advance to the extract batch
 	 *
 	 * @param count batches processed so far
 	 */
@@ -36,7 +36,7 @@ public abstract class StreamingClock
 	/**
 	 * Gets the batch time
 	 *
-	 * @return next batch time
+	 * @return extract batch time
 	 */
 	public abstract Long getBatchTime();
 }

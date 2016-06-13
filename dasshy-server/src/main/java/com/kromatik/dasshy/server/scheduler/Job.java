@@ -21,7 +21,7 @@ public abstract class Job
 	/** end time of this job*/
 	protected Long				endTime;
 
-	/** job result */
+	/** latest job result */
 	protected Object			jobResult;
 
 	/** error */
@@ -56,7 +56,7 @@ public abstract class Job
 		try
 		{
 			startTime = System.currentTimeMillis();
-			jobResult = run();
+			run();
 			endTime = System.currentTimeMillis();
 		}
 		catch (Exception throwable)
@@ -79,11 +79,9 @@ public abstract class Job
 
 
 	/**
-	 * Run the job and get a result of it execution
-	 *
-	 * @return result of the job execution
+	 * Run the job and get a result of its execution
 	 */
-	protected abstract Object run();
+	protected abstract void run();
 
 	/**
 	 * Abort the job
@@ -92,58 +90,6 @@ public abstract class Job
 	 */
 	protected abstract boolean abort();
 
-
-	/**
-	 * Fires an event
-	 *
-	 * @param event job event
-	 */
-	protected void fireEvent(final JobEvent event)
-	{
-		if (listener != null)
-		{
-			listener.onJobEvent(event);
-		}
-	}
-
-	/**
-	 * Sets the new job state
-	 *
-	 * @param jobState new job state
-	 */
-	public void setJobState(final TJobState jobState)
-	{
-		if (this.jobState == jobState)
-		{
-			return;
-		}
-
-		this.jobState = jobState;
-		if (listener != null)
-		{
-			listener.onStateChange(this, this.jobState, jobState);
-		}
-	}
-
-	/**
-	 * Get job state
-	 *
-	 * @return job state
-	 */
-	public TJobState getJobState()
-	{
-		return jobState;
-	}
-
-	public JobListener getListener()
-	{
-		return listener;
-	}
-
-	public void setListener(final JobListener listener)
-	{
-		this.listener = listener;
-	}
 
 	/**
 	 * Get stack trace as String
@@ -163,31 +109,116 @@ public abstract class Job
 		return ExceptionUtils.getFullStackTrace(cause != null ? cause : e);
 	}
 
+
+	/**
+	 * Fires an event
+	 *
+	 * @param event job event
+	 */
+	protected void fireEvent(final JobEvent event)
+	{
+		if (listener != null)
+		{
+			listener.onJobEvent(event);
+		}
+	}
+
+	/**
+	 * @param jobState new job state
+	 */
+	public void setJobState(final TJobState jobState)
+	{
+		if (this.jobState == jobState)
+		{
+			return;
+		}
+
+		this.jobState = jobState;
+		if (listener != null)
+		{
+			listener.onStateChange(this, this.jobState, jobState);
+		}
+	}
+
+	/**
+	 * @param jobResult job result
+	 */
+	public void setJobResult(final Object jobResult)
+	{
+		this.jobResult = jobResult;
+		if (listener != null)
+		{
+			listener.onJobResult(this, jobResult);
+		}
+	}
+
+	/**
+	 * @return job state
+	 */
+	public TJobState getJobState()
+	{
+		return jobState;
+	}
+
+	/**
+	 * @return job listener
+	 */
+	public JobListener getListener()
+	{
+		return listener;
+	}
+
+	/**
+	 * @param listener listener
+	 */
+	public void setListener(final JobListener listener)
+	{
+		this.listener = listener;
+	}
+
+	/**
+	 * @return job's start time
+	 */
 	public Long getStartTime()
 	{
 		return startTime;
 	}
 
+	/**
+	 * @return job's end time
+	 */
 	public Long getEndTime()
 	{
 		return endTime;
 	}
 
+	/**
+	 * @return last job result
+	 */
 	public Object getJobResult()
 	{
 		return jobResult;
 	}
 
+	/**
+	 * @return error message, if any
+	 */
 	public String getErrorMessage()
 	{
 		return errorMessage;
 	}
 
+	/**
+	 * @return exception, if any
+	 */
 	public Throwable getException()
 	{
 		return exception;
 	}
 
+	/**
+	 * @return true if the job is aborted, false otherwise
+	 */
 	public boolean isAborted()
 	{
 		return aborted;

@@ -3,7 +3,7 @@ package com.kromatik.dasshy.server.policy;
 import com.kromatik.dasshy.sdk.RuntimeContext;
 import com.kromatik.dasshy.server.scheduler.Job;
 import com.kromatik.dasshy.server.scheduler.JobListener;
-import com.kromatik.dasshy.server.streaming.PolicyJob;
+import com.kromatik.dasshy.server.spark.PolicyJob;
 import com.kromatik.dasshy.server.scheduler.JobScheduler;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 

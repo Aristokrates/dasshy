@@ -22,9 +22,9 @@ public class JobSchedulerTest
 		Job job = new Job(jobId, null)
 		{
 			@Override
-			protected Object run()
+			protected void run()
 			{
-				return null;
+				return;
 			}
 
 			@Override
@@ -55,7 +55,7 @@ public class JobSchedulerTest
 		Job job = new Job(jobId, null)
 		{
 			@Override
-			protected Object run()
+			protected void run()
 			{
 				throw new RuntimeException("Job error out");
 			}
@@ -88,9 +88,9 @@ public class JobSchedulerTest
 		Job job = new Job(jobId, null)
 		{
 			@Override
-			protected Object run()
+			protected void run()
 			{
-				return null;
+				return;
 			}
 
 			@Override

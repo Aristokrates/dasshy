@@ -2,7 +2,7 @@ package com.kromatik.dasshy.server.scheduler;
 
 import com.kromatik.dasshy.server.dao.PolicyDao;
 import com.kromatik.dasshy.server.event.JobEvent;
-import com.kromatik.dasshy.server.streaming.PolicyJob;
+import com.kromatik.dasshy.server.spark.PolicyJob;
 import com.kromatik.dasshy.thrift.model.TJobState;
 import com.kromatik.dasshy.thrift.model.TPolicy;
 
@@ -62,5 +62,12 @@ public class JobUpdateListener implements JobListener
 	public void onJobEvent(final JobEvent jobEvent)
 	{
 		// save the event
+	}
+
+	@Override
+	public void onJobResult(final Job job, final Object jobResult)
+	{
+		// save/add the job results
+
 	}
 }

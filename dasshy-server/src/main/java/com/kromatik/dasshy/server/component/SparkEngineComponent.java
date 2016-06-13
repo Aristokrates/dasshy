@@ -4,9 +4,9 @@ import com.kromatik.dasshy.core.engine.IEngineComponent;
 import com.kromatik.dasshy.core.exception.EngineStartupException;
 import com.kromatik.dasshy.sdk.RuntimeContext;
 import com.kromatik.dasshy.server.config.DasshyConfiguration;
-import com.kromatik.dasshy.server.streaming.DasshyRuntime;
-import com.kromatik.dasshy.server.streaming.DasshySparkContextFactory;
-import com.kromatik.dasshy.server.streaming.SparkContextFactory;
+import com.kromatik.dasshy.server.spark.DasshyRuntime;
+import com.kromatik.dasshy.server.spark.DasshySparkContextFactory;
+import com.kromatik.dasshy.server.spark.SparkContextFactory;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
