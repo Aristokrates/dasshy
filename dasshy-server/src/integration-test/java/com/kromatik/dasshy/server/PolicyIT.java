@@ -100,6 +100,8 @@ public class PolicyIT
 		Thread.sleep(3000);
 
 		TPolicy existingPolicy = new GetPolicyCommand(dasshyServerApi, policyId).run();
+
+		// TODO (pai) check the correct status once the kafka extractor has been implemented
 		Assertions.assertThat(existingPolicy.getState()).isNotNull();
 	}
 
@@ -151,5 +153,4 @@ public class PolicyIT
 			return config;
 		}
 	}
-
 }

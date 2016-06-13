@@ -2,6 +2,7 @@ package com.kromatik.dasshy.server.command;
 
 import com.kromatik.dasshy.server.exception.DasshyBadRequestException;
 import com.kromatik.dasshy.server.exception.DasshyServerErrorException;
+import com.kromatik.dasshy.server.thrift.DasshyMediaType;
 import com.kromatik.dasshy.thrift.model.TError;
 
 import javax.ws.rs.ProcessingException;
@@ -23,7 +24,7 @@ public abstract class DasshyHttpCommand<R> extends DasshyCommand<R>
 	protected String	serviceName;
 	protected String	commandName;
 
-	protected MediaType mediaType	=	MediaType.APPLICATION_JSON_TYPE;
+	protected MediaType mediaType	=	DasshyMediaType.THRIFT.getMediaType();
 
 	public DasshyHttpCommand(WebTarget webTarget, String serviceName, String commandName)
 	{
