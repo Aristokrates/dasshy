@@ -75,6 +75,7 @@ buildscript {
     dependencies {
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
         classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
     }
 }
 
@@ -231,12 +232,32 @@ task jacocoMerge(type: JacocoMerge) {
     }
 }
 
-task mergedReport(type: JacocoReport) {
+task jacocoTestReport(type: JacocoReport) {
     executionData jacocoMerge.destinationFile
     dependsOn jacocoMerge
+
     subprojects.each {
         sourceSets it.sourceSets.main
     }
+
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: '**com/kromatik/dasshy/thrift/model/**')
+        })
+    }
+}
+
+apply plugin: "com.github.kt3k.coveralls"
+coveralls {
+    sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+
 }
 
 // sonarqube
@@ -250,9 +271,22 @@ sonarqube {
 project(":dasshy-model") {
     sonarqube {
         properties {
-            property "sonar.exclusions", "src/main/java/com/kromatik/dasshy/thrift/model/**"
+            property "sonar.exclusions", "**com/kromatik/dasshy/thrift/model/**"
             property "sonar.sourceEncoding", "UTF-8"
         }
     }
 }
-project.tasks["sonarqube"].dependsOn jacocoMerge
+tasks.sonarqube {
+    group = 'Sonar'
+    description = 'Performs a SonarQube quality check'
+
+    dependsOn jacocoTestReport
+}
+
+tasks.coveralls {
+    group = 'Coverage'
+    description = 'Uploads the aggregated coverage report to Coveralls'
+
+    dependsOn jacocoTestReport
+    onlyIf { System.env.'CI' }
+}

@@ -13,3 +13,6 @@ branches:
 cache:
   directories:
   - $HOME/.gradle
+
+after_success:
+  - gradle coveralls
