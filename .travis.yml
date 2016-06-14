@@ -1,18 +1,16 @@
 language: java
-
 jdk:
-  - oraclejdk7
-
+- oraclejdk7
 os:
-  - linux
-
+- linux
 branches:
   only:
-    - master
-
+  - master
 cache:
   directories:
   - $HOME/.gradle
-
 after_success:
-  - gradle coveralls
+- gradle coveralls
+notifications:
+  slack:
+    secure: l/BdWT80fF/fO69T8OZVyFOfnLGaqRVuCi5fDs7KzLNdrYLJtRwwJ+SdEJr3N2RMzQoeJAVhGruYGgy8kXYJhM/qJEIG4+C3z8hp2X51VCQgporU9B1txF51eQmqsW2ZUH5YyJWbcvwGpxFApNTTIuxoZCtlgrCb/ow29KL0qWz0UpH5GR0sOysjEfApJVqzhM4Tfww+cAFkfsn7TW5nwV6KvOkPbqflQCNCH9sK9dBKbkbb/UZnOs9xDLjFT0V6DrDE5rlaklNwlxmcYiPV4Ai7lo3gg1EjMiFGiZzCxEaEdFfYtQzWary0mVq4QvdEC29+c8g/J37trc7knJXd0ZRTHWuGO42Th+GAlv61O+34qpqstatP49jYv4InyF+96jyp9jzLoUxoNtiK+arUb9rCP5proQIRbY0CfrYKqq8P6orfK1se7qoOHMz57ij9H2s0ihWofT7DfxNyFnpmVfQcQpit5x0ftubLyRDRDiu4L7RQLW3P5QjnQ7PPlWZhhDgSr3hKjv6sWmY21IEkR/YfbQjbWbIlgEgTB54MCf4buSKDMvRmplGfA2fRhz0IAYza0PzfFG0OzHvPCWAKM9DW/40CUGLKws1uMt3utUacjEe1n3qe7EijarwHaaEW/kzQR/lxqCMKs4do+UchO/4KLmL5w/nWUMVHrpv42no=
