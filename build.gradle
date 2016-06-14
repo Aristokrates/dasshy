@@ -157,7 +157,6 @@ subprojects { subProject ->
     task integrationTest(type: Test) {
         testClassesDir = sourceSets.integrationTest.output.classesDir
         classpath = sourceSets.integrationTest.runtimeClasspath
-        outputs.upToDateWhen { false }
 
         jacoco {
             destinationFile = file("$buildDir/jacoco/jacocoIntegTest.exec")
