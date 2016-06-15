@@ -17,7 +17,7 @@ It tries to unify the streaming and batch processing.
 
 ## Documentation
 
-See the [Javadoc](http://kromatiksolutions.github.com/dasshy/javadoc)
+See the [Javadoc](http://kromatiksolutions.github.io/dasshy/javadoc/)
 
 See the [DasshyModel](http://kromatiksolutions.github.com/dasshy/model) for the Rest API policy model
 
