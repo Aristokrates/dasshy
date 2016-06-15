@@ -19,7 +19,7 @@ It tries to unify the streaming and batch processing.
 
 See the [Javadoc](http://kromatiksolutions.github.io/dasshy/javadoc/)
 
-See the [DasshyModel](http://kromatiksolutions.github.com/dasshy/model) for the Rest API policy model
+See the [DasshyModel](http://kromatiksolutions.github.io/dasshy/dasshy-model/) for the Rest API policy model
 
 See the [Wiki](https://github.com/KromatikSolutions/dasshy/wiki) for full documentation, examples and other information. (Work In Progress)
 
@@ -40,14 +40,14 @@ Additionally, it exposes an REST api for managing policies both for streaming an
 Contains the model that is used in the REST api. The model is based on the [Apache Thrift] (https://thrift.apache.org/) framework.
 This framework is used as a serialization mechanism between any client and the Dasshy server and it provides scalable cross-language development.
 
-The central part of the dasshy model is the policy: [TPolicy]()
+The central part of the dasshy model is the policy: [TPolicy](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Struct_TPolicy)
 
 The policy consist of:
-- batchClock: TBatchClock - determines the execution cycle of the policy (streaming or batch)
-- extractor: TStage - defines how to extract the data from a given source
-- transformer: TStage - defines how to transform the data that was previously extracted.
-- loader: TStage - defines how to load the data into a given sink and return the result of the policy execution(job).
-- state: TJobState - state of the policy execution(job)
+- batchClock: [TBatchClock](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Struct_TBatchClock) - determines the execution cycle of the policy (streaming or batch)
+- extractor: [TStage](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Struct_TStage) - defines how to extract the data from a given source
+- transformer: [TStage](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Struct_TStage) - defines how to transform the data that was previously extracted.
+- loader: [TStage](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Struct_TStage) - defines how to load the data into a given sink and return the result of the policy execution(job).
+- state: [TJobState](http://kromatiksolutions.github.io/dasshy/dasshy-model/com.kromatik.dasshy.model.html#Enum_TJobState) - state of the policy execution(job)
 
 Each stage of the policy execution (extractor, transformer, loader) defines a stage implementation and passed its configuration parameters.
 
