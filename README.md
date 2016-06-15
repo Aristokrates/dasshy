@@ -6,7 +6,7 @@ Dasshy enables creating policies for real-time stream processing as well as crea
 It tries to unify the streaming and batch processing.
 
 ## Key technologies
-- [Spark & Spark Streaming & SparkSQL] (http://spark.apache.org/) - We use the latest spark 2.0.0 snapshot release to keep up with the new features & improvements
+- [Spark & Spark Streaming & SparkSQL] (http://spark.apache.org/) - We use the latest spark 2.0.0 snapshot
 - [Apache Zookeeper] (https://zookeeper.apache.org/)
 - [Apache Kafka] (http://kafka.apache.org/)
 - [Netflix Archaius] (https://github.com/Netflix/archaius)
@@ -45,9 +45,11 @@ The central part of the dasshy model is the policy: [TPolicy]()
 The policy consist of:
 - batchClock: TBatchClock - determines the execution cycle of the policy (streaming or batch)
 - extractor: TStage - defines how to extract the data from a given source
-- transformer: TStage - defines how to transform the data that was previously extracted
+- transformer: TStage - defines how to transform the data that was previously extracted.
 - loader: TStage - defines how to load the data into a given sink and return the result of the policy execution(job).
 - state: TJobState - state of the policy execution(job)
+
+Each stage of the policy execution (extractor, transformer, loader) defines a stage implementation and passed its configuration parameters.
 
 ## Dasshy Web
 Web application for managing policies, built using the latest [Angular 2.0](https://angular.io/) framework. The web application allows for creating policies as well as creating custom dashboards for displaying the result of the policy execution(job)
@@ -56,6 +58,102 @@ This module is WIP (Work In Progress) and still not open-sourced.
 
 ## Dasshy SDK
 
+The Dasshy SDK allows defining custom stage plugins for the policy execution (extractor, transformer, loaders).
+
+#### Extractor:
+
+```java
+public interface Extractor extends IStage
+{
+	/**
+	 * Calculates the extracted data set and returns data sets grouped by names.
+	 * The name of the data set can be used for registering sql tables per dataset
+	 *
+	 * @param context runtime context
+	 * @param time    time, valid in case of a streaming job
+	 * @return extracted data frames by name
+	 */
+	Map<String, Dataset<Row>> extract(final RuntimeContext context, final Time time);
+
+	/**
+	 * Commits the extracted data in case of a streaming job
+	 */
+	void commit();
+
+	/**
+	 * Rollback the extracted data in case of a streaming job
+	 */
+	void rollback();
+}
+```
+
+#### Transformer:
+
+```java
+public interface Transformer extends IStage
+{
+
+	/**
+	 * Transforms the input data frame
+	 *
+	 * @param context runtime context
+	 * @param input   input data
+	 * @return transformed data
+	 */
+	Map<String, Dataset<Row>> transform(final RuntimeContext context, final Map<String, Dataset<Row>> input);
+}
+```
+
+#### Loader
+
+```java
+public interface Loader extends IStage
+{
+
+	/**
+	 * Load the input data and return a result.
+	 * This includes querying the input data frame and returning final result.
+	 * Optionally, the output data can be loaded into a persistent storage
+	 *
+	 * @param context runtime context
+	 * @param input   input data frames
+	 * @return the result data
+	 */
+	Dataset<Row> load(final RuntimeContext context, final Map<String, Dataset<Row>> input);
+}
+```
+#### Attribute Definitions
+
+The stage plugins can accept some attributes to determine how to configure the concrete stage plugin.
+The attribute are defined when constructing the plugin.
+
+```java
+
+public class KafkaExtractor extends AbstractExtractor
+{
+	public KafkaExtractor()
+	{
+
+		// set the attribute definitions for this extractor (name, type, mandatory)
+
+		setAttributeDefinitions(
+		    new StageAttribute(HOST, StageAttribute.Type.STRING, true),
+						new StageAttribute(PORT, StageAttribute.Type.INTEGER, true),
+						new StageAttribute(TOPIC, StageAttribute.Type.STRING, true),
+						new StageAttribute(OFFSET, StageAttribute.Type.STRING, false));
+	}
+}
+```
+
+#### Stage Plugins
+
+Steps for creating your own stage plugin:
+- Implement a given stage interface (Exctractor, Transformer or Loader)
+- Define the attributes for your stage plugin
+- Register your stage plugin in [DefaultStagePlugin](dasshy-server/src/main/java/com/kromatik/dasshy/server/service/DefaultStagePlugin.java) with a unique identifier. Later on we will provide a REST api for registering plugins dynamically.
+- Use your stage plugin in a policy. That means specifying the stage plugin identifier and providing the concrete values for the attributes defined for that plugin.
+
+Refer to our [Integration Tests](dasshy-server/src/integration-test/java/com/kromatik/dasshy/server/PolicyIT.java) for usage example.
 
 ## Build
 
