@@ -275,6 +275,13 @@ project(":dasshy-model") {
         }
     }
 }
+project(":dasshy-server") {
+    task(runServer, dependsOn: 'classes', type: JavaExec) {
+        main = 'com.kromatik.dasshy.server.DasshyServer'
+        classpath = sourceSets.main.runtimeClasspath
+        systemProperties System.getProperties()
+    }
+}
 tasks.sonarqube {
     group = 'Sonar'
     description = 'Performs a SonarQube quality check'
