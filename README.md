@@ -5,6 +5,16 @@
 Dasshy enables creating policies for real-time stream processing as well as creating on-demand analytic queries with miliseconds execution time.
 It tries to unify the streaming and batch processing.
 
+## Key technologies
+- [Spark & Spark Streaming & SparkSQL] (http://spark.apache.org/) - We use the latest spark 2.0.0 snapshot release to keep up with the new features & improvements
+- [Apache Zookeeper] (https://zookeeper.apache.org/)
+- [Apache Kafka] (http://kafka.apache.org/)
+- [Netflix Archaius] (https://github.com/Netflix/archaius)
+- [Jetty] (http://www.eclipse.org/jetty/)
+- [Jersey] (https://jersey.java.net/)
+- [Apache Thrift] (https://thrift.apache.org/)
+- [Docker] (https://www.docker.com/)
+
 ## Documentation
 
 See the [Javadoc](http://kromatiksolutions.github.com/dasshy/javadoc)
@@ -19,16 +29,33 @@ See the [Wiki](https://github.com/KromatikSolutions/dasshy/wiki) for full docume
 | ---- | ----------- |
 | [Dasshy Server](#dasshy-server) | A Spark 2.0 application providing a REST API for creating policies |
 | [Dasshy Model](#dasshy-model) | Thrift model for the REST API  |
-| [Dasshy Web](#dasshy-web) | AngularJS 2.0 Web UI for managing policies. Uses the server API (Work In Progress) |
+| [Dasshy Web](#dasshy-web) | Angular 2.0 Web application for managing policies and creating custom dashboards. Uses the server API (Work In Progress) |
 | [Dasshy SDK](#dasshy-sdk) | A library of interfaces for building custom stages (extractors, transformers, loaders) of a policy |
 
 ## Dasshy Server
+The server is an Spark application containing the Spark Driver, that can be run on any spark cluster.
+Additionally, it exposes an REST api for managing policies both for streaming and batch processing.
 
 ## Dasshy Model
+Contains the model that is used in the REST api. The model is based on the [Apache Thrift] (https://thrift.apache.org/) framework.
+This framework is used as a serialization mechanism between any client and the Dasshy server and it provides scalable cross-language development.
+
+The central part of the dasshy model is the policy: [TPolicy]()
+
+The policy consist of:
+- batchClock: TBatchClock - determines the execution cycle of the policy (streaming or batch)
+- extractor: TStage - defines how to extract the data from a given source
+- transformer: TStage - defines how to transform the data that was previously extracted
+- loader: TStage - defines how to load the data into a given sink and return the result of the policy execution(job).
+- state: TJobState - state of the policy execution(job)
 
 ## Dasshy Web
+Web application for managing policies, built using the latest [Angular 2.0](https://angular.io/) framework. The web application allows for creating policies as well as creating custom dashboards for displaying the result of the policy execution(job)
+
+This module is WIP (Work In Progress) and still not open-sourced.
 
 ## Dasshy SDK
+
 
 ## Build
 
@@ -66,7 +93,7 @@ For full list of supported configuration properties for Dasshy server refer to: 
 ## Distribution
 
 Dasshy server is distributed as a Spark application built as a single uber jar.
-This jar can be then deployed on any spark cluster or run locally.
+This jar can be deployed on any spark cluster or run locally.
 
 The uber jar can be found at:
 
