@@ -6,7 +6,7 @@ Dasshy enables creating policies for real-time stream processing as well as crea
 It tries to unify the streaming and batch processing.
 
 ## Key technologies
-- [Spark & Spark Streaming & SparkSQL] (http://spark.apache.org/) - We use the latest spark 2.0.0 snapshot
+- [Spark & Spark Streaming & SparkSQL] (http://spark.apache.org/) - We use the latest spark 2.0.0 snapshot and its java API
 - [Apache Zookeeper] (https://zookeeper.apache.org/)
 - [Apache Kafka] (http://kafka.apache.org/)
 - [Netflix Archaius] (https://github.com/Netflix/archaius)
@@ -27,9 +27,9 @@ See the [Wiki](https://github.com/KromatikSolutions/dasshy/wiki) for full docume
 
 | Name | Description |
 | ---- | ----------- |
-| [Dasshy Server](#dasshy-server) | A Spark 2.0 application providing a REST API for creating policies |
+| [Dasshy Server](#dasshy-server) | A Spark 2.0 application providing a REST API for creating policies. |
 | [Dasshy Model](#dasshy-model) | Thrift model for the REST API  |
-| [Dasshy Web](#dasshy-web) | Angular 2.0 Web application for managing policies and creating custom dashboards. Uses the server API (Work In Progress) |
+| [Dasshy Web](#dasshy-web) | Angular 2.0 Web application for managing policies and creating custom dashboards. |
 | [Dasshy SDK](#dasshy-sdk) | A library of interfaces for building custom stages (extractors, transformers, loaders) of a policy |
 
 ## Dasshy Server
@@ -124,8 +124,7 @@ public interface Loader extends IStage
 ```
 #### Attribute Definitions
 
-The stage plugins can accept some attributes to determine how to configure the concrete stage plugin.
-The attribute are defined when constructing the plugin.
+The stage plugins can accept some attributes. The attribute are defined when constructing the plugin.
 
 ```java
 
@@ -137,7 +136,7 @@ public class KafkaExtractor extends AbstractExtractor
 		// set the attribute definitions for this extractor (name, type, mandatory)
 
 		setAttributeDefinitions(
-		    new StageAttribute(HOST, StageAttribute.Type.STRING, true),
+		    			new StageAttribute(HOST, StageAttribute.Type.STRING, true),
 						new StageAttribute(PORT, StageAttribute.Type.INTEGER, true),
 						new StageAttribute(TOPIC, StageAttribute.Type.STRING, true),
 						new StageAttribute(OFFSET, StageAttribute.Type.STRING, false));
@@ -151,9 +150,9 @@ Steps for creating your own stage plugin:
 - Implement a given stage interface (Exctractor, Transformer or Loader)
 - Define the attributes for your stage plugin
 - Register your stage plugin in [DefaultStagePlugin](dasshy-server/src/main/java/com/kromatik/dasshy/server/service/DefaultStagePlugin.java) with a unique identifier. Later on we will provide a REST api for registering plugins dynamically.
-- Use your stage plugin in a policy. That means specifying the stage plugin identifier and providing the concrete values for the attributes defined for that plugin.
+- Use your stage plugin in a policy. That means specifying the stage plugin identifier and providing values for the attributes defined in that plugin.
 
-Refer to our [Integration Tests](dasshy-server/src/integration-test/java/com/kromatik/dasshy/server/PolicyIT.java) for usage example.
+Refer to our [Integration Tests](dasshy-server/src/integration-test/java/com/kromatik/dasshy/server/PolicyIT.java) for example.
 
 ## Build
 
@@ -173,7 +172,7 @@ Assuming you've already installed docker locally, starting the dockerized zookee
 ```
 $ docker-compose up
 ```
-Once zookeeper is available, Dasshy server can be started as well:
+Once zookeeper is available, Dasshy server can be started using:
 
 ```
 $ ./gradlew runServer
