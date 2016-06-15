@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: com.kromatik.dasshy.model</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: com.kromatik.dasshy.model</h1>
+<table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
+<tr>
+<td>com.kromatik.dasshy.model</td><td></td>
+<td><a href="#Struct_TBatchClock">TBatchClock</a><br/>
+<a href="#Struct_TBatchClockN">TBatchClockN</a><br/>
+<a href="#Struct_TBatchClockNBackoff">TBatchClockNBackoff</a><br/>
+<a href="#Struct_TError">TError</a><br/>
+<a href="#Struct_TErrorDetail">TErrorDetail</a><br/>
+<a href="#Enum_TJobState">TJobState</a><br/>
+<a href="#Struct_TPolicy">TPolicy</a><br/>
+<a href="#Struct_TPolicyList">TPolicyList</a><br/>
+<a href="#Struct_TStage">TStage</a><br/>
+<a href="#Struct_TStagePlugin">TStagePlugin</a><br/>
+<a href="#Struct_TStagePluginAttribute">TStagePluginAttribute</a><br/>
+<a href="#Struct_TStagePluginAttributeList">TStagePluginAttributeList</a><br/>
+<a href="#Struct_TStagePluginList">TStagePluginList</a><br/>
+<a href="#Enum_TStageType">TStageType</a><br/>
+<a href="#Struct_TStreamingBatchClock">TStreamingBatchClock</a><br/>
+</td>
+<td></code></td>
+</tr></table>
+<hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_TJobState">Enumeration: TJobState</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>READY</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>PENDING</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>RUNNING</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>FINISHED</code></td><td><code>3</code></td><td>
+</td></tr>
+<tr><td><code>ERROR</code></td><td><code>4</code></td><td>
+</td></tr>
+<tr><td><code>ABORT</code></td><td><code>5</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_TStageType">Enumeration: TStageType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>EXTRACTOR</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>TRANSFORMER</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>LOADER</code></td><td><code>2</code></td><td>
+</td></tr>
+</table></div>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_TErrorDetail">Struct: TErrorDetail</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>code</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>3</td><td>codeExtended</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TError">Struct: TError</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>code</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>3</td><td>codeExtended</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>4</td><td>errorDetails</td><td><code>list&lt;<code><a href="#Struct_TErrorDetail">TErrorDetail</a></code>&gt;</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>5</td><td>debug</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStage">Struct: TStage</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>identifier</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>configuration</td><td><code>map&lt;<code>string</code>, <code>string</code>&gt;</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TBatchClock">Union: TBatchClock</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>streaming</td><td><code><a href="#Typedef_TStreamingBatchClock">TStreamingBatchClock</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>nTimes</td><td><code><a href="#Typedef_TBatchClockN">TBatchClockN</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>nTimesBackoff</td><td><code><a href="#Typedef_TBatchClockNBackoff">TBatchClockNBackoff</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStreamingBatchClock">Struct: TStreamingBatchClock</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>interval</td><td><code>i64</code></td><td></td><td>required</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TBatchClockN">Struct: TBatchClockN</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>maxBatches</td><td><code>i32</code></td><td></td><td>required</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TBatchClockNBackoff">Struct: TBatchClockNBackoff</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>maxBatches</td><td><code>i32</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>sleepMs</td><td><code>i64</code></td><td></td><td>required</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TPolicy">Struct: TPolicy</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>clock</td><td><code><a href="#Struct_TBatchClock">TBatchClock</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>error</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>lastUpdated</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>extractor</td><td><code><a href="#Struct_TStage">TStage</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>transformer</td><td><code><a href="#Struct_TStage">TStage</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>7</td><td>loader</td><td><code><a href="#Struct_TStage">TStage</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>8</td><td>state</td><td><code><a href="#Enum_TJobState">TJobState</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>9</td><td>startTime</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>10</td><td>endTime</td><td><code>i64</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TPolicyList">Struct: TPolicyList</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>policies</td><td><code>list&lt;<code><a href="#Struct_TPolicy">TPolicy</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>offset</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>3</td><td>limit</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>4</td><td>total</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStagePlugin">Struct: TStagePlugin</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="#Enum_TStageType">TStageType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>identifier</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>classpath</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>4</td><td>description</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStagePluginList">Struct: TStagePluginList</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>plugins</td><td><code>list&lt;<code><a href="#Struct_TStagePlugin">TStagePlugin</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStagePluginAttribute">Struct: TStagePluginAttribute</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>dataType</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>mandatory</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TStagePluginAttributeList">Struct: TStagePluginAttributeList</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="#Enum_TStageType">TStageType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>identifier</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>attributes</td><td><code>list&lt;<code><a href="#Struct_TStagePluginAttribute">TStagePluginAttribute</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div></div></body></html>
